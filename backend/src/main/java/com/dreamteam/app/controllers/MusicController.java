@@ -2,11 +2,7 @@ package com.dreamteam.app.controllers;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.services.MusicService;
@@ -29,7 +25,21 @@ public class MusicController {
 	@PostMapping("/new")
 	public Music add(@RequestBody Music m) {
 		return service.add(m);
-			
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public void delete(@PathVariable Long id){
+		 service.delete(id);
+	}
+
+	@GetMapping("/{id}")
+	public Music getById(@PathVariable Long id){
+		return service.getById(id);
+	}
+
+	@PostMapping("/update/{id}")
+	public Music update(@PathVariable Long id,@RequestBody Music music){
+		return service.update(id, music);
 	}
 	
 }
