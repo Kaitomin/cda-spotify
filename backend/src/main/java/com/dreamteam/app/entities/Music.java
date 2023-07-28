@@ -24,7 +24,10 @@ public class Music {
 
 	@Enumerated(EnumType.STRING)
 	private Set<Tags> tags;
-	
+
+	@ManyToMany(mappedBy = "musics")
+	private Set<Playlist> playlists;
+
 	public Music(long id, String name, String artist, String duration, LocalDate releasedAt, Set<Tags> tags) {
 		this.id = id;
 		this.name = name;

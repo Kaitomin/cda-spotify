@@ -1,5 +1,8 @@
 package com.dreamteam.app.repositories;
 
-public class UserRepository {
+import com.dreamteam.app.entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
 
 }
