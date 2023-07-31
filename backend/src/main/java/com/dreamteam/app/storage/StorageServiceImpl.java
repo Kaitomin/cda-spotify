@@ -69,7 +69,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Path load(String filename) {
-        if (filename.matches("((.*).png|(.*).jpg|(.*).jpeg)")) {
+        if (filename.matches("((.*).mp3|(.*).wav)")) {
             return imgLocation.resolve(filename);
         }
         return audioLocation.resolve(filename);

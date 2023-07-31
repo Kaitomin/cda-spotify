@@ -21,6 +21,8 @@ public class Music {
 	private String artist;
 	private String duration;
 	private LocalDate releasedAt;
+	private String imgUri;
+	private String audioUri;
 
 	@Enumerated(EnumType.STRING)
 	private Set<Tags> tags;
@@ -28,14 +30,26 @@ public class Music {
 	@ManyToMany(mappedBy = "musics")
 	private Set<Playlist> playlists;
 
-	public Music(long id, String name, String artist, String duration, LocalDate releasedAt, Set<Tags> tags) {
+	public Music(long id, String name, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, Set<Tags> tags) {
 		this.id = id;
 		this.name = name;
 		this.artist = artist;
 		this.duration = duration;
 		this.releasedAt = releasedAt;
+		this.imgUri = imgUri;
+		this.audioUri = audioUri;
 		this.tags = tags;
 	}
+	public Music(String name, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, Set<Tags> tags) {
+		this.name = name;
+		this.artist = artist;
+		this.duration = duration;
+		this.releasedAt = releasedAt;
+		this.imgUri = imgUri;
+		this.audioUri = audioUri;
+		this.tags = tags;
+	}
+
 	public Music() {}
 
 }
