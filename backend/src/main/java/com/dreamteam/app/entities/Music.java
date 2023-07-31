@@ -17,10 +17,13 @@ public class Music {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private String name;
+	private String title;
 	private String artist;
 	private String duration;
+
+	@Temporal(TemporalType.DATE)
 	private LocalDate releasedAt;
+
 	private String imgUri;
 	private String audioUri;
 
@@ -30,9 +33,8 @@ public class Music {
 	@ManyToMany(mappedBy = "musics")
 	private Set<Playlist> playlists;
 
-	public Music(long id, String name, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, Set<Tags> tags) {
-		this.id = id;
-		this.name = name;
+	public Music(String title, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, Set<Tags> tags) {
+		this.title = title;
 		this.artist = artist;
 		this.duration = duration;
 		this.releasedAt = releasedAt;
@@ -40,8 +42,9 @@ public class Music {
 		this.audioUri = audioUri;
 		this.tags = tags;
 	}
-	public Music(String name, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, Set<Tags> tags) {
-		this.name = name;
+	public Music(long id, String title, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, Set<Tags> tags) {
+		this.id = id;
+		this.title = title;
 		this.artist = artist;
 		this.duration = duration;
 		this.releasedAt = releasedAt;
@@ -51,5 +54,6 @@ public class Music {
 	}
 
 	public Music() {}
+
 
 }

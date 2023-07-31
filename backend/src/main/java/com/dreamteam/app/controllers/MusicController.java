@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/music")
 public class MusicController {
-
 	@Autowired
 	private MusicService service;
 	@Autowired
@@ -50,7 +49,7 @@ public class MusicController {
 	}
 
 	@PostMapping("/update/{id}")
-	public Music update(@PathVariable Long id,@RequestBody Music music){
+	public Music update(@PathVariable Long id, @RequestBody Music music){
 		return service.update(id, music);
 	}
 
@@ -73,6 +72,7 @@ public class MusicController {
 			System.out.println(e.getMessage());
 		}
 		Music m = new Music(title, artist, duration, releasedAt, imgFile.getOriginalFilename(), audioFile.getOriginalFilename(), tags);
+
 		return service.add(m);
 	}
 	
