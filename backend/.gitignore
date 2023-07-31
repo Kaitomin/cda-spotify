@@ -34,3 +34,6 @@ build/
 
 ### ENV ###
 .env
+
+### Static upload folders ###
+src/main/resources/static/
