@@ -3,6 +3,7 @@ package com.dreamteam.app.controllers;
 
 import com.dreamteam.app.entities.User;
 import com.dreamteam.app.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,17 +11,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 public class UserController  {
-
     private UserService service;
-
-    public List<User> findAll(){
-        return service.findAll();
-    }
-
-    public UserController() {
+    public UserController(UserService service) {
         this.service = service;
     }
 
+    @GetMapping
+    public List<User> findAll(){
+        return service.findAll();
+    }
     @PostMapping("/new")
     public User add(@RequestBody User u) {
         return service.add(u);
@@ -37,6 +36,5 @@ public class UserController  {
     public User update(@PathVariable Long id,@RequestBody User user){
         return service.update(id, user);
     }
-
 
 }

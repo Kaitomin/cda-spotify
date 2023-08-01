@@ -18,9 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/music")
 public class MusicController {
-	@Autowired
 	private MusicService service;
-	@Autowired
 	private final StorageService storageService;
 
 	public MusicController(MusicService service, StorageService storageService) {

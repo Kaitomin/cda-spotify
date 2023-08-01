@@ -10,17 +10,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/playlist")
 public class PlaylistController {
-
     private PlaylistService service;
-
-    public List<Playlist> findAll(){
-        return service.findAll();
-    }
-
-    public PlaylistController() {
+    public PlaylistController(PlaylistService service) {
         this.service = service;
     }
 
+    @GetMapping
+    public List<Playlist> findAll(){
+        return service.findAll();
+    }
     @PostMapping("/new")
     public Playlist add(@RequestBody Playlist p) {
         return service.add(p);
