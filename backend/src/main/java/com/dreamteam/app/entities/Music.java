@@ -30,8 +30,8 @@ public class Music {
 	@Enumerated(EnumType.STRING)
 	private Set<Tags> tags;
 
-	@ManyToMany(mappedBy = "musics")
-	private Set<Playlist> playlists;
+	//@ManyToMany(mappedBy = "musics")
+	//private Set<Playlist> playlists;
 
 	public Music(String title, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, Set<Tags> tags) {
 		this.title = title;

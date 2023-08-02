@@ -17,7 +17,7 @@ public class Playlist {
     private long id;
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Music> musics;
     private LocalDate createdAt;
 
