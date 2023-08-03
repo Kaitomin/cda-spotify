@@ -1,5 +1,6 @@
 package com.dreamteam.app.controllers;
 
+import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.services.PlaylistService;
@@ -16,11 +17,11 @@ public class PlaylistController {
     }
 
     @GetMapping
-    public List<Playlist> findAll(){
+    public List<PlaylistDTO> findAll(){
         return service.findAll();
     }
     @PostMapping("/new")
-    public Playlist add(@RequestBody Playlist p) {
+    public PlaylistDTO add(@RequestBody PlaylistDTO p) {
         return service.add(p);
     }
     @DeleteMapping("/delete/{id}")
@@ -28,12 +29,12 @@ public class PlaylistController {
         service.delete(id);
     }
     @GetMapping("/{id}")
-    public Playlist getById(@PathVariable Long id){
+    public PlaylistDTO getById(@PathVariable Long id){
         return service.getById(id);
     }
     @PostMapping("/update/{id}")
-    public Playlist update(@PathVariable Long id,@RequestBody Playlist playlist){
-        return service.update(id, playlist);
+    public PlaylistDTO update(@PathVariable Long id,@RequestBody PlaylistDTO playlist){
+        return service.add(playlist);
     }
 
 

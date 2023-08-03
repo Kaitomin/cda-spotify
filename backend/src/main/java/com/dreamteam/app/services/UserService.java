@@ -1,8 +1,7 @@
 package com.dreamteam.app.services;
 
-import com.dreamteam.app.entities.Playlist;
-import com.dreamteam.app.entities.User;
-import com.dreamteam.app.repositories.PlaylistRepository;
+import com.dreamteam.app.dto.UserDTO;
+import com.dreamteam.app.mappers.UserMapper;
 import com.dreamteam.app.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,33 +12,25 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository repository;
+    private final UserMapper mapper;
 
-    public List<User> findAll(){
-        return repository.findAll();
+    public List<UserDTO> findAll(){
+        return repository.findAll().stream().map(mapper::toDto).toList();
     }
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, UserMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public User add(User u) {
-        return repository.save(u);
+    public UserDTO add(UserDTO u) {
+        return mapper.toDto(repository.save(mapper.toEntity(u)));
     }
 
     public void delete(Long id){ repository.deleteById(id); }
 
-    public User getById(Long id) {
-        Optional<User> userOptional = repository.findById(id);
-        return userOptional.map( m -> m).orElse(null);
-    }
-
-    public  User update(Long id, User user){
-        User p = repository.findById(id).orElse(null);
-        if(p != null){
-            return repository.save(user);
-        }
-        return null;
-
+    public UserDTO getById(Long id) {
+        return repository.findById(id).map(mapper::toDto).orElse(null);
     }
 
 }

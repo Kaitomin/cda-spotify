@@ -1,7 +1,7 @@
 package com.dreamteam.app.controllers;
 
 
-import com.dreamteam.app.entities.User;
+import com.dreamteam.app.dto.UserDTO;
 import com.dreamteam.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +17,11 @@ public class UserController  {
     }
 
     @GetMapping
-    public List<User> findAll(){
+    public List<UserDTO> findAll(){
         return service.findAll();
     }
     @PostMapping("/new")
-    public User add(@RequestBody User u) {
+    public UserDTO add(@RequestBody UserDTO u) {
         return service.add(u);
     }
     @DeleteMapping("/delete/{id}")
@@ -29,12 +29,12 @@ public class UserController  {
         service.delete(id);
     }
     @GetMapping("/{id}")
-    public User getById(@PathVariable Long id){
+    public UserDTO getById(@PathVariable Long id){
         return service.getById(id);
     }
     @PostMapping("/update/{id}")
-    public User update(@PathVariable Long id,@RequestBody User user){
-        return service.update(id, user);
+    public UserDTO update(@PathVariable Long id,@RequestBody UserDTO user){
+        return service.add(user);
     }
 
 }
