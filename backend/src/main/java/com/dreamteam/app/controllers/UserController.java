@@ -1,6 +1,7 @@
 package com.dreamteam.app.controllers;
 
 
+import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.dto.UserDTO;
 import com.dreamteam.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,4 +38,9 @@ public class UserController  {
         return service.add(user);
     }
 
+
+    @PostMapping("/{userId}/addPlaylist")
+    public UserDTO addPlaylistByUser(@PathVariable Long userId, @RequestBody PlaylistDTO playlistDTO){
+        return service.addPlaylistByUser(userId, playlistDTO);
+    }
 }
