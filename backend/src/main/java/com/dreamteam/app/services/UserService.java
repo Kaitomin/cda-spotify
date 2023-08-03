@@ -6,6 +6,7 @@ import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.entities.User;
 import com.dreamteam.app.mappers.PlaylistMapper;
 import com.dreamteam.app.mappers.UserMapper;
+import com.dreamteam.app.repositories.PlaylistRepository;
 import com.dreamteam.app.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,8 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private UserRepository repository;
+    private final UserRepository repository;
+    private final PlaylistRepository playlistRepository;
     private final UserMapper mapper;
     private final PlaylistMapper playlistMapper;
 
@@ -22,8 +24,9 @@ public class UserService {
         return repository.findAll().stream().map(mapper::toDto).toList();
     }
 
-    public UserService(UserRepository repository, UserMapper mapper, PlaylistMapper playlistMapper) {
+    public UserService(UserRepository repository, PlaylistRepository playlistRepository, UserMapper mapper, PlaylistMapper playlistMapper) {
         this.repository = repository;
+        this.playlistRepository = playlistRepository;
         this.mapper = mapper;
         this.playlistMapper = playlistMapper;
     }
@@ -45,8 +48,22 @@ public class UserService {
             userPlaylists.add(playlistMapper.toEntity(playlistDTO));
             user.setPlaylists(userPlaylists);
             return mapper.toDto(repository.save(user));
+
+
         }
         return null;
     }
+/*    public UserDTO updatePlaylistByUser(Long id, Long playlistId, PlaylistDTO playlistDTO){
+        User user = repository.findById(id).orElse(null);
+        if(si c'est bien la gas co'){
+
+            playlistRepository.save(playlistMapper.toEntity(playlistDTO));
+
+        }
+
+    }*/
+
+
+
 
 }

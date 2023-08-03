@@ -43,4 +43,13 @@ public class UserController  {
     public UserDTO addPlaylistByUser(@PathVariable Long userId, @RequestBody PlaylistDTO playlistDTO){
         return service.addPlaylistByUser(userId, playlistDTO);
     }
+
+ /*   @PostMapping("/updatePlaylist/")
+    public UserDTO updatePlaylistByUser(@PathVariable Long userId, @PathVariable Long playslistId, @RequestBody PlaylistDTO playlistDTO){
+        return service.updatePlaylistByUser();
+    }*/
+/*    @PostMapping("/{userId}/deletePlaylist/{playlisteId}")
+    public UserDTO deletePlaylisteByUser(){
+        return  service.deletePlaylisteByUser();
+    }*/
 }
