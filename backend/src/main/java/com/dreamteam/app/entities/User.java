@@ -19,7 +19,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Playlist> playlists;
 
     public User(String name, String password, Role role, List<Playlist> playlists) {

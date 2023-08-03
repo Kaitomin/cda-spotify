@@ -1,19 +1,12 @@
 package com.dreamteam.app.controllers;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
-import com.dreamteam.app.entities.Tags;
+import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.storage.StorageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.*;
 
-import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.services.MusicService;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/music")
@@ -27,12 +20,12 @@ public class MusicController {
 	}
 
 	@GetMapping
-	public List<Music> findAll(){
+	public List<MusicDTO> findAll(){
 		return service.findAll();
 	}
 	
 	@PostMapping("/new")
-	public Music add(@RequestBody Music m) {
+	public MusicDTO add(@RequestBody MusicDTO m) {
 		return service.add(m);
 	}
 
@@ -42,24 +35,24 @@ public class MusicController {
 	}
 
 	@GetMapping("/{id}")
-	public Music getById(@PathVariable Long id){
+	public MusicDTO getById(@PathVariable Long id){
 		return service.getById(id);
 	}
 
 	@PostMapping("/update/{id}")
-	public Music update(@PathVariable Long id, @RequestBody Music music){
-		return service.update(id, music);
+	public MusicDTO update(@PathVariable Long id, @RequestBody MusicDTO music){
+		return service.add(music);
 	}
 
-	@PostMapping("/upload")
-	public Music upload(
+/*	@PostMapping("/upload")
+	public MusicDTO upload(
 			@RequestParam("title") String title,
 			@RequestParam("artist") String artist,
 			@RequestParam("duration") String duration,
 			@RequestParam("releasedAt") LocalDate releasedAt,
 			@RequestParam("imgFile") MultipartFile imgFile,
 			@RequestParam("audioFile") MultipartFile audioFile,
-			@RequestParam("tags") Set<Tags> tags
+			@RequestParam("tags") List<Tags> tags
 	) {
 		try {
 			storageService.store(imgFile);
@@ -69,9 +62,9 @@ public class MusicController {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		Music m = new Music(title, artist, duration, releasedAt, imgFile.getOriginalFilename(), audioFile.getOriginalFilename(), tags);
+		MusicDTO m = new MusicDTO(title, artist, duration, releasedAt, imgFile.getOriginalFilename(), audioFile.getOriginalFilename(), tags);
 
 		return service.add(m);
-	}
+	}*/
 	
 }

@@ -1,6 +1,7 @@
 package com.dreamteam.app.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -28,12 +29,12 @@ public class Music {
 	private String audioUri;
 
 	@Enumerated(EnumType.STRING)
-	private Set<Tags> tags;
+	private List<Tags> tags;
 
 	//@ManyToMany(mappedBy = "musics")
 	//private Set<Playlist> playlists;
 
-	public Music(String title, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, Set<Tags> tags) {
+	public Music(String title, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, List<Tags> tags) {
 		this.title = title;
 		this.artist = artist;
 		this.duration = duration;
@@ -42,7 +43,7 @@ public class Music {
 		this.audioUri = audioUri;
 		this.tags = tags;
 	}
-	public Music(long id, String title, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, Set<Tags> tags) {
+	public Music(long id, String title, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, List<Tags> tags) {
 		this.id = id;
 		this.title = title;
 		this.artist = artist;

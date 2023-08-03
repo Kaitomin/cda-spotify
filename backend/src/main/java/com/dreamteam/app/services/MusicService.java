@@ -1,48 +1,41 @@
 package com.dreamteam.app.services;
 
 import java.util.List;
-import java.util.Optional;
 
+import com.dreamteam.app.dto.MusicDTO;
+import com.dreamteam.app.mappers.MusicMapper;
 import org.springframework.stereotype.Service;
 
-import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.repositories.MusicRepository;
-
-import lombok.RequiredArgsConstructor;
 
 @Service
 public class MusicService {
 
-	private MusicRepository repository; 
+	private final MusicRepository repository;
+	private final MusicMapper mapper;
 	
-	public List<Music> findAll(){
-		return repository.findAll();
+	public List<MusicDTO> findAll(){
+		return repository.findAll().stream().map(mapper::toDto).toList();
 	}
 
-	public MusicService(MusicRepository repository) {
+
+	public MusicService(MusicRepository repository, MusicMapper mapper) {
 		this.repository = repository;
+		this.mapper = mapper;
 	}
 	
-	public Music add(Music m) {
-		return repository.save(m);
+	public MusicDTO add(MusicDTO m) {
+		return mapper.toDto(repository.save(mapper.toEntity(m)));
 	}
 
 	public void delete(Long id){ repository.deleteById(id); }
 
-	public Music getById(Long id) {
-		Optional<Music> musicOptional = repository.findById(id);
-		return musicOptional.map( m -> m).orElse(null);
+	public MusicDTO getById(Long id) {
+		//Optional<Music> musicOptional = repository.findById(id);
+		return repository.findById(id).map(mapper::toDto).orElse(null);
 	}
 
-	public  Music update(Long id, Music music){
-		Music m = repository.findById(id).orElse(null);
-		if(m != null){
-			return repository.save(music);
 
-		}
-		return null;
-
-	}
 
 
 }
