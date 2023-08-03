@@ -25,6 +25,7 @@ public class MusicService {
 	}
 	
 	public MusicDTO add(MusicDTO m) {
+		//throw new RuntimeException("Not implemented");
 		return mapper.toDto(repository.save(mapper.toEntity(m)));
 	}
 

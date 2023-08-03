@@ -41,18 +41,17 @@ public class UserService {
         return repository.findById(id).map(mapper::toDto).orElse(null);
     }
 
-    public UserDTO addPlaylistByUser(Long id, PlaylistDTO playlistDTO){
-        User user = repository.findById(id).orElse(null);
-        if (user != null){
+    public void addPlaylistByUser(Long id, PlaylistDTO playlistDTO){
+        repository.findById(id).ifPresent(user->{
             List<Playlist> userPlaylists = user.getPlaylists();
             userPlaylists.add(playlistMapper.toEntity(playlistDTO));
             user.setPlaylists(userPlaylists);
-            return mapper.toDto(repository.save(user));
+            repository.save(user);
+        });
 
-
-        }
-        return null;
     }
+
+
 /*    public UserDTO updatePlaylistByUser(Long id, Long playlistId, PlaylistDTO playlistDTO){
         User user = repository.findById(id).orElse(null);
         if(si c'est bien la gas co'){

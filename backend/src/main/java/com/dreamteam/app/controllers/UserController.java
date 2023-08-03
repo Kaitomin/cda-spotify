@@ -40,8 +40,8 @@ public class UserController  {
 
 
     @PostMapping("/{userId}/addPlaylist")
-    public UserDTO addPlaylistByUser(@PathVariable Long userId, @RequestBody PlaylistDTO playlistDTO){
-        return service.addPlaylistByUser(userId, playlistDTO);
+    public void addPlaylistByUser(@PathVariable Long userId, @RequestBody PlaylistDTO playlistDTO){
+        service.addPlaylistByUser(userId, playlistDTO);
     }
 
  /*   @PostMapping("/updatePlaylist/")
