@@ -42,3 +42,22 @@ body {
 .nav li:hover {
   background-color: #777;
 }
+
+.form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap : 0.5rem;
+  padding : 1rem;
+}
+
+.label {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+.input {
+  display : flex;
+  align-items: end;
+  justify-content: end;
+}

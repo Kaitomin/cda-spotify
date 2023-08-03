@@ -1,8 +1,8 @@
-
+import FormMusic from "../components/FormMusic"
 
 const Playlist = () => {
   return (
-    <div>Playlist</div>
+    <FormMusic />
   )
 }
 

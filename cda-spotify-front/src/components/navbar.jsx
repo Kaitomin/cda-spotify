@@ -1,17 +1,17 @@
-
+import {Link} from "react-router-dom";
 
 export default function NavBar() {
   return <nav className="nav">
-    <a href="/" className="site-title">Spotify</a>
+    <Link to="/" className="site-title">Spotify</Link>
     <ul>
       <li>
-        <a href="/searching">Rechercher</a>
+        <Link to="/searching">Rechercher</Link>
       </li>
       <li>
-        <a href="/playlist">Mes Playlists</a>
+        <Link to="/playlist">Mes Playlists</Link>
       </li>
       <li>
-        <a href="/account">Mon Compte</a>
+        <Link to="/account">Mon Compte</Link>
       </li>
       
     </ul>
