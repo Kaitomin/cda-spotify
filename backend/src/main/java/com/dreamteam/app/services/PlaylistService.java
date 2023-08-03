@@ -23,10 +23,6 @@ public class PlaylistService {
     private final PlaylistMapper mapper;
     private final MusicMapper musicMapper;
 
-    public List<PlaylistDTO> findAll(){
-        return repository.findAll().stream().map(mapper::toDto).toList();
-    }
-
     public PlaylistService(PlaylistRepository repository, UserService userService, PlaylistMapper mapper, MusicMapper musicMapper) {
         this.repository = repository;
         this.userService = userService;
@@ -34,10 +30,13 @@ public class PlaylistService {
         this.musicMapper = musicMapper;
     }
 
+    public List<PlaylistDTO> findAll(){
+        return repository.findAll().stream().map(mapper::toDto).toList();
+    }
+
     public PlaylistDTO add(PlaylistDTO p) {
         throw new RuntimeException("Not implemented");
     }
-
     public void delete(Long id){ repository.deleteById(id); }
 
     public PlaylistDTO getById(Long id) {
@@ -45,8 +44,6 @@ public class PlaylistService {
         //return playlistOptional.map( m -> m).orElse(null);
         return repository.findById(id).map(mapper::toDto).orElse(null);
     }
-
-
     public PlaylistDTO addMusic(Long id, MusicDTO musicDTO){
         Playlist playlist = repository.findById(id).orElse(null);
         if (playlist != null){
@@ -59,20 +56,16 @@ public class PlaylistService {
         return null;
     }
     public void removeMusic(Long playlistId, Long musicId){
-
-        repository.findById(playlistId).ifPresent(playlist->{
+        repository.findById(playlistId).ifPresent(playlist -> {
             List<Music> musics = playlist.getMusics();
 
             musics = musics.stream()
                     .filter(music -> music.getId() != musicId)
-                    .toList();
+                    .collect(Collectors.toList());
             playlist.setMusics(musics);
             repository.save(playlist);
         });
 
     }
-
-
-
 
 }

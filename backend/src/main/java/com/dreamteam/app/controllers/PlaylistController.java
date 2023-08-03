@@ -37,15 +37,13 @@ public class PlaylistController {
     public PlaylistDTO update(@PathVariable Long id,@RequestBody PlaylistDTO playlist){
         return service.add(playlist);
     }
-    @PostMapping("/{playlisteId}/addMusic")
-    public void addMusic(@PathVariable Long playlisteId, @RequestBody MusicDTO musicDTO){
-        service.addMusic(playlisteId , musicDTO);
+    @PostMapping("/{playlistId}/addMusic")
+    public void addMusic(@PathVariable Long playlistId, @RequestBody MusicDTO musicDTO){
+        service.addMusic(playlistId , musicDTO);
 
     }
     @PostMapping("/{playlistId}/removeMusic/{musicId}")
     public void removeMusic(@PathVariable Long playlistId, @PathVariable Long musicId){
-        System.out.println(playlistId);
-        System.out.println(musicId);
         service.removeMusic(playlistId, musicId);
     }
 
