@@ -2,12 +2,10 @@ package com.dreamteam.app.entities;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
+import com.dreamteam.app.enums.Tags;
 import jakarta.persistence.*;
 import lombok.*;
-
-import javax.management.ConstructorParameters;
 
 @Entity
 @Data
