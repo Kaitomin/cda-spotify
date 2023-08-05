@@ -33,11 +33,8 @@ public class PlaylistController {
         return service.getById(id);
     }
     @PostMapping("/update/{id}")
-    public PlaylistDTO update(@PathVariable Long id,@RequestBody PlaylistDTO playlist){
+    public PlaylistDTO update(@PathVariable Long id, @RequestBody PlaylistDTO playlist){
         return service.add(playlist);
     }
-
-
-
 
 }

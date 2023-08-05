@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PlaylistService {
-
     private final PlaylistRepository repository;
 
     private final PlaylistMapper mapper;
@@ -32,19 +31,7 @@ public class PlaylistService {
     public void delete(Long id){ repository.deleteById(id); }
 
     public PlaylistDTO getById(Long id) {
-        //Optional<PlaylistDTO> playlistOptional = repository.findById(id);
-        //return playlistOptional.map( m -> m).orElse(null);
         return repository.findById(id).map(mapper::toDto).orElse(null);
     }
-
-//   public  PlaylistDTO update(Long id, PlaylistDTO playlist){
-//        Playlist p = repository.findById(id).orElse(null);
-//        if(p != null){
-//            return repository.save(playlist);
-//        }
-//        return null;
-//
-//    }
-
 
 }

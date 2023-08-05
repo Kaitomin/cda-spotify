@@ -3,7 +3,6 @@ package com.dreamteam.app.controllers;
 import java.util.List;
 
 import com.dreamteam.app.dto.MusicDTO;
-import com.dreamteam.app.storage.StorageService;
 import org.springframework.web.bind.annotation.*;
 
 import com.dreamteam.app.services.MusicService;
@@ -35,9 +34,9 @@ public class MusicController {
 
 	@PostMapping("/new")
 	public MusicDTO add(
-			@RequestPart("fileUpload") MusicDTO musicDTO,
-			@RequestPart("imgFile") MultipartFile imgFile,
-			@RequestPart("audioFile") MultipartFile audioFile
+		@RequestPart("fileUpload") MusicDTO musicDTO,
+		@RequestPart("imgFile") MultipartFile imgFile,
+		@RequestPart("audioFile") MultipartFile audioFile
 	) {
 		return service.add(musicDTO, imgFile, audioFile);
 	}

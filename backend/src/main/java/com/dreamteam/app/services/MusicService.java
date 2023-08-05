@@ -13,18 +13,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class MusicService {
-
 	private final MusicRepository repository;
 	private final MusicMapper mapper;
 	private final StorageService storageService;
-
 
 	public MusicService(MusicRepository repository, MusicMapper mapper, StorageService storageService) {
 		this.repository = repository;
 		this.mapper = mapper;
 		this.storageService = storageService;
 	}
-
 	public List<MusicDTO> findAll(){
 		return repository.findAll().stream().map(mapper::toDto).toList();
 	}
@@ -46,7 +43,6 @@ public class MusicService {
 	public void delete(Long id){ repository.deleteById(id); }
 
 	public MusicDTO getById(Long id) {
-		//Optional<Music> musicOptional = repository.findById(id);
 		return repository.findById(id).map(mapper::toDto).orElse(null);
 	}
 
