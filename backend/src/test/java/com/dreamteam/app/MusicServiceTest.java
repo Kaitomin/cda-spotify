@@ -2,19 +2,23 @@ package com.dreamteam.app;
 
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.entities.Music;
-import com.dreamteam.app.entities.Tags;
-import com.dreamteam.app.mappers.MusicMapper;
+import com.dreamteam.app.enums.Tags;
 import com.dreamteam.app.repositories.MusicRepository;
 import com.dreamteam.app.services.MusicService;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.dreamteam.app.storage.StorageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,14 +34,16 @@ import static org.mockito.Mockito.*;
 public class MusicServiceTest {
 
     @Mock
-    private MusicMapper musicMapper;
+    private ModelMapper musicMapper;
     @Mock
     private MusicRepository repository;
+    @Mock
+    private StorageService storageService;
     private MusicService service;
 
     @BeforeEach
     public void setup(){
-        service = new MusicService(repository, musicMapper);
+        service = new MusicService(repository, musicMapper, storageService);
     }
 
     @Test
@@ -46,7 +52,7 @@ public class MusicServiceTest {
 
 
         when(repository.findById(25L)).thenReturn(Optional.of(m));
-        assertEquals(musicMapper.toDto(m), service.getById(25L));
+        assertEquals(musicMapper.map(m, MusicDTO.class), service.getById(25L));
     }
 
     @Test
@@ -70,27 +76,34 @@ public class MusicServiceTest {
         ml.add(m);
         when(repository.findAll()).thenReturn(ml);
 
-        assertEquals(ml.stream().map(musicMapper::toDto).toList(), service.findAll());
+        assertEquals(ml.stream().map(music -> musicMapper.map(music, MusicDTO.class)).toList(), service.findAll());
         verify(repository,times(1) ).findAll();
     }
 
     @Test
-    public void addMusic_should(){
-        Music m = new Music(25, "Waka Waka", "shakira", "2,25", LocalDate.of(1985, 6, 15), "/pas las", "/pas la", Arrays.asList(Tags.POP, Tags.ADRIEN));
+    public void addMusic_shouldReturnMusic(){
+        Music m = new Music(25, "Waka Waka", "shakira", "2,25", LocalDate.of(1985, 6, 15), "imgFile", "audioFile", Arrays.asList(Tags.POP, Tags.ADRIEN));
+        MockMultipartFile imgFile = new MockMultipartFile("imgFile", "imgFile", null, "img".getBytes());
+        MockMultipartFile audioFile = new MockMultipartFile("audioFile", "audioFile", null, "audio".getBytes());
 
-        //MusicDTO mDto = musicMapper.toDto(m);
-
+        when(musicMapper.map(m, MusicDTO.class)).thenReturn(new MusicDTO());
         when(repository.save(any())).thenReturn(m);
-        assertEquals(musicMapper.toDto(m), service.add(musicMapper.toDto(m)));
-        
+
+        MusicDTO mDto = musicMapper.map(m, MusicDTO.class);
+        mDto.setId(m.getId());
+        mDto.setTitle(m.getTitle());
+        mDto.setArtist(m.getArtist());
+        mDto.setDuration(m.getDuration());
+        mDto.setReleasedAt(m.getReleasedAt());
+        mDto.setImgUri(m.getImgUri());
+        mDto.setAudioUri(m.getAudioUri());
+        mDto.setTags(m.getTags());
+
+        assertEquals(mDto, service.add(musicMapper.map(m, MusicDTO.class), imgFile, audioFile, null));
+
         verify(repository, times(1)).save(any());
 
     }
-
-
-
-
-
 }
 
 
