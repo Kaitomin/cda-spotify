@@ -5,56 +5,32 @@ import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import javax.management.ConstructorParameters;
 
 @Entity
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Music {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
+	@NonNull
 	private String title;
+	@NonNull
 	private String artist;
+	@NonNull
 	private String duration;
-
 	@Temporal(TemporalType.DATE)
+	@NonNull
 	private LocalDate releasedAt;
-
+	@NonNull
 	private String imgUri;
+	@NonNull
 	private String audioUri;
-
 	@Enumerated(EnumType.STRING)
+	@NonNull
 	private List<Tags> tags;
-
-	//@ManyToMany(mappedBy = "musics")
-	//private Set<Playlist> playlists;
-
-	public Music(String title, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, List<Tags> tags) {
-		this.title = title;
-		this.artist = artist;
-		this.duration = duration;
-		this.releasedAt = releasedAt;
-		this.imgUri = imgUri;
-		this.audioUri = audioUri;
-		this.tags = tags;
-	}
-	public Music(long id, String title, String artist, String duration, LocalDate releasedAt, String imgUri, String audioUri, List<Tags> tags) {
-		this.id = id;
-		this.title = title;
-		this.artist = artist;
-		this.duration = duration;
-		this.releasedAt = releasedAt;
-		this.imgUri = imgUri;
-		this.audioUri = audioUri;
-		this.tags = tags;
-	}
-
-	public Music() {}
-
-
 }
