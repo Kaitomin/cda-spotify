@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dreamteam.app.dto.MusicDTO;
-import com.dreamteam.app.mappers.MusicMapper;
+import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.storage.StorageService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.dreamteam.app.repositories.MusicRepository;
@@ -17,13 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class MusicService {
 	private final MusicRepository repository;
-	private final MusicMapper mapper;
+	private final ModelMapper mapper;
 	private final StorageService storageService;
 
 	public List<MusicDTO> findAll(){
-		return repository.findAll().stream().map(mapper::toDto).toList();
+		return repository.findAll().stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
 	}
-
 	public MusicDTO add(MusicDTO mDto, MultipartFile imgFile, MultipartFile audioFile, Optional<Long> id) {
 		try {
 			storageService.store(imgFile);
@@ -38,13 +38,11 @@ public class MusicService {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		return mapper.toDto(repository.save(mapper.toEntity(mDto)));
+		return mapper.map(repository.save(mapper.map(mDto, Music.class)), MusicDTO.class);
 	}
-
 	public void delete(Long id){ repository.deleteById(id); }
-
 	public MusicDTO getById(Long id) {
-		return repository.findById(id).map(mapper::toDto).orElse(null);
+		return repository.findById(id).map(music -> mapper.map(music, MusicDTO.class)).orElse(null);
 	}
 
 }

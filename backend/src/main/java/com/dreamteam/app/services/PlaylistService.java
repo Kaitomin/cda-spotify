@@ -1,37 +1,29 @@
 package com.dreamteam.app.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.entities.Playlist;
-import com.dreamteam.app.mappers.PlaylistMapper;
 import com.dreamteam.app.repositories.PlaylistRepository;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class PlaylistService {
     private final PlaylistRepository repository;
-
-    private final PlaylistMapper mapper;
+    private final ModelMapper mapper;
 
     public List<PlaylistDTO> findAll(){
-        return repository.findAll().stream().map(mapper::toDto).toList();
+        return repository.findAll().stream().map(playlist -> mapper.map(playlist, PlaylistDTO.class)).toList();
     }
-
-    public PlaylistService(PlaylistRepository repository, PlaylistMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
-
     public PlaylistDTO add(PlaylistDTO p) {
-        return mapper.toDto(repository.save(mapper.toEntity(p)));
+        return mapper.map(repository.save(mapper.map(p, Playlist.class)), PlaylistDTO.class);
     }
-
     public void delete(Long id){ repository.deleteById(id); }
-
     public PlaylistDTO getById(Long id) {
-        return repository.findById(id).map(mapper::toDto).orElse(null);
+        return repository.findById(id).map(playlist -> mapper.map(playlist, PlaylistDTO.class)).orElse(null);
     }
 
 }

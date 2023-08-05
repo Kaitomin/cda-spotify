@@ -4,17 +4,16 @@ import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.services.PlaylistService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
 @RequestMapping("/api/playlist")
+@AllArgsConstructor
 public class PlaylistController {
-    private PlaylistService service;
-    public PlaylistController(PlaylistService service) {
-        this.service = service;
-    }
+    private final PlaylistService service;
 
     @GetMapping
     public List<PlaylistDTO> findAll(){
@@ -36,5 +35,4 @@ public class PlaylistController {
     public PlaylistDTO update(@PathVariable Long id, @RequestBody PlaylistDTO playlist){
         return service.add(playlist);
     }
-
 }

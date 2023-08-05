@@ -20,17 +20,14 @@ public class MusicController {
 	public List<MusicDTO> findAll(){
 		return service.findAll();
 	}
-
 	@DeleteMapping("/delete/{id}")
 	public void delete(@PathVariable Long id){
 		 service.delete(id);
 	}
-
 	@GetMapping("/{id}")
 	public MusicDTO getById(@PathVariable Long id){
 		return service.getById(id);
 	}
-
 	@PostMapping("/new")
 	public MusicDTO add(
 		@RequestPart("fileUpload") MusicDTO musicDTO,
@@ -39,7 +36,6 @@ public class MusicController {
 	) {
 		return service.add(musicDTO, imgFile, audioFile, null);
 	}
-
 	@PostMapping("/update/{id}")
 	public MusicDTO update(
 		@PathVariable Optional<Long> id,
@@ -47,7 +43,6 @@ public class MusicController {
 		@RequestPart("imgFile") MultipartFile imgFile,
 		@RequestPart("audioFile") MultipartFile audioFile
 	){
-		System.out.println(id);
 		return service.add(musicDTO, imgFile, audioFile, id);
 	}
 }
