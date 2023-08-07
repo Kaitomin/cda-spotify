@@ -19,19 +19,19 @@ public class PlaylistController {
         return service.findAll();
     }
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable long id){
         service.delete(id);
     }
     @GetMapping("/{id}")
-    public PlaylistDTO getById(@PathVariable Long id){
+    public PlaylistDTO getById(@PathVariable long id){
         return service.getById(id);
     }
     @PostMapping("/{playlistId}/addMusic")
-    public void addMusic(@PathVariable Long playlistId, @RequestBody MusicDTO musicDTO){
+    public void addMusic(@PathVariable long playlistId, @RequestBody MusicDTO musicDTO){
         service.addMusic(playlistId , musicDTO);
     }
     @PostMapping("/{playlistId}/removeMusic/{musicId}")
-    public void removeMusic(@PathVariable Long playlistId, @PathVariable Long musicId){
+    public void removeMusic(@PathVariable long playlistId, @PathVariable long musicId){
         service.removeMusic(playlistId, musicId);
     }
 }

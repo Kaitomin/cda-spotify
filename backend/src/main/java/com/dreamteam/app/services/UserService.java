@@ -2,7 +2,6 @@ package com.dreamteam.app.services;
 
 import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.dto.UserDTO;
-import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.entities.User;
 import com.dreamteam.app.repositories.UserRepository;
@@ -38,7 +37,10 @@ public class UserService {
         u.setPlaylists(playlists);
         return mapper.map(repository.save(mapper.map(u, User.class)), UserDTO.class);
     }
-    public void addPlaylistByUser(Long id, PlaylistDTO playlistDTO){
+    public void addPlaylistByUser(long id, PlaylistDTO playlistDTO){
+        // Can not add another playlist named "Favoris"
+        if (playlistDTO.getName().equals("Favoris")) return;
+
         repository.findById(id).ifPresent(user -> {
             List<Playlist> userPlaylists = user.getPlaylists();
             userPlaylists.add(mapper.map(playlistDTO, Playlist.class));
@@ -48,8 +50,10 @@ public class UserService {
 
     }
     public void deletePlaylistByUser (long userId, long playlistId){
-        repository.findById(userId).ifPresent(user -> {
+        // Can not delete playlist "Favoris"
+        if (playlistService.getById(playlistId).getName().equals("Favoris")) return;
 
+        repository.findById(userId).ifPresent(user -> {
             List<Playlist> playlists = user.getPlaylists();
             playlists = playlists.stream()
                     .filter(playlist -> playlist.getId() != playlistId)
@@ -61,8 +65,8 @@ public class UserService {
 
     }
 
-    public void delete(Long id){ repository.deleteById(id); }
-    public UserDTO getById(Long id) {
+    public void delete(long id){ repository.deleteById(id); }
+    public UserDTO getById(long id) {
         return repository.findById(id).map(user -> mapper.map(user, UserDTO.class)).orElse(null);
     }
 }
