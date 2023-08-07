@@ -1,24 +1,34 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {Routes, Route} from 'react-router-dom'
+import './style.css'
+import NavBar from './components/navbar'
+import Account from './pages/Account'
+import Searching from './pages/Searching'
+import Home from './pages/Home'
+import Playlist from './pages/Playlist'
+
 
 function App() {
-  const [count, setCount] = useState(0)
-  const element = <a href="https://www.reactjs.org"> link to react </a>;
+  
   return (
     <>
-    <nav>navbar</nav>
-    coucou <br/>
-    {element}
-    
-    {/*
-      <Routes>
-        <Route path="/" element={<Home />} />
+    <NavBar/>
 
-        <Route path="*" element={<NoMatch />} />
-      </Routes> */}
-  </>
+
+    <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/searching" element={<Searching/>}/>
+      <Route path="/playlist" element={<Playlist/>}/>
+      <Route path="/account" element={<Account/>}/>
+    </Routes>
+    
+    
+
+
+    
+
+    </>
+  
   )
 }
 
