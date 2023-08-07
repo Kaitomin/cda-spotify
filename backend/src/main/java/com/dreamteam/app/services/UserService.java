@@ -4,43 +4,26 @@ import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.dto.UserDTO;
 import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.entities.User;
-import com.dreamteam.app.mappers.PlaylistMapper;
-import com.dreamteam.app.mappers.UserMapper;
-import com.dreamteam.app.repositories.PlaylistRepository;
 import com.dreamteam.app.repositories.UserRepository;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
-    private final UserRepository repository;
-    private final PlaylistRepository playlistRepository;
-    private final UserMapper mapper;
-    private final PlaylistMapper playlistMapper;
+    private UserRepository repository;
+    private final ModelMapper mapper;
 
     public List<UserDTO> findAll(){
-        return repository.findAll().stream().map(mapper::toDto).toList();
+        return repository.findAll().stream().map(user -> mapper.map(user, UserDTO.class)).toList();
     }
-
-    public UserService(UserRepository repository, PlaylistRepository playlistRepository, UserMapper mapper, PlaylistMapper playlistMapper) {
-        this.repository = repository;
-        this.playlistRepository = playlistRepository;
-        this.mapper = mapper;
-        this.playlistMapper = playlistMapper;
-    }
-
     public UserDTO add(UserDTO u) {
-        return mapper.toDto(repository.save(mapper.toEntity(u)));
+        return mapper.map(repository.save(mapper.map(u, User.class)), UserDTO.class);
     }
-
-    public void delete(Long id){ repository.deleteById(id); }
-
-    public UserDTO getById(Long id) {
-        return repository.findById(id).map(mapper::toDto).orElse(null);
-    }
-
     public void addPlaylistByUser(Long id, PlaylistDTO playlistDTO){
         repository.findById(id).ifPresent(user->{
             List<Playlist> userPlaylists = user.getPlaylists();
@@ -50,19 +33,8 @@ public class UserService {
         });
 
     }
-
-
-/*    public UserDTO updatePlaylistByUser(Long id, Long playlistId, PlaylistDTO playlistDTO){
-        User user = repository.findById(id).orElse(null);
-        if(si c'est bien la gas co'){
-
-            playlistRepository.save(playlistMapper.toEntity(playlistDTO));
-
-        }
-
-    }*/
-
-
-
-
+    public void delete(Long id){ repository.deleteById(id); }
+    public UserDTO getById(Long id) {
+        return repository.findById(id).map(user -> mapper.map(user, UserDTO.class)).orElse(null);
+    }
 }

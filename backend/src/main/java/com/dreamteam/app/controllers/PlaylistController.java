@@ -5,24 +5,23 @@ import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.services.PlaylistService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
 @RequestMapping("/api/playlist")
+@AllArgsConstructor
 public class PlaylistController {
-    private PlaylistService service;
-    public PlaylistController(PlaylistService service) {
-        this.service = service;
-    }
+    private final PlaylistService service;
 
     @GetMapping
     public List<PlaylistDTO> findAll(){
         return service.findAll();
     }
     @PostMapping("/new")
-    public PlaylistDTO add(@RequestBody PlaylistDTO p ) {
+    public PlaylistDTO add(@RequestBody PlaylistDTO p) {
         return service.add(p);
     }
     @DeleteMapping("/delete/{id}")
@@ -46,6 +45,8 @@ public class PlaylistController {
     public void removeMusic(@PathVariable Long playlistId, @PathVariable Long musicId){
         service.removeMusic(playlistId, musicId);
     }
+
+
 
 
 }

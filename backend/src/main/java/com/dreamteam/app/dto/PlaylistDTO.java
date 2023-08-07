@@ -1,8 +1,6 @@
 package com.dreamteam.app.dto;
 
 import com.dreamteam.app.entities.Music;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
 import java.time.LocalDate;
