@@ -5,17 +5,17 @@ import com.dreamteam.app.dto.UserDTO;
 import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.entities.User;
 import com.dreamteam.app.repositories.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserService {
 
-    private UserRepository repository;
+    private final UserRepository repository;
     private final ModelMapper mapper;
 
     public List<UserDTO> findAll(){
@@ -25,9 +25,9 @@ public class UserService {
         return mapper.map(repository.save(mapper.map(u, User.class)), UserDTO.class);
     }
     public void addPlaylistByUser(Long id, PlaylistDTO playlistDTO){
-        repository.findById(id).ifPresent(user->{
+        repository.findById(id).ifPresent(user -> {
             List<Playlist> userPlaylists = user.getPlaylists();
-            userPlaylists.add(playlistMapper.toEntity(playlistDTO));
+            userPlaylists.add(mapper.map(playlistDTO, Playlist.class));
             user.setPlaylists(userPlaylists);
             repository.save(user);
         });

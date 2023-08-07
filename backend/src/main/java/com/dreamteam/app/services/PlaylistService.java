@@ -8,29 +8,26 @@ import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.repositories.PlaylistRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PlaylistService {
     private final PlaylistRepository repository;
-    private final UserService userService;
     private final ModelMapper mapper;
 
     public List<PlaylistDTO> findAll(){
         return repository.findAll().stream().map(playlist -> mapper.map(playlist, PlaylistDTO.class)).toList();
     }
-
     public PlaylistDTO addMusic(Long id, MusicDTO musicDTO){
         Playlist playlist = repository.findById(id).orElse(null);
         if (playlist != null){
-            List<Music> playslistMusics = playlist.getMusics();
-            playslistMusics.add(musicMapper.toEntity(musicDTO));
-            playlist.setMusics(playslistMusics);
-            return mapper.toDto(repository.save(playlist));
-
+            List<Music> playlistMusics = playlist.getMusics();
+            playlistMusics.add(mapper.map(musicDTO, Music.class));
+            playlist.setMusics(playlistMusics);
+            return mapper.map(repository.save(playlist), PlaylistDTO.class);
         }
         return null;
     }
@@ -44,7 +41,6 @@ public class PlaylistService {
             playlist.setMusics(musics);
             repository.save(playlist);
         });
-
     }
     public void delete(Long id){ repository.deleteById(id); }
     public PlaylistDTO getById(Long id) {

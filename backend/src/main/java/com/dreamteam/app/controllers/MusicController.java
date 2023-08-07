@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dreamteam.app.dto.MusicDTO;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import com.dreamteam.app.services.MusicService;
@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/music")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MusicController {
 	private final MusicService service;
 

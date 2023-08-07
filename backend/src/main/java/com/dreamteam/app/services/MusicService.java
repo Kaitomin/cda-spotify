@@ -7,7 +7,7 @@ import java.util.Optional;
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.storage.StorageService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import com.dreamteam.app.repositories.MusicRepository;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MusicService {
 	private final MusicRepository repository;
 	private final ModelMapper mapper;
