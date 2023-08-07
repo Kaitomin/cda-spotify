@@ -39,5 +39,9 @@ public class UserController  {
     public UserDTO update(@PathVariable Long id,@RequestBody UserDTO user){
         return service.add(user);
     }
+    @PostMapping("/{userId}/deletePlaylist/{playlistId}")
+    public void deletePlaylistByUser(@PathVariable long userId,@PathVariable long playlistId){
+        service.deletePlaylistByUser(userId, playlistId);
+    }
 
 }

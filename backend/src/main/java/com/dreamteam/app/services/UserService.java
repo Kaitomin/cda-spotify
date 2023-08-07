@@ -33,6 +33,24 @@ public class UserService {
         });
 
     }
+    public void deletePlaylistByUser (long userId, long playlistId){
+        repository.findById(userId).ifPresent(user -> {
+            List<Playlist> userPlaylists = user.getPlaylists();
+
+            Playlist playlistToRemove = userPlaylists.stream()
+                    .filter(playlist -> playlist.getId() == playlistId)
+                    .findFirst()
+                    .orElse(null);
+
+            if (playlistToRemove != null) {
+                userPlaylists.remove(playlistToRemove);
+                user.setPlaylists(userPlaylists);
+                repository.save(user);
+            }
+        });
+
+    }
+
     public void delete(Long id){ repository.deleteById(id); }
     public UserDTO getById(Long id) {
         return repository.findById(id).map(user -> mapper.map(user, UserDTO.class)).orElse(null);
