@@ -1,6 +1,7 @@
 package com.dreamteam.app.services;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.dreamteam.app.dto.MusicDTO;
@@ -17,6 +18,10 @@ import org.springframework.stereotype.Service;
 public class PlaylistService {
     private final PlaylistRepository repository;
     private final ModelMapper mapper;
+
+    public PlaylistDTO update(PlaylistDTO p){
+        return mapper.map(repository.save(mapper.map(p, Playlist.class)), PlaylistDTO.class);
+    }
 
     public List<PlaylistDTO> findAll(){
         return repository.findAll().stream().map(playlist -> mapper.map(playlist, PlaylistDTO.class)).toList();

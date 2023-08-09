@@ -26,6 +26,11 @@ public class PlaylistController {
     public PlaylistDTO getById(@PathVariable long id){
         return service.getById(id);
     }
+
+    @GetMapping("/new")
+    public PlaylistDTO update(@RequestBody PlaylistDTO p){
+        return service.update(p);
+    }
     @PostMapping("/{playlistId}/addMusic")
     public void addMusic(@PathVariable long playlistId, @RequestBody MusicDTO musicDTO){
         service.addMusic(playlistId , musicDTO);
@@ -34,4 +39,6 @@ public class PlaylistController {
     public void removeMusic(@PathVariable long playlistId, @PathVariable long musicId){
         service.removeMusic(playlistId, musicId);
     }
+
+
 }

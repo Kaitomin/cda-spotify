@@ -61,3 +61,55 @@ body {
   align-items: end;
   justify-content: end;
 }
+
+/* music player style */
+/*
+#timeline {
+  width: 90%;
+  height: 2px;
+  margin-top: 20px;
+  margin-left: 10px;
+  float: left;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+*/
+.audio-player {
+  /* Styling du conteneur du lecteur */
+}
+
+.controls {
+  margin-top: 3vh;
+  margin-inline: 2vh;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.control-btn {
+  margin-top: 3vh;
+}
+
+.timeline {
+  width: 100%;
+  height: 4px;
+  background-color: #ccc;
+  position: relative;
+  margin: 0 10px;
+  cursor: pointer;
+}
+.timer{
+  margin: 0 10px 10px;
+}
+
+.progress {
+  height: 3px !important;
+  background-color: #1DB954  !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: width 0.3s ease-in-out;
+}

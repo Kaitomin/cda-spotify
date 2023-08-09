@@ -2,6 +2,7 @@ import { useState } from 'react'
 import {Routes, Route} from 'react-router-dom'
 import './style.css'
 import NavBar from './components/navbar'
+import MusicPlayer from './components/MusicPlayer'
 import Account from './pages/Account'
 import Searching from './pages/Searching'
 import Home from './pages/Home'
@@ -13,6 +14,7 @@ function App() {
   return (
     <>
     <NavBar/>
+    <MusicPlayer/>
 
 
     <Routes>
