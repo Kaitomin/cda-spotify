@@ -61,3 +61,11 @@ body {
   align-items: end;
   justify-content: end;
 }
+
+.check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width : 10%
+  
+}
