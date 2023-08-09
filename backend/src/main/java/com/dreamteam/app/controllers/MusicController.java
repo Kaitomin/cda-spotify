@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/music")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class MusicController {
 	private final MusicService service;
 
