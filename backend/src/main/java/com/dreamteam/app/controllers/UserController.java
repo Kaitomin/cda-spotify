@@ -24,20 +24,24 @@ public class UserController  {
         return service.add(u);
     }
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable long id){
         service.delete(id);
     }
     @GetMapping("/{id}")
-    public UserDTO getById(@PathVariable Long id){
+    public UserDTO getById(@PathVariable long id){
         return service.getById(id);
     }
     @PostMapping("/{userId}/addPlaylist")
-    public void addPlaylistByUser(@PathVariable Long userId, @RequestBody PlaylistDTO playlistDTO){
+    public void addPlaylistByUser(@PathVariable long userId, @RequestBody PlaylistDTO playlistDTO){
         service.addPlaylistByUser(userId, playlistDTO);
     }
     @PostMapping("/update/{id}")
-    public UserDTO update(@PathVariable Long id,@RequestBody UserDTO user){
+    public UserDTO update(@PathVariable long id,@RequestBody UserDTO user){
         return service.add(user);
+    }
+    @PostMapping("/{userId}/deletePlaylist/{playlistId}")
+    public void deletePlaylistByUser(@PathVariable long userId,@PathVariable long playlistId){
+        service.deletePlaylistByUser(userId, playlistId);
     }
 
 }

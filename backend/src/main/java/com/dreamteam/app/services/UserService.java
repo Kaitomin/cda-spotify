@@ -9,7 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,14 +21,26 @@ public class UserService {
 
     private final UserRepository repository;
     private final ModelMapper mapper;
+    private final PlaylistService playlistService;
 
     public List<UserDTO> findAll(){
         return repository.findAll().stream().map(user -> mapper.map(user, UserDTO.class)).toList();
     }
     public UserDTO add(UserDTO u) {
+        PlaylistDTO playlistDTO = new PlaylistDTO();
+        playlistDTO.setName("Favoris");
+        playlistDTO.setCreatedAt(LocalDate.now());
+        playlistDTO.setMusics(Collections.emptyList());
+
+        List<Playlist> playlists = new ArrayList<>();
+        playlists.add(mapper.map(playlistDTO, Playlist.class));
+        u.setPlaylists(playlists);
         return mapper.map(repository.save(mapper.map(u, User.class)), UserDTO.class);
     }
-    public void addPlaylistByUser(Long id, PlaylistDTO playlistDTO){
+    public void addPlaylistByUser(long id, PlaylistDTO playlistDTO){
+        // Can not add another playlist named "Favoris"
+        if (playlistDTO.getName().equals("Favoris")) return;
+
         repository.findById(id).ifPresent(user -> {
             List<Playlist> userPlaylists = user.getPlaylists();
             userPlaylists.add(mapper.map(playlistDTO, Playlist.class));
@@ -33,8 +49,24 @@ public class UserService {
         });
 
     }
-    public void delete(Long id){ repository.deleteById(id); }
-    public UserDTO getById(Long id) {
+    public void deletePlaylistByUser (long userId, long playlistId){
+        // Can not delete playlist "Favoris"
+        if (playlistService.getById(playlistId).getName().equals("Favoris")) return;
+
+        repository.findById(userId).ifPresent(user -> {
+            List<Playlist> playlists = user.getPlaylists();
+            playlists = playlists.stream()
+                    .filter(playlist -> playlist.getId() != playlistId)
+                    .collect(Collectors.toList());
+            user.setPlaylists(playlists);
+            playlistService.delete(playlistId);
+            repository.save(user);
+        });
+
+    }
+
+    public void delete(long id){ repository.deleteById(id); }
+    public UserDTO getById(long id) {
         return repository.findById(id).map(user -> mapper.map(user, UserDTO.class)).orElse(null);
     }
 }

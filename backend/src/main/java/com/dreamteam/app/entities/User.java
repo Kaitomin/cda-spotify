@@ -22,6 +22,7 @@ public class User {
     @NonNull
     private Role role;
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @NonNull
     private List<Playlist> playlists;
 }

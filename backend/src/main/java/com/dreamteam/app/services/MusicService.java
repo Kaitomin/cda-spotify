@@ -40,8 +40,8 @@ public class MusicService {
 		}
 		return mapper.map(repository.save(mapper.map(mDto, Music.class)), MusicDTO.class);
 	}
-	public void delete(Long id){ repository.deleteById(id); }
-	public MusicDTO getById(Long id) {
+	public void delete(long id){ repository.deleteById(id); }
+	public MusicDTO getById(long id) {
 		return repository.findById(id).map(music -> mapper.map(music, MusicDTO.class)).orElse(null);
 	}
 }

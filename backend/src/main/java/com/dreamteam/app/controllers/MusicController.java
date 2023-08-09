@@ -22,11 +22,11 @@ public class MusicController {
 		return service.findAll();
 	}
 	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable Long id){
+	public void delete(@PathVariable long id){
 		 service.delete(id);
 	}
 	@GetMapping("/{id}")
-	public MusicDTO getById(@PathVariable Long id){
+	public MusicDTO getById(@PathVariable long id){
 		return service.getById(id);
 	}
 	@PostMapping("/new")

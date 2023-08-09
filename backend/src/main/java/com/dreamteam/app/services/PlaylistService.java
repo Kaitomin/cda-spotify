@@ -21,7 +21,7 @@ public class PlaylistService {
     public List<PlaylistDTO> findAll(){
         return repository.findAll().stream().map(playlist -> mapper.map(playlist, PlaylistDTO.class)).toList();
     }
-    public PlaylistDTO addMusic(Long id, MusicDTO musicDTO){
+    public PlaylistDTO addMusic(long id, MusicDTO musicDTO){
         Playlist playlist = repository.findById(id).orElse(null);
         if (playlist != null){
             List<Music> playlistMusics = playlist.getMusics();
@@ -31,7 +31,7 @@ public class PlaylistService {
         }
         return null;
     }
-    public void removeMusic(Long playlistId, Long musicId){
+    public void removeMusic(long playlistId, long musicId){
         repository.findById(playlistId).ifPresent(playlist -> {
             List<Music> musics = playlist.getMusics();
 
@@ -42,8 +42,8 @@ public class PlaylistService {
             repository.save(playlist);
         });
     }
-    public void delete(Long id){ repository.deleteById(id); }
-    public PlaylistDTO getById(Long id) {
+    public void delete(long id){ repository.deleteById(id); }
+    public PlaylistDTO getById(long id) {
         return repository.findById(id).map(playlist -> mapper.map(playlist, PlaylistDTO.class)).orElse(null);
     }
 }
