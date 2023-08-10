@@ -113,3 +113,11 @@ body {
   left: 0;
   transition: width 0.3s ease-in-out;
 }
+
+.check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width : 10%
+  
+}
