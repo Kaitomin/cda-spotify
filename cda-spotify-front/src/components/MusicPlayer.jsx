@@ -1,15 +1,30 @@
 //import React from 'react'
 import React, { useState, useRef } from 'react';
+import { useEffect } from 'react';
 import { FaPlay, FaPause, FaForward, FaBackward  } from 'react-icons/fa';
+import { json } from 'react-router-dom';
 import '../style.css'
 
-const MusicPlayer = () => {
+const MusicPlayer = ({}) => {
+
+
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [isLooping, setIsLooping] = useState(false);
     const [isRandom, setIsRandom] = useState(false);
+    const [musicData, setMusicData] = useState(null)
+
+    useEffect(() =>{
+            const data = fetch('http://localhost:8080/api/music/2')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                setMusicData(data)
+            })
+
+    },[])
 
     const togglePlay = () => {
         if (isPlaying) {
@@ -59,12 +74,12 @@ const MusicPlayer = () => {
   return (
     <div>
         <div>MusicPlayer</div>
+        {musicData && (
         <div>
-            <h2 className='text-center'> TITRE DE LA MUSIQUE</h2>
-            <h3 className='text-center'>NOM DE L'AUTEUR</h3>
+            <h2 className='text-center'>{musicData.title}</h2>
+            <h3 className='text-center'>{musicData.artist}</h3>
             <div className='d-flex justify-content-center align-items-center vh-45'>
-                <img className='img-fluid w-90' src='https://i.scdn.co/image/ab67616d00001e02503dddb45c350d6dd63a8e75'>
-                </img>
+                <img className='img-player' src={`http://localhost:8080/img/${musicData.imgUri}`}/>
             </div>
             <div className="d-flex justify-content-center mt-3">
                 <a className="btn btn-primary me-2">favori</a>
@@ -76,7 +91,7 @@ const MusicPlayer = () => {
                 ref={audioRef}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
-                src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg"
+                src={`http://localhost:8080/audio/${musicData.audioUri}`}
             />
 
             <div className="controls">
@@ -112,7 +127,7 @@ const MusicPlayer = () => {
 
 
         </div>
-
+        )}
 
     </div>
   )

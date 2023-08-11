@@ -5,15 +5,31 @@ import axios from 'axios'
 
 const FormMusic = () => {
     const baseUrl = "http://localhost:8080/api/music/new";
+    const checkList = ["POP", "ROCK", "ADRIEN"];
+    const [checked, setChecked] = useState([]);
     const [music, setMusic] = useState({
         title: "",
         artist: "",
         duration: "",
         releasedAt: "",
-        tags: ["POP"],
+        tags: [],
         imgFile: null,
         audioFile: null
     })
+    const handleCheck = (event) => {
+        var updatedList = [...checked];
+        if (event.target.checked) {
+          updatedList = [...checked, event.target.value];
+        } else {
+          updatedList.splice(checked.indexOf(event.target.value), 1);
+        }
+        setChecked(updatedList);
+      };
+
+
+    const isChecked = (item) =>
+    checked.includes(item) ? "checked-item" : "not-checked-item";
+
     const handleChange = e => {
         let {name, value, files} = e.target
         
@@ -26,13 +42,13 @@ const FormMusic = () => {
         e.preventDefault()
 
         const formData = new FormData()
-
+        
         const newMusic  = {
             "title" : music.title,
             "artist" : music.artist,
             "duration" : music.duration,
             "releasedAt" : music.releasedAt,
-            "tags" : music.tags
+            "tags" : checked
         }
         
         formData.append("fileUpload", 
@@ -103,29 +119,23 @@ const FormMusic = () => {
                 onChange={handleChange}
             />
         </label>
-        <label className='label'>Tag de la musique :
-            <label className='checkbox'>
-                Pop
-                <input type="checkbox" name="pop" className='input' />
-            </label>
-            <label className='checkbox'>
-                Rock
-                <input type="checkbox" name="rock" className='input' />
-            </label>
-            <label className='checkbox'>
-                AdrienLeBest
-                <input type="checkbox" name="adrien" className='input' />
-            </label>
-            <label className='checkbox'>
-                Rap
-                <input type="checkbox" name="rap" className='input' />
-            </label>
-        </label>
+        <div className="checkList">
+        <div className="title">Les tags de la musique:</div>
+        <div className="list-container">
+          {checkList.map((item, index) => (
+            <div key={index}>
+              <input value={item} type="checkbox" onChange={handleCheck} />
+              <span className={isChecked(item)}>{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+     
         <label className='label'>
             <input type="submit" name="submit" value="Valider la musique" />
         </label>
     </form>
   )
-}
+} 
 
 export default FormMusic
