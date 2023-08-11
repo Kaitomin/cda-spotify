@@ -5,13 +5,15 @@ import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.dto.UserDTO;
 import com.dreamteam.app.services.UserService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
-@AllArgsConstructor
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController  {
     private final UserService service;
 
