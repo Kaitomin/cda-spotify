@@ -1,5 +1,6 @@
 package com.dreamteam.app.storage;
 
+import com.dreamteam.app.utils.CustomUtils;
 import jakarta.persistence.Id;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,7 +119,7 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public void deleteFile(String filename) {
         // Assign file path
-        File f = isImage(filename) ?
+        File f = CustomUtils.isImageType(filename) ?
                 new File(this.imgLocation + "/" + filename) :
                 new File(this.audioLocation + "/" + filename);
 
@@ -138,7 +139,4 @@ public class StorageServiceImpl implements StorageService {
         }
     }
 
-    public boolean isImage(String filename) {
-        return FilenameUtils.getExtension(filename).matches("(png|jpg|jpeg)");
-    }
 }
