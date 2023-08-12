@@ -11,7 +11,7 @@ public interface StorageService {
 
     void init();
 
-    void store(MultipartFile file) throws IOException;
+    String store(MultipartFile file) throws IOException;
 
     Stream<Path> loadAll();
 
@@ -21,4 +21,5 @@ public interface StorageService {
 
     void deleteAll();
 
+    void deleteFile(String filename);
 }

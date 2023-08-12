@@ -23,11 +23,6 @@ import org.springframework.stereotype.Service;
 import com.dreamteam.app.repositories.MusicRepository;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 @Service
 @RequiredArgsConstructor
 public class MusicService {
@@ -40,47 +35,54 @@ public class MusicService {
 	}
 	public MusicDTO add(MusicDTO mDto, MultipartFile imgFile, MultipartFile audioFile, Optional<Long> id) {
 		try {
-			storageService.store(imgFile);
-			storageService.store(audioFile);
+			// Store img and audio files to static folder
+			String imgUuid = storageService.store(imgFile);
+			String audioUuid = storageService.store(audioFile);
 
+			// Check if music already exists
 			if (id != null) mDto.setId(id.get());
 
+	// ---- [Start] Calculate audio duration ---- //
 			SimpleDateFormat timeInFormat = new SimpleDateFormat("ss", Locale.FRANCE);
 			SimpleDateFormat timeOutFormat = new SimpleDateFormat("mm:ss", Locale.FRANCE);
 			SimpleDateFormat timeOutOverAnHourFormat = new SimpleDateFormat("kk:mm:ss", Locale.FRANCE);
 			String duration;
 
-			// Convert Multipart to File
+			// Convert 'Multipart file' to 'File'
 			File file = new File(System.getProperty("java.io.tmpdir")+ "/" + audioFile.getOriginalFilename());
 			audioFile.transferTo(file);
 
 			AudioFile af = AudioFileIO.read(file);
 			AudioHeader ah = af.getAudioHeader();
-			long trackLength = ah.getTrackLength();
+			int trackLength = ah.getTrackLength();
 
 			Date timeIn;
 			synchronized(timeInFormat) {
 				timeIn = timeInFormat.parse(String.valueOf(trackLength));
-				System.out.println(timeIn);
+				System.out.println("timeIn : " + timeIn);
 			}
 			if(trackLength < 3600L) {
 				synchronized(timeOutFormat) {
+					System.out.println("timeOutFormat : " + timeOutFormat);
 					duration =  timeOutFormat.format(timeIn);
 				}
 			} else {
 				synchronized(timeOutOverAnHourFormat) {
+					System.out.println("timeOutOverAnHourFormat : " + timeOutOverAnHourFormat);
 					duration = timeOutOverAnHourFormat.format(timeIn);
 				}
 			}
 
 			//System.out.println("Duration in Integer : " + trackLength);
-			//System.out.println("Duration in String : " + duration);
+			System.out.println("Duration in String : " + duration);
 
 			// Delete temp file from Temp folder
 			file.deleteOnExit();
+	// ---- [End] Calculate audio duration ---- //
 
+			// Set MusicDTO object
 			mDto.setDuration(duration);
-			mDto.setImgUri(imgFile.getOriginalFilename());
+			mDto.setImgUri(imgUuid);
 			mDto.setAudioUri(audioFile.getOriginalFilename());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -99,7 +101,12 @@ public class MusicService {
 		}
 		return mapper.map(repository.save(mapper.map(mDto, Music.class)), MusicDTO.class);
 	}
-	public void delete(long id){ repository.deleteById(id); }
+	public void delete(long id){
+		Music m = repository.findById(id).orElse(null);
+		storageService.deleteFile(m.getImgUri());
+		storageService.deleteFile(m.getAudioUri());
+		repository.deleteById(id);
+	}
 	public MusicDTO getById(long id) {
 		return repository.findById(id).map(music -> mapper.map(music, MusicDTO.class)).orElse(null);
 	}
