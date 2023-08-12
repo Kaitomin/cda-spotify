@@ -72,7 +72,6 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Stream<Path> loadAll() {
-        /* To do with both audioLocation and imgLocation*/
         /*try {
             return Files.walk(this.audioLocation, 1)
                     .filter(path -> !path.equals(this.audioLocation))
@@ -86,15 +85,16 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Path load(String filename) {
-        if (filename.matches("((.*).mp3|(.*).wav)")) {
+        /*if (filename.matches("((.*).mp3|(.*).wav)")) {
             return imgLocation.resolve(filename);
         }
-        return audioLocation.resolve(filename);
+        return audioLocation.resolve(filename);*/
+        return null;
     }
 
     @Override
     public Resource loadAsResource(String filename) {
-        try {
+        /*try {
             Path file = load(filename);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
@@ -107,7 +107,8 @@ public class StorageServiceImpl implements StorageService {
         }
         catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);
-        }
+        }*/
+        return null;
     }
 
     @Override

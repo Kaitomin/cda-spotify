@@ -62,7 +62,7 @@ public class MusicService {
 			}
 
 			// Check if new audio file is uploaded
-			if (audioFile == null) mDto.setAudioUri(m.getAudioUri());
+			if (audioFile == null || (audioFile.getOriginalFilename().equals(m.getAudioUri()))) mDto.setAudioUri(m.getAudioUri());
 			else {
 				String audioUuid = storageService.store(audioFile);
 				String duration = CustomUtils.getDuration(audioFile);
