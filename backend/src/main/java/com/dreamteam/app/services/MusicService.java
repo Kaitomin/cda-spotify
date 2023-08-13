@@ -62,7 +62,7 @@ public class MusicService {
 			mDto.setId(id);
 			mDto.setDuration(m.getDuration());
 
-			// Check if new image file is uploaded
+			// Check if a new image file is uploaded
 			if (imgFile == null) mDto.setImgUri(m.getImgUri());
 			else {
 				String imgUuid = storageService.store(imgFile);
@@ -70,7 +70,7 @@ public class MusicService {
 				mDto.setImgUri(imgUuid);
 			}
 
-			// Check if new audio file is uploaded
+			// Check if a new audio file is uploaded
 			if (audioFile == null) mDto.setAudioUri(m.getAudioUri());
 			else {
 				String audioUuid = storageService.store(audioFile);

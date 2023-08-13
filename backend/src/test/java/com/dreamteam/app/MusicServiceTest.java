@@ -2,7 +2,7 @@ package com.dreamteam.app;
 
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.entities.Music;
-import com.dreamteam.app.enums.Tags;
+import com.dreamteam.app.enums.Tag;
 import com.dreamteam.app.repositories.MusicRepository;
 import com.dreamteam.app.services.MusicService;
 
@@ -10,15 +10,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.dreamteam.app.storage.StorageService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -48,7 +45,7 @@ public class MusicServiceTest {
 
     @Test
     public void findById_shouldReturnMusic() {
-        Music m = new Music(25, "Waka Waka","shakira","2,25", LocalDate.of(1985,6,15),"/pas las","/pas la", Arrays.asList(Tags.POP, Tags.ADRIEN));
+        Music m = new Music(25, "Waka Waka","shakira","2,25", LocalDate.of(1985,6,15),"/pas las","/pas la", Arrays.asList(Tag.POP, Tag.ADRIEN));
 
 
         when(repository.findById(25L)).thenReturn(Optional.of(m));
@@ -71,7 +68,7 @@ public class MusicServiceTest {
 
     @Test
     public void findAll_shouldReturnMusic() {
-        Music m = new Music(25, "Waka Waka","shakira","2,25", LocalDate.of(1985,6,15),"/pas las","/pas la", Arrays.asList(Tags.POP, Tags.ADRIEN));
+        Music m = new Music(25, "Waka Waka","shakira","2,25", LocalDate.of(1985,6,15),"/pas las","/pas la", Arrays.asList(Tag.POP, Tag.ADRIEN));
         List<Music> ml = new ArrayList<>();
         ml.add(m);
         when(repository.findAll()).thenReturn(ml);
@@ -82,7 +79,7 @@ public class MusicServiceTest {
 
     @Test
     public void addMusic_shouldReturnMusic(){
-        Music m = new Music(25, "Waka Waka", "shakira", "2,25", LocalDate.of(1985, 6, 15), "imgFile", "audioFile", Arrays.asList(Tags.POP, Tags.ADRIEN));
+        Music m = new Music(25, "Waka Waka", "shakira", "2,25", LocalDate.of(1985, 6, 15), "imgFile", "audioFile", Arrays.asList(Tag.POP, Tag.ADRIEN));
         MockMultipartFile imgFile = new MockMultipartFile("imgFile", "imgFile", null, "img".getBytes());
         MockMultipartFile audioFile = new MockMultipartFile("audioFile", "audioFile", null, "audio".getBytes());
 
