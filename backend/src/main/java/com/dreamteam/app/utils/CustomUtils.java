@@ -17,6 +17,16 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CustomUtils {
+    /**
+     * @param multFile
+     * @return duration in mm:ss format
+     * @throws IOException
+     * @throws CannotReadException
+     * @throws TagException
+     * @throws InvalidAudioFrameException
+     * @throws ReadOnlyFileException
+     * @throws ParseException
+     */
     public static String getDuration(MultipartFile multFile) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
         SimpleDateFormat timeInFormat = new SimpleDateFormat("ss", Locale.FRANCE);
         SimpleDateFormat timeOutFormat = new SimpleDateFormat("mm:ss", Locale.FRANCE);
@@ -54,6 +64,10 @@ public class CustomUtils {
         return duration;
     }
 
+    /**
+     * @param filename
+     * @return boolean whether file is an image type or not
+     */
     public static boolean isImageType(String filename) {
         return FilenameUtils.getExtension(filename).matches("(png|jpg|jpeg)");
     }

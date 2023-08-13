@@ -54,9 +54,7 @@ public class StorageServiceImpl implements StorageService {
         String uuidFilename = uuid + "." + ext;
 
         // Assign uuidFilename
-        Path destinationFile = rootLocation.equals(this.audioLocation) ?
-            rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize().toAbsolutePath() :
-            rootLocation.resolve(Paths.get(uuidFilename)).normalize().toAbsolutePath();
+        Path destinationFile = rootLocation.resolve(Paths.get(uuidFilename)).normalize().toAbsolutePath();
 
         // This is a security check
         if (!destinationFile.getParent().equals(rootLocation.toAbsolutePath())) {
@@ -67,7 +65,7 @@ public class StorageServiceImpl implements StorageService {
         try (InputStream inputStream = file.getInputStream()) {
             Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
         }
-        return  rootLocation.equals(this.audioLocation) ? file.getOriginalFilename() : uuidFilename;
+        return uuidFilename;
     }
 
     @Override

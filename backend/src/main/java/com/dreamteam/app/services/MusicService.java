@@ -34,7 +34,11 @@ public class MusicService {
 		return repository.findAll().stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
 	}
 
-	public MusicDTO add(MusicDTO mDto, MultipartFile imgFile, MultipartFile audioFile) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
+	public MusicDTO add(
+			MusicDTO mDto,
+			MultipartFile imgFile,
+			MultipartFile audioFile
+		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
 		String imgUuid = storageService.store(imgFile);
 		String audioUuid = storageService.store(audioFile);
 
@@ -42,11 +46,16 @@ public class MusicService {
 
 		mDto.setDuration(duration);
 		mDto.setImgUri(imgUuid);
-		mDto.setAudioUri(audioFile.getOriginalFilename());
+		mDto.setAudioUri(audioUuid);
 		return mapper.map(repository.save(mapper.map(mDto, Music.class)), MusicDTO.class);
 	}
 
-	public MusicDTO update(MusicDTO mDto, MultipartFile imgFile, MultipartFile audioFile, long id) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
+	public MusicDTO update(
+			MusicDTO mDto,
+			MultipartFile imgFile,
+			MultipartFile audioFile,
+			long id
+		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
 		if (repository.findById(id).orElse(null) != null) {
 			Music m = repository.findById(id).orElse(null);
 
@@ -62,18 +71,18 @@ public class MusicService {
 			}
 
 			// Check if new audio file is uploaded
-			if (audioFile == null || (audioFile.getOriginalFilename().equals(m.getAudioUri()))) mDto.setAudioUri(m.getAudioUri());
+			if (audioFile == null) mDto.setAudioUri(m.getAudioUri());
 			else {
 				String audioUuid = storageService.store(audioFile);
 				String duration = CustomUtils.getDuration(audioFile);
 				storageService.deleteFile(m.getAudioUri()); // Delete previous audio file
 
 				mDto.setDuration(duration);
-				mDto.setAudioUri(audioFile.getOriginalFilename());
+				mDto.setAudioUri(audioUuid);
 			}
 			return mapper.map(repository.save(mapper.map(mDto, Music.class)), MusicDTO.class);
 		}
-		return null;
+		throw new IOException("File not found");
 	}
 	public void delete(long id){
 		Music m = repository.findById(id).orElse(null);

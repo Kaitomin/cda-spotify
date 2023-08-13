@@ -63,7 +63,7 @@ public class MusicController {
 		@RequestPart("fileUpload") MusicDTO musicDTO,
 		@RequestPart(value = "imgFile", required = false) MultipartFile imgFile,
 		@RequestPart(value = "audioFile", required = false) MultipartFile audioFile
-	){
+	) {
 		try {
 			return service.update(musicDTO, imgFile, audioFile, id);
 		} catch (CannotReadException e) {
