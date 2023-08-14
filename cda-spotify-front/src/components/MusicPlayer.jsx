@@ -17,7 +17,8 @@ const MusicPlayer = ({}) => {
     const [isRandom, setIsRandom] = useState(false);
     const [currentMusic, setCurrentMusic] = useState(null);
     const [musicList, setMusicList] = useState([]);
-   // const [playNext, setplayNext] = useState(true);
+    const [randomIndex, setRandomIndex] = useState(false);
+
 
     // useEffect(() =>{
     //         const data = fetch('http://localhost:8080/api/music/2')
@@ -33,45 +34,29 @@ const MusicPlayer = ({}) => {
         fetch('http://localhost:8080/api/playlist/2')
             .then(res => res.json())
             .then(data => {
-                //console.log(data)
                 setMusicList(data.musics); 
                 setCurrentMusic(data.musics[currentIndex]);
-                console.log(audioRef.current);
-                console.log(currentIndex);
-                //audioRef.current.play();
+
             });
     }, [] );
     useEffect( () =>{
       setCurrentMusic(musicList[currentIndex])
     }, [currentIndex]
     )
-
-
+    
     useEffect(() => {
       
       if (audioRef.current && currentMusic) {
          audioRef.current.play();
-          console.log(audioRef.current);
-          console.log(audioRef.current.loop);
+
       }
     },[currentMusic]
     
     )
 
-    //console.log(playlist.musics[0]);
-
-    // useEffect(() => {
-    //     if (currentMusic) {
-    //       audioRef.current.src = currentMusic.audioUri;
-    //       audioRef.current.load();
-    //     }
-    //   }, [currentMusic]);
-
     const togglePlay = () => {
-        console.log(isPlaying);
         if (isPlaying) {
           audioRef.current.pause();
-          //console.log(audioRef);
         } else {
           audioRef.current.play();
         }
@@ -79,10 +64,8 @@ const MusicPlayer = ({}) => {
       };
       const handlePrevious = () => {
         // precedente musique
-        //setCurrentIndex(prevIndex => (prevIndex - 1 + musicList.length) % musicList.length);
         setCurrentIndex(prevIndex => prevIndex == 0 ? musicList.length - 1 : prevIndex - 1 );
-        //console.log("current index pour le previous"+currentIndex);
-        //setCurrentMusic(musicList[currentIndex])
+
       };
     
       const handleTimeUpdate = () => {
@@ -90,12 +73,8 @@ const MusicPlayer = ({}) => {
         if (audioRef.current.currentTime == duration) {
             handleNext();
           }
-          // setDuration(audioRef.current.duration);
-          // if (isPlaying) {
-            //   audioRef.current.play();
-            // }
+
           };
-          //setIsPlaying();
     
       const handleLoadedMetadata = () => {
         setDuration(audioRef.current.duration);
@@ -111,11 +90,16 @@ const MusicPlayer = ({}) => {
     
       const handleNext = () => {
         // prochaine musique
-        //setCurrentIndex(prevIndex => (prevIndex + 1) % musicList.length); plus class avec un modulo (si ca donné le meme bug au debut quand tu changé de sans)
-        setCurrentIndex(prevIndex => prevIndex == musicList.length -1 ? 0 : prevIndex + 1);
-        //console.log("current index pour le next" + currentIndex);
-        //setCurrentMusic(musicList[currentIndex])
-        //console.log(currentMusic);
+        if (isRandom) {
+          let newRandomIndex = Math.floor(Math.random() * musicList.length);
+          while (newRandomIndex === currentIndex) {            
+            newRandomIndex = Math.floor(Math.random() * musicList.length);
+          }
+          setCurrentIndex(newRandomIndex);
+        } else {
+          setCurrentIndex(prevIndex => prevIndex == musicList.length -1 ? 0 : prevIndex + 1);
+        }
+
       };
       function formatTime(timeInSeconds) {
         const minutes = Math.floor(timeInSeconds / 60);
@@ -128,17 +112,15 @@ const MusicPlayer = ({}) => {
       };
       
       const handleRandom = () => {
-        // demandé a DAI !!!
+
+        setIsRandom(!isRandom);
+ 
       };
+      
 
   return (
     <div>
         <div>MusicPlayer</div>
-        {/* {musicData && ( */}
-                {/* <span >
-                    <h1>ICICIC</h1>
-                    {playlist[0].id} 
-                </span> */}
             {musicList.length > 0 && currentMusic && (
         <div>
             <h2 className='text-center'>{currentMusic.title}</h2>
