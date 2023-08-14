@@ -32,6 +32,11 @@ public class PlaylistController {
     public PlaylistDTO update(@RequestBody PlaylistDTO p){
         return service.update(p);
     }
+    @GetMapping("/user/{id}")
+    public List<PlaylistDTO> findAllByUserId(@PathVariable long id) {
+        return service.findAllByUserId(id);
+    }
+
     @PostMapping("/{playlistId}/addMusic")
     public void addMusic(@PathVariable long playlistId, @RequestBody MusicDTO musicDTO){
         service.addMusic(playlistId , musicDTO);

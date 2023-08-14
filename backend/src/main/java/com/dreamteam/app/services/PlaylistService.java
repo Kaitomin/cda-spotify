@@ -36,6 +36,9 @@ public class PlaylistService {
         }
         return null;
     }
+    public List<PlaylistDTO> findAllByUserId(long id) {
+        return repository.findAllByUserId(id).stream().map(playlist -> mapper.map(playlist, PlaylistDTO.class)).toList();
+    }
     public void removeMusic(long playlistId, long musicId){
         repository.findById(playlistId).ifPresent(playlist -> {
             List<Music> musics = playlist.getMusics();
