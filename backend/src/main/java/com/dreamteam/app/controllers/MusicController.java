@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dreamteam.app.dto.MusicDTO;
+import com.dreamteam.app.enums.Tag;
 import lombok.RequiredArgsConstructor;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -79,5 +80,14 @@ public class MusicController {
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GetMapping("/byTag/{tag}")
+	public List<MusicDTO> getTop10ByTags(@PathVariable Tag tag) {
+		return service.getTop10ByTags(tag);
+	}
+	@GetMapping("/byArtist/{artist}")
+	public List<MusicDTO> getTop10ByArtist(@PathVariable String artist) {
+		return service.getTop10ByArtist(artist);
 	}
 }

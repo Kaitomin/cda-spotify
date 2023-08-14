@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.entities.Music;
+import com.dreamteam.app.enums.Tag;
 import com.dreamteam.app.storage.StorageService;
 import com.dreamteam.app.utils.CustomUtils;
 import lombok.RequiredArgsConstructor;
@@ -92,5 +94,15 @@ public class MusicService {
 	}
 	public MusicDTO getById(long id) {
 		return repository.findById(id).map(music -> mapper.map(music, MusicDTO.class)).orElse(null);
+	}
+
+	public List<MusicDTO> getTop10ByTags(Tag tag) {
+		List<MusicDTO> musicsDTO = findAll();
+
+		return musicsDTO.stream().filter(music -> music.getTags().contains(tag)).limit(10).toList();
+		//return repository.findTop10ByTags(tag).stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
+	}
+	public List<MusicDTO> getTop10ByArtist(String artist) {
+		return repository.findTop10ByArtist(artist).stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
 	}
 }
