@@ -16,7 +16,7 @@ const DetailedPlaylist = () => {
 
 
     const getPlaylist = () => {
-        axios.get('http://localhost:8080/api/playlist/2')
+        axios.get('http://localhost:8080/api/playlist/3')
             .then(response => {
                 const data = response.data;
                 if (data.musics && data.musics.length > 0) {
@@ -32,15 +32,18 @@ const DetailedPlaylist = () => {
 
 
     const handleDelete = (id) =>{
-        axios.post(`http://localhost:8080/api/playlist/2/removeMusic/${id}`)
+        axios.post(`http://localhost:8080/api/playlist/3/removeMusic/${id}`)
         .then(getPlaylist())
     }
     const handleUpdatePlaylist = (childName) => {
-        setPlaylist({
+        const newPlaylistData = {
             ...playlist,
-            name:childName
-        })
-        axios.post(`http://localhost:8080/api/user/2/addPlaylist`,  playlist)
+            name:childName,
+            createdAt:"2012-04-23T18:25:43.511Z"
+
+        }
+        console.log(newPlaylistData);
+        axios.post(`http://localhost:8080/api/user/1/updatePlaylist`,  newPlaylistData)
           .then(() =>{
               console.log('premier niveau');
             getPlaylist();
