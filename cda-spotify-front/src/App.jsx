@@ -8,6 +8,8 @@ import Account from './pages/Account'
 import Searching from './pages/Searching'
 import Home from './pages/Home'
 import Playlist from './pages/Playlist'
+import MyPlaylist from './pages/MyPlaylist'
+import DetailedPlaylist from './pages/DetailedPlaylist'
 
 
 
@@ -18,6 +20,8 @@ function App() {
     <NavBar/>
     <MusicPlayer/>
     <Slider/>
+    <MyPlaylist/>
+    <DetailedPlaylist/>
 
     <Routes>
       <Route path="/" element={<Home/>}/>
