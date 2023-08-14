@@ -53,7 +53,6 @@ public class AuthenticationService {
         var user = repository.findByUsername(req.getUsername()).orElse(null);
         var jwtToken = jwtService.generateToken(user);
 
-        // Set cookie here
         Cookie cookie = new Cookie("jwt", jwtToken);
         cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
         cookie.setSecure(true);

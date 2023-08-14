@@ -1,5 +1,8 @@
 package com.dreamteam.app.storage;
 
+import com.dreamteam.app.utils.CustomUtils;
+import jakarta.persistence.Id;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -14,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
@@ -28,11 +33,10 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void store(MultipartFile file) throws IOException, IllegalArgumentException {
-        if (file.isEmpty()) {
-            throw new StorageException("Failed to store empty file.");
-        }
+    public String store(MultipartFile file) throws IOException, IllegalArgumentException {
+        if (file.isEmpty()) throw new StorageException("Failed to store empty file.");
 
+        // Assign folder directory
         Path rootLocation = null;
         if (file.getOriginalFilename().matches("((.*).png|(.*).jpg|(.*).jpeg)")){
             rootLocation = this.imgLocation;
@@ -42,20 +46,30 @@ public class StorageServiceImpl implements StorageService {
             throw new IllegalArgumentException("Invalid file format");
         }
 
-        Path destinationFile = rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize().toAbsolutePath();
+        // Extract file extension
+        String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+
+        // Generate uuid & concatenate file extension
+        UUID uuid = UUID.randomUUID();
+        String uuidFilename = uuid + "." + ext;
+
+        // Assign uuidFilename
+        Path destinationFile = rootLocation.resolve(Paths.get(uuidFilename)).normalize().toAbsolutePath();
+
+        // This is a security check
         if (!destinationFile.getParent().equals(rootLocation.toAbsolutePath())) {
-            // This is a security check
             throw new StorageException("Cannot store file outside current directory.");
         }
+
+        // Copy file to folder
         try (InputStream inputStream = file.getInputStream()) {
             Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
         }
-
+        return uuidFilename;
     }
 
     @Override
     public Stream<Path> loadAll() {
-        /* To do with both audioLocation and imgLocation*/
         /*try {
             return Files.walk(this.audioLocation, 1)
                     .filter(path -> !path.equals(this.audioLocation))
@@ -69,15 +83,16 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Path load(String filename) {
-        if (filename.matches("((.*).mp3|(.*).wav)")) {
+        /*if (filename.matches("((.*).mp3|(.*).wav)")) {
             return imgLocation.resolve(filename);
         }
-        return audioLocation.resolve(filename);
+        return audioLocation.resolve(filename);*/
+        return null;
     }
 
     @Override
     public Resource loadAsResource(String filename) {
-        try {
+        /*try {
             Path file = load(filename);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
@@ -90,13 +105,26 @@ public class StorageServiceImpl implements StorageService {
         }
         catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);
-        }
+        }*/
+        return null;
     }
 
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(audioLocation.toFile());
         FileSystemUtils.deleteRecursively(imgLocation.toFile());
+    }
+
+    @Override
+    public void deleteFile(String filename) {
+        // Assign file path
+        File f = CustomUtils.isImageType(filename) ?
+                new File(this.imgLocation + "/" + filename) :
+                new File(this.audioLocation + "/" + filename);
+
+        if (f.delete()) {
+            System.out.println("File deleted : " + f.getName());
+        }
     }
 
     @Override
@@ -109,4 +137,5 @@ public class StorageServiceImpl implements StorageService {
             throw new StorageException("Could not initialize storage", e);
         }
     }
+
 }

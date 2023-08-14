@@ -1,7 +1,7 @@
 package com.dreamteam.app.dto;
 
 
-import com.dreamteam.app.enums.Tags;
+import com.dreamteam.app.enums.Tag;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -16,5 +16,5 @@ public class MusicDTO {
 	private LocalDate releasedAt;
 	private String imgUri;
 	private String audioUri;
-	private List<Tags> tags;
+	private List<Tag> tags;
 }
