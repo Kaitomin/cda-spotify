@@ -123,5 +123,35 @@ body {
   align-items: center;
   justify-content: center;
   width : 10%
-  
+}
+
+/* SLIDER PART  */
+
+.slider-area{
+  padding-top: 20vh;
+  margin-bottom: 2vh;
+}
+.site-title{
+  margin-bottom: 10px;
+
+}
+.slider-bg{
+  padding-top: 6vh;
+  padding-bottom: 4vh;
+  background-color: #1DB954;
+
+}
+.slider {
+  display: flex;
+}
+.slider-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.slider-music-component{
+
+}
+.slider-music-title{
+
 }

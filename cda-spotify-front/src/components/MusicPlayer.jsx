@@ -8,39 +8,94 @@ import '../style.css'
 const MusicPlayer = ({}) => {
 
 
-    const audioRef = useRef(null);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const audioRef = useRef();
+    const [isPlaying, setIsPlaying] = useState(true);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [isLooping, setIsLooping] = useState(false);
     const [isRandom, setIsRandom] = useState(false);
-    const [musicData, setMusicData] = useState(null)
+    const [currentMusic, setCurrentMusic] = useState(null);
+    const [musicList, setMusicList] = useState([]);
+   // const [playNext, setplayNext] = useState(true);
 
-    useEffect(() =>{
-            const data = fetch('http://localhost:8080/api/music/2')
+    // useEffect(() =>{
+    //         const data = fetch('http://localhost:8080/api/music/2')
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             //console.log(data)
+    //             setMusicData(data)
+    //         })
+
+    // },[])
+    useEffect(() => {
+        // Fetch the musicList data from the API
+        fetch('http://localhost:8080/api/playlist/2')
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                setMusicData(data)
-            })
+                //console.log(data)
+                setMusicList(data.musics); 
+                setCurrentMusic(data.musics[currentIndex]);
+                console.log(audioRef.current);
+                console.log(currentIndex);
+                //audioRef.current.play();
+            });
+    }, [] );
+    useEffect( () =>{
+      setCurrentMusic(musicList[currentIndex])
+    }, [currentIndex]
+    )
 
-    },[])
+
+    useEffect(() => {
+      
+      if (audioRef.current && currentMusic) {
+         audioRef.current.play();
+          console.log(audioRef.current);
+          console.log(audioRef.current.loop);
+      }
+    },[currentMusic]
+    
+    )
+
+    //console.log(playlist.musics[0]);
+
+    // useEffect(() => {
+    //     if (currentMusic) {
+    //       audioRef.current.src = currentMusic.audioUri;
+    //       audioRef.current.load();
+    //     }
+    //   }, [currentMusic]);
 
     const togglePlay = () => {
+        console.log(isPlaying);
         if (isPlaying) {
           audioRef.current.pause();
+          //console.log(audioRef);
         } else {
           audioRef.current.play();
         }
         setIsPlaying(!isPlaying);
       };
       const handlePrevious = () => {
-        // precedente musique 
+        // precedente musique
+        //setCurrentIndex(prevIndex => (prevIndex - 1 + musicList.length) % musicList.length);
+        setCurrentIndex(prevIndex => prevIndex == 0 ? musicList.length - 1 : prevIndex - 1 );
+        //console.log("current index pour le previous"+currentIndex);
+        //setCurrentMusic(musicList[currentIndex])
       };
     
       const handleTimeUpdate = () => {
         setCurrentTime(audioRef.current.currentTime);
-      };
+        if (audioRef.current.currentTime == duration) {
+            handleNext();
+          }
+          // setDuration(audioRef.current.duration);
+          // if (isPlaying) {
+            //   audioRef.current.play();
+            // }
+          };
+          //setIsPlaying();
     
       const handleLoadedMetadata = () => {
         setDuration(audioRef.current.duration);
@@ -56,6 +111,11 @@ const MusicPlayer = ({}) => {
     
       const handleNext = () => {
         // prochaine musique
+        //setCurrentIndex(prevIndex => (prevIndex + 1) % musicList.length); plus class avec un modulo (si ca donné le meme bug au debut quand tu changé de sans)
+        setCurrentIndex(prevIndex => prevIndex == musicList.length -1 ? 0 : prevIndex + 1);
+        //console.log("current index pour le next" + currentIndex);
+        //setCurrentMusic(musicList[currentIndex])
+        //console.log(currentMusic);
       };
       function formatTime(timeInSeconds) {
         const minutes = Math.floor(timeInSeconds / 60);
@@ -74,12 +134,17 @@ const MusicPlayer = ({}) => {
   return (
     <div>
         <div>MusicPlayer</div>
-        {musicData && (
+        {/* {musicData && ( */}
+                {/* <span >
+                    <h1>ICICIC</h1>
+                    {playlist[0].id} 
+                </span> */}
+            {musicList.length > 0 && currentMusic && (
         <div>
-            <h2 className='text-center'>{musicData.title}</h2>
-            <h3 className='text-center'>{musicData.artist}</h3>
+            <h2 className='text-center'>{currentMusic.title}</h2>
+            <h3 className='text-center'>{currentMusic.artist}</h3>
             <div className='d-flex justify-content-center align-items-center vh-45'>
-                <img className='img-player' src={`http://localhost:8080/img/${musicData.imgUri}`}/>
+                <img className='img-player' src={`http://localhost:8080/img/${currentMusic.imgUri}`}/>
             </div>
             <div className="d-flex justify-content-center mt-3">
                 <a className="btn btn-primary me-2">favori</a>
@@ -87,11 +152,11 @@ const MusicPlayer = ({}) => {
                 <a className="btn btn-primary">partage</a>
             </div>
 
-            <audio
+            <audio 
                 ref={audioRef}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
-                src={`http://localhost:8080/audio/${musicData.audioUri}`}
+                src={`http://localhost:8080/audio/${currentMusic.audioUri}`}
             />
 
             <div className="controls">
@@ -110,7 +175,7 @@ const MusicPlayer = ({}) => {
                     <FaPause /> 
                 </button>
                 <button onClick={handlePrevious} className="control-btn">
-                    <FaBackward /> {}
+                    <FaBackward /> 
                 </button>
                 <button onClick={togglePlay} className="control-btn">
                 {isPlaying ? <FaPause /> : <FaPlay />}
@@ -122,8 +187,6 @@ const MusicPlayer = ({}) => {
                     <FaPause /> 
                 </button>
             </div>
-
-
 
 
         </div>

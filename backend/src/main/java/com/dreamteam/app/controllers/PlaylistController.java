@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/playlist")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class PlaylistController {
     private final PlaylistService service;
 
