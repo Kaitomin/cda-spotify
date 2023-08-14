@@ -14,7 +14,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 public class TagController {
     @GetMapping
-    public List<Tag> getAll() {
+    public List<Tag> findAll() {
         List<Tag> tags = Arrays.asList(Tag.values());
         return tags;
     }
