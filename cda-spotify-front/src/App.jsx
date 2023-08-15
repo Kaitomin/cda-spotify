@@ -18,9 +18,6 @@ function App() {
   return (
     <>
     <NavBar/>
-    <MusicPlayer/>
-    <Slider/>
-    <MyPlaylist/>
     <DetailedPlaylist/>
 
     <Routes>

@@ -62,7 +62,10 @@ body {
   justify-content: end;
 }
 
-/* music player style */
+/* ------------- */
+/*  MusicPlayer  */
+/* ------------- */
+
 /*
 #timeline {
   width: 90%;
@@ -115,7 +118,6 @@ body {
 }
 .img-player{
   height: 40vh;
-  width: 90%;
   border-radius: 5px 5px 5px 5px;
 }
 .check {
@@ -125,7 +127,9 @@ body {
   width : 10%
 }
 
-/* SLIDER PART  */
+/* -------- */
+/*  Slider  */
+/* -------- */
 
 .slider-area{
   padding-top: 20vh;
@@ -156,7 +160,9 @@ body {
 
 }
 
-/* MyPla*ylist PAGE */
+/* ------------ */
+/*  MyPlaylist  */
+/* ------------ */
 .MyPlayslist-body{
   background-color: #b8b8b8;
 }
@@ -195,8 +201,10 @@ body {
   text-overflow: ellipsis; /* Tronquer le texte avec trois petits points */
   max-width: 90%; /* Pour éviter que le titre ne soit trop large */
 }
-/* DetailedPlayList PAGE */
 
+/* ------------------ */
+/*  DetailedPlayList  */
+/* ------------------ */
 .music-list {
   display: flex;
   flex-direction: column;
@@ -206,29 +214,24 @@ body {
 .music-item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
+  gap: 0 25px;
   padding: 10px;
   border-bottom: 1px solid #ccc;
 }
 
 .music-image {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
   border-radius: 8px;
-  margin-right: 10px;
-}
-
-.music-details {
-  flex-grow: 1;
-  text-align: start;
 }
 
 .music-title {
   font-size: 18px;
   margin: 0;
 }
-
 .music-author {
   color: #666;
   margin: 0;
@@ -243,7 +246,7 @@ body {
   cursor: pointer;
 }
 
-.modal{
+.modal {
   /* position: absolute; */
   width: 500px;
   height: 250px;
