@@ -95,63 +95,62 @@ const MusicPlayer = () => {
 
   return (
     <div>
-      <div>MusicPlayer</div>
-        {currentMusic && (
-          <div>
-            <h2 className='text-center'>{currentMusic.title}</h2>
-            <h3 className='text-center'>{currentMusic.artist}</h3>
-            <div className='d-flex justify-content-center align-items-center vh-45'>
-                <img className='img-player' src={`${import.meta.env.VITE_BACKEND_URL}/img/${currentMusic.imgUri}`}/>
-            </div>
-            <div className="d-flex justify-content-center mt-3">
-                <a className="btn btn-primary me-2">favori</a>
-                <a className="btn btn-primary me-2">playlist</a>
-                <a className="btn btn-primary">partage</a>
-            </div>
-
-            <audio 
-                ref={audioRef}
-                onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleLoadedMetadata}
-                src={`${import.meta.env.VITE_BACKEND_URL}/audio/${currentMusic.audioUri}`}
-            />
-
-            <div className="controls">
-              <div className='d-flex justify-content-between w-100 timer'>
-                <div>
-                    {formatTime(currentTime)}
-                </div>
-                <div>
-                    {formatTime(duration)}
-                </div>
-              </div>
-              <div className="timeline" onClick={handleTimelineClick}>
-                  <div className="progress" style={{ width: `${(currentTime / duration) * 100}%` }}></div>
-              </div>
-              <button onClick={handleLoop} className={`control-btn ${isLooping ? 'active' : ''}`}>
-                <FaPause /> 
-              </button>
-              { !musicId && 
-                <button onClick={handlePrevious} className="control-btn">
-                  <FaBackward /> 
-                </button> 
-              }
-              <button onClick={togglePlay} className="control-btn">
-                {isPlaying ? <FaPause /> : <FaPlay />}
-              </button>
-              { !musicId && 
-                <>
-                  <button onClick={handleNext} className="control-btn">
-                    <FaForward />
-                  </button>
-                  <button onClick={handleRandom} className={`control-btn ${isRandom ? 'active' : ''}`}>
-                    <FaPause /> 
-                  </button>
-                  </>
-              }
-            </div>
+      {currentMusic && (
+        <div>
+          <h2 className='text-center'>{currentMusic.title}</h2>
+          <h3 className='text-center'>{currentMusic.artist}</h3>
+          <div className='d-flex justify-content-center align-items-center vh-45'>
+              <img className='img-player' src={`${import.meta.env.VITE_BACKEND_URL}/img/${currentMusic.imgUri}`}/>
           </div>
-        )}
+          <div className="d-flex justify-content-center mt-3">
+              <a className="btn btn-primary me-2">favori</a>
+              <a className="btn btn-primary me-2">playlist</a>
+              <a className="btn btn-primary">partage</a>
+          </div>
+
+          <audio 
+              ref={audioRef}
+              onTimeUpdate={handleTimeUpdate}
+              onLoadedMetadata={handleLoadedMetadata}
+              src={`${import.meta.env.VITE_BACKEND_URL}/audio/${currentMusic.audioUri}`}
+          />
+
+          <div className="controls">
+            <div className='d-flex justify-content-between w-100 timer'>
+              <div>
+                  {formatTime(currentTime)}
+              </div>
+              <div>
+                  {formatTime(duration)}
+              </div>
+            </div>
+            <div className="timeline" onClick={handleTimelineClick}>
+                <div className="progress" style={{ width: `${(currentTime / duration) * 100}%` }}></div>
+            </div>
+            <button onClick={handleLoop} className={`control-btn ${isLooping ? 'active' : ''}`}>
+              <FaPause /> 
+            </button>
+            { !musicId && 
+              <button onClick={handlePrevious} className="control-btn">
+                <FaBackward /> 
+              </button> 
+            }
+            <button onClick={togglePlay} className="control-btn">
+              {isPlaying ? <FaPause /> : <FaPlay />}
+            </button>
+            { !musicId && 
+              <>
+                <button onClick={handleNext} className="control-btn">
+                  <FaForward />
+                </button>
+                <button onClick={handleRandom} className={`control-btn ${isRandom ? 'active' : ''}`}>
+                  <FaPause /> 
+                </button>
+                </>
+            }
+          </div>
+        </div>
+      )}
     </div>
   )
 }
