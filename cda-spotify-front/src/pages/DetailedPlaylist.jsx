@@ -3,6 +3,7 @@ import axios from 'axios';
 import FormMusic from "../components/FormMusic"
 import Playlist from '../components/Playlist';
 import UpdatePlaylistForm from '../components/UpdatePlaylistForm';
+import { Link, useParams } from 'react-router-dom';
 //import { update } from 'lodash';
 
 const DetailedPlaylist = () => {
@@ -14,9 +15,10 @@ const DetailedPlaylist = () => {
   const [playlistName, setPlaylistName] = useState("");
   const [newPlaylistName, setNewPlaylistName] = useState("");
 
+  let { userId } = useParams();
 
     const getPlaylist = () => {
-        axios.get('http://localhost:8080/api/playlist/3')
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/${userId}`)
             .then(response => {
                 const data = response.data;
                 if (data.musics && data.musics.length > 0) {
@@ -32,7 +34,7 @@ const DetailedPlaylist = () => {
 
 
     const handleDelete = (id) =>{
-        axios.post(`http://localhost:8080/api/playlist/3/removeMusic/${id}`)
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/${userId}/removeMusic/${id}`)
         .then(getPlaylist())
     }
     const handleUpdatePlaylist = (childName) => {
@@ -43,7 +45,7 @@ const DetailedPlaylist = () => {
 
         }
         console.log(newPlaylistData);
-        axios.post(`http://localhost:8080/api/user/1/updatePlaylist`,  newPlaylistData)
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/1/updatePlaylist`,  newPlaylistData)
           .then(() =>{
               console.log('premier niveau');
             getPlaylist();
@@ -71,7 +73,9 @@ const DetailedPlaylist = () => {
         <div className="music-list">
         {musicList && musicList.map((music) => (
             <div key={music.id} className="music-item">
+                <Link to={`/musicPlayer/${music.id}`}>
                 <img src={music.imageUrl} alt={music.title} className="music-image" />
+                </Link>
                 <div className="music-details">
                 <p className="music-title">{music.title}</p>
                 <p className="music-author">{music.author}</p>

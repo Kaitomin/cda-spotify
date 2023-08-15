@@ -4,13 +4,12 @@ import React from 'react'
 import axios from 'axios'
 
 const FormMusic = () => {
-    const baseUrl = "http://localhost:8080/api/music/new";
+    const baseUrl = `${import.meta.env.VITE_BACKEND_URL}/api/music/new`;
     const checkList = ["POP", "ROCK", "ADRIEN"];
     const [checked, setChecked] = useState([]);
     const [music, setMusic] = useState({
         title: "",
         artist: "",
-        duration: "",
         releasedAt: "",
         tags: [],
         imgFile: null,
@@ -46,7 +45,6 @@ const FormMusic = () => {
         const newMusic  = {
             "title" : music.title,
             "artist" : music.artist,
-            "duration" : music.duration,
             "releasedAt" : music.releasedAt,
             "tags" : checked
         }
@@ -83,15 +81,7 @@ const FormMusic = () => {
                 onChange={handleChange}
             />
         </label>
-        <label className='label'>
-            Durée de la musique : 
-            <input 
-                type="text" 
-                name="duration" 
-                className='input'
-                onChange={handleChange}
-            />
-        </label>
+       
         <label className='label'>
             Date de sortie de la musique : 
             <input 

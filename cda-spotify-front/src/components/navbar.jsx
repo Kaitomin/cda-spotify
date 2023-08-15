@@ -8,7 +8,7 @@ export default function NavBar() {
         <Link to="/searching">Rechercher</Link>
       </li>
       <li>
-        <Link to="/playlist">Mes Playlists</Link>
+        <Link to="/myPlaylist">Mes Playlists</Link>
       </li>
       <li>
         <Link to="/account">Mon Compte</Link>

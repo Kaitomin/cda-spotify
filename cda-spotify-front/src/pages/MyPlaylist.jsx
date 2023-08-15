@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import FormMusic from "../components/FormMusic"
+import { Link } from 'react-router-dom';
 
 const MyPlaylist = () => {
     const [playlists, setPlaylists] = useState([]);
@@ -15,6 +16,7 @@ const MyPlaylist = () => {
         { id: 7, title: 'Playlist 7', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSybeCQhUBLzH8bCd_HC2xax1V5jAVqkC54AQ&usqp=CAU' },
         { id: 8, title: 'Playlist 8', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSybeCQhUBLzH8bCd_HC2xax1V5jAVqkC54AQ&usqp=CAU' },
         { id: 9, title: 'Playlist 9', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSybeCQhUBLzH8bCd_HC2xax1V5jAVqkC54AQ&usqp=CAU' },
+        { id: 10, title: 'Playlist 10', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSybeCQhUBLzH8bCd_HC2xax1V5jAVqkC54AQ&usqp=CAU' },
 
       ];
       setPlaylists(fakeAPIResponse);
@@ -26,10 +28,10 @@ const MyPlaylist = () => {
       <h1 className='text-center pt-5'>Vos Playlists</h1>
       <div className="playlist-container">
         {playlists.map((playlist) => (
-          <a key={playlist.id} className="playlist-item">
+          <Link to={`/playlist/${playlist.id}`} key={playlist.id} className="playlist-item">
             <img src={playlist.imageUrl} alt={playlist.title} className="playlist-image" />
             <p className="playlist-title">{playlist.title}</p>
-          </a>
+          </Link>
         ))}
       </div>
 

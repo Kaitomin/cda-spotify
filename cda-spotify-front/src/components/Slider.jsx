@@ -3,7 +3,7 @@ import '../style.css'
 
 class Props {
     title;
-    img;
+    imgUri;
     titleSlider;
 }
 

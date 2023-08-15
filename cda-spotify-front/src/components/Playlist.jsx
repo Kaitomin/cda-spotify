@@ -1,4 +1,6 @@
 import React from 'react'
+import MyPlaylist from '../pages/MyPlaylist'
+import DetailedPlaylist from '../pages/DetailedPlaylist'
 
 function Playlist() {
 
@@ -7,6 +9,8 @@ function Playlist() {
   return (
     <div>
         
+    <MyPlaylist/>
+    <DetailedPlaylist/>
     
 
     </div>

@@ -31,7 +31,7 @@ const MusicPlayer = ({}) => {
     // },[])
     useEffect(() => {
         // Fetch the musicList data from the API
-        fetch('http://localhost:8080/api/playlist/2')
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/2`)
             .then(res => res.json())
             .then(data => {
                 setMusicList(data.musics); 
@@ -126,7 +126,7 @@ const MusicPlayer = ({}) => {
             <h2 className='text-center'>{currentMusic.title}</h2>
             <h3 className='text-center'>{currentMusic.artist}</h3>
             <div className='d-flex justify-content-center align-items-center vh-45'>
-                <img className='img-player' src={`http://localhost:8080/img/${currentMusic.imgUri}`}/>
+                <img className='img-player' src={`${import.meta.env.VITE_BACKEND_URL}/${currentMusic.imgUri}`}/>
             </div>
             <div className="d-flex justify-content-center mt-3">
                 <a className="btn btn-primary me-2">favori</a>
@@ -138,7 +138,7 @@ const MusicPlayer = ({}) => {
                 ref={audioRef}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
-                src={`http://localhost:8080/audio/${currentMusic.audioUri}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}${currentMusic.audioUri}`}
             />
 
             <div className="controls">
