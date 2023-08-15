@@ -69,3 +69,55 @@ body {
   width : 10%
   
 }
+
+.playlistCard {
+  display: flex;
+  align-items: center;
+  overflow-wrap: normal;
+  flex-wrap: wrap;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.cardPlaylist {
+  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+/* SLIDER PART  */
+
+.slider-area{
+  padding-top: 20vh;
+  margin-bottom: 2vh;
+}
+.site-title{
+  margin-bottom: 10px;
+
+}
+.slider-bg{
+  padding-top: 6vh;
+  padding-bottom: 4vh;
+  background-color: #555856;
+  color : white;
+  padding: 1rem;
+
+}
+.slider {
+  display: flex;
+}
+.slider-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.slider-music-component{
+  padding : 1rem;
+
+}
+.slider-music-title{
+
+}

@@ -6,6 +6,7 @@ import Account from './pages/Account'
 import Searching from './pages/Searching'
 import Home from './pages/Home'
 import Playlist from './pages/Playlist'
+import Slider from './components/Slider'
 
 
 function App() {
@@ -13,7 +14,6 @@ function App() {
   return (
     <>
     <NavBar/>
-
 
     <Routes>
       <Route path="/" element={<Home/>}/>
