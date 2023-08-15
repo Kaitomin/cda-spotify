@@ -3,7 +3,7 @@ package com.dreamteam.app.entities;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.dreamteam.app.enums.Tags;
+import com.dreamteam.app.enums.Tag;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,5 +30,5 @@ public class Music {
 	private String audioUri;
 	@Enumerated(EnumType.STRING)
 	@NonNull
-	private List<Tags> tags;
+	private List<Tag> tags;
 }

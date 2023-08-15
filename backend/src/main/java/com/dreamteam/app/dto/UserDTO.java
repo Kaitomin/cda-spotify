@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class UserDTO {
     private long id;
-    private String name;
+    private String username;
     private String password;
     private Role role;
     private List<Playlist> playlists;

@@ -37,11 +37,11 @@ public class UserService {
         u.setPlaylists(playlists);
         return mapper.map(repository.save(mapper.map(u, User.class)), UserDTO.class);
     }
-    public void addPlaylistByUser(long id, PlaylistDTO playlistDTO){
+    public void addPlaylistByUser(long userId, PlaylistDTO playlistDTO){
         // Can not add another playlist named "Favoris"
         if (playlistDTO.getName().equals("Favoris")) return;
 
-        repository.findById(id).ifPresent(user -> {
+        repository.findById(userId).ifPresent(user -> {
             List<Playlist> userPlaylists = user.getPlaylists();
             userPlaylists.add(mapper.map(playlistDTO, Playlist.class));
             user.setPlaylists(userPlaylists);
@@ -62,7 +62,17 @@ public class UserService {
             playlistService.delete(playlistId);
             repository.save(user);
         });
+    }
+    public void updatePlaylistByUser (long userId, PlaylistDTO playlistDTO){
+        // Can not update playlist "Favoris"
+        if (playlistDTO.getName().equals("Favoris")) return;
 
+        repository.findById(userId).ifPresent(user -> {
+            List<Playlist> playlists = user.getPlaylists();
+            playlists.stream()
+                    .filter(playlist -> playlist.getId() == playlistDTO.getId())
+                    .findFirst().ifPresent(playlistFound -> playlistService.update(playlistDTO));
+        });
     }
 
     public void delete(long id){ repository.deleteById(id); }

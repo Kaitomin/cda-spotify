@@ -62,30 +62,67 @@ body {
   justify-content: end;
 }
 
+/* music player style */
+/*
+#timeline {
+  width: 90%;
+  height: 2px;
+  margin-top: 20px;
+  margin-left: 10px;
+  float: left;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+*/
+.audio-player {
+  /* Styling du conteneur du lecteur */
+}
+
+.controls {
+  margin-top: 3vh;
+  margin-inline: 2vh;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.control-btn {
+  margin-top: 3vh;
+}
+
+.timeline {
+  width: 100%;
+  height: 4px;
+  background-color: #ccc;
+  position: relative;
+  margin: 0 10px;
+  cursor: pointer;
+}
+.timer{
+  margin: 0 10px 10px;
+}
+
+.progress {
+  height: 3px !important;
+  background-color: #1DB954  !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: width 0.3s ease-in-out;
+}
+.img-player{
+  height: 40vh;
+  width: 90%;
+  border-radius: 5px 5px 5px 5px;
+}
 .check {
   display: flex;
   align-items: center;
   justify-content: center;
   width : 10%
-  
-}
-
-.playlistCard {
-  display: flex;
-  align-items: center;
-  overflow-wrap: normal;
-  flex-wrap: wrap;
-  padding: 1rem;
-  margin: 1rem;
-}
-
-.cardPlaylist {
-  margin: 1rem;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
 }
 
 /* SLIDER PART  */
@@ -119,5 +156,100 @@ body {
 
 }
 .slider-music-title{
+
+}
+
+/* MyPla*ylist PAGE */
+.MyPlayslist-body{
+  background-color: #b8b8b8;
+}
+.playlist-page {
+  text-align: center;
+}
+
+.playlist-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 5vw;
+}
+
+.playlist-item {
+  width: calc(50% - 10px); /* 10px pour gérer les marges entre les éléments */
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: black;
+}
+
+.playlist-image {
+  width: 100%;
+  max-height: 150px; /* Taille d'image fixe */
+  object-fit: cover;
+  background-size: cover;
+  border-radius: 5px;
+  box-shadow: 5px 5px 20px 4px rgba(0, 0, 0, 0.1); 
+
+}
+
+.playlist-title {
+  margin-top: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Tronquer le texte avec trois petits points */
+  max-width: 90%; /* Pour éviter que le titre ne soit trop large */
+}
+/* DetailedPlayList PAGE */
+
+.music-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.music-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.music-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.music-details {
+  flex-grow: 1;
+  text-align: start;
+}
+
+.music-title {
+  font-size: 18px;
+  margin: 0;
+}
+
+.music-author {
+  color: #666;
+  margin: 0;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.modal{
+  /* position: absolute; */
+  width: 500px;
+  height: 250px;
+  background-color: #1DB954;
 
 }

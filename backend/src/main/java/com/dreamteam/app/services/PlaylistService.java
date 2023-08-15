@@ -1,6 +1,7 @@
 package com.dreamteam.app.services;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.dreamteam.app.dto.MusicDTO;
@@ -18,6 +19,10 @@ public class PlaylistService {
     private final PlaylistRepository repository;
     private final ModelMapper mapper;
 
+    public PlaylistDTO update(PlaylistDTO p){
+        return mapper.map(repository.save(mapper.map(p, Playlist.class)), PlaylistDTO.class);
+    }
+
     public List<PlaylistDTO> findAll(){
         return repository.findAll().stream().map(playlist -> mapper.map(playlist, PlaylistDTO.class)).toList();
     }
@@ -30,6 +35,9 @@ public class PlaylistService {
             return mapper.map(repository.save(playlist), PlaylistDTO.class);
         }
         return null;
+    }
+    public List<PlaylistDTO> findAllByUserId(long id) {
+        return repository.findAllByUserId(id).stream().map(playlist -> mapper.map(playlist, PlaylistDTO.class)).toList();
     }
     public void removeMusic(long playlistId, long musicId){
         repository.findById(playlistId).ifPresent(playlist -> {
