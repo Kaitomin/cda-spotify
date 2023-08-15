@@ -119,6 +119,22 @@ const DetailedPlaylist = () => {
             })
         }
     }
+
+    const handleEnded = () => {
+        const playIcon = document.querySelector(`.btn-${currentMusicId} > i.fa-circle-play`)
+        const stopIcon = document.querySelector(`.btn-${currentMusicId} > i.fa-circle-stop`)
+        const audio = document.querySelector(`.music-${currentMusicId}`)
+        const currentBarContainer = document.querySelector(`.bars-${currentMusicId}`)
+        const currentBars = document.querySelectorAll(`.bars-${currentMusicId} > .bar`)
+
+        playIcon.classList.remove("hidden")
+        stopIcon.classList.add("hidden")
+        audio.pause()
+        audio.currentTime = 0
+        currentBarContainer.classList.add("hidden")
+        currentBars.forEach(b => b.classList.remove("animated"))
+    }
+
     return (
         <div>
             <div className="playlist-page">
@@ -135,7 +151,7 @@ const DetailedPlaylist = () => {
                         <div key={music.id} className={`music-item track-${music.id}`}>
                             <div className="music-track">
                                 <img src={`http://localhost:8080/img/${music.imgUri}`} alt={music.title} className="music-image" />
-                                <audio className={`music-${music.id} audio-tag`} >
+                                <audio className={`music-${music.id} audio-tag`} onEnded={handleEnded}>
                                     <source src={`http://localhost:8080/audio/${music.audioUri}`} type='audio/mp3' />
                                 </audio>
                                 <div className={`btn-container btn-${music.id}`} onClick={(e) => handleClick(e, music.id)}>
