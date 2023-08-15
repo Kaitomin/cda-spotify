@@ -12,7 +12,7 @@ const DetailedPlaylist = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentMusicId, setCurrentMusicId] = useState(null);
 
-  let { playlistId } = useParams();
+    const { playlistId } = useParams();
 
     const getPlaylist = () => {
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/${playlistId}`)
@@ -149,12 +149,10 @@ const DetailedPlaylist = () => {
                     </div>
                 )} 
                 <div className="music-list">
-                    {musicList && musicList.map((music) => (
+                    {musicList && musicList.map((music, index) => (
                         <div key={music.id} className={`music-item track-${music.id}`}>
                             <div className="music-track">
-                            <Link to={`/musicPlayer/${music.id}`}>
                                 <img src={`http://localhost:8080/img/${music.imgUri}`} alt={music.title} className="music-image" />
-                            </Link>
                                 <audio className={`music-${music.id} audio-tag`} onEnded={handleEnded}>
                                     <source src={`http://localhost:8080/audio/${music.audioUri}`} type='audio/mp3' />
                                 </audio>
@@ -165,7 +163,9 @@ const DetailedPlaylist = () => {
                             </div>
                             <div>
                                 <div className="music-details">
-                                    <p className="music-title">{music.artist} - {music.title}</p>
+                                    <Link to={`/playlist/${playlist.id}/music/${index}`}>
+                                        <p className="music-title">{music.artist} - {music.title}</p>
+                                    </Link>
                                 </div>
 
                                 <div className={`music-bars bars-${music.id} hidden`}>
