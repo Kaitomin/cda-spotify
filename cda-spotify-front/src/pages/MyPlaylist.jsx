@@ -17,12 +17,11 @@ const MyPlaylist = () => {
 
       <h1 className='text-center pt-5'>Playlists</h1>
       <div className="playlist-container">
-        {playlists.map((playlist) => (
-             playlist.musics.length > 0 && 
-            <Link to={`/playlist/${playlist.id}`} key={playlist.id} className="playlist-item">
-              { <img src={`${import.meta.env.VITE_BACKEND_URL}/img/${playlist.musics[0].imgUri}`} alt={playlist.title} className="playlist-image" /> }
-              <p className="playlist-title">{playlist.name}</p>
-            </Link>
+        {playlists.map((playlist) => ( 
+          <Link to={`/playlist/${playlist.id}`} key={playlist.id} className="playlist-item">
+            {<img src={playlist.musics.length > 0 ? `${import.meta.env.VITE_BACKEND_URL}/img/${playlist.musics[0].imgUri}` : "https://placehold.co/400x150"} alt={playlist.title} className="playlist-image" /> }
+            <p className="playlist-title">{playlist.name}</p>
+          </Link>
         ))}
       </div>
 

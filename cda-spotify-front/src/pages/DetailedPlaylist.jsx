@@ -147,6 +147,12 @@ const DetailedPlaylist = () => {
                 </div>
             )} 
             <div className="music-list">
+                {musicList.length == 0 && (
+                    <div className="w-100 mt-5">
+                        <h2>Empty playlist </h2>
+                        <Link to="/musics">Visiter la bibliothèque de musiques</Link>
+                    </div >
+                )}
                 {musicList && musicList.map((music, index) => (
                     <div key={music.id} className={`music-item track-${music.id}`}>
                         <div className="music-track">
