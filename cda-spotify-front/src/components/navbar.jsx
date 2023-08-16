@@ -14,6 +14,9 @@ export default function NavBar() {
         <li>
           <Link to="/account">Mon Compte</Link>
         </li>
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
       </ul>
     </nav>
   )

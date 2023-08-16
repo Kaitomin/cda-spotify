@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../style.css'
 import React from 'react'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 const FormMusic = () => {
-    const baseUrl = `${import.meta.env.VITE_BACKEND_URL}/api/music/new`;
+    let url = `${import.meta.env.VITE_BACKEND_URL}/api/music/new`
     const checkList = ["POP", "ROCK", "ADRIEN"];
     const [checked, setChecked] = useState([]);
+    const { musicId } = useParams()
     const [music, setMusic] = useState({
         title: "",
         artist: "",
@@ -15,6 +17,18 @@ const FormMusic = () => {
         imgFile: null,
         audioFile: null
     })
+
+    if (musicId) {
+        url = `${import.meta.env.VITE_BACKEND_URL}/api/music/update/${music.id}`
+        useEffect(() => {
+            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/music/${musicId}`)
+                .then(res => {
+                    setMusic(res.data)
+                    setChecked(res.data.tags)
+                })
+        }, [])
+    }
+
     const handleCheck = (event) => {
         var updatedList = [...checked];
         if (event.target.checked) {
@@ -52,13 +66,27 @@ const FormMusic = () => {
         formData.append("fileUpload", 
             new Blob([JSON.stringify(newMusic)], {
                 type: "application/json"
-            }))
-        formData.append("imgFile", music.imgFile);
-        formData.append("audioFile", music.audioFile);
+            })
+        )
 
-        axios.post(baseUrl, formData)
-            .then(response => console.log(response.data))
-            .catch(exception => console.log(exception))        
+        if (musicId) {
+            console.log("musicId")
+            if (music.imgFile != null) formData.append("imgFile", music.imgFile);
+            if (music.audioFile != null) formData.append("audioFile", music.audioFile);
+        } else {
+            console.log("null")
+            formData.append("imgFile", music.imgFile);
+            formData.append("audioFile", music.audioFile);
+        }
+
+        for (let pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+        }
+
+        axios.post(url, formData)
+        .then(response => console.log(response.data))
+        .catch(exception => console.log(exception))        
+        
     }
   
     return (    
@@ -68,7 +96,8 @@ const FormMusic = () => {
             Titre de la musique :
             <input type="text" 
                 name="title" 
-                className='input' 
+                className='input'
+                value={music.title}
                 onChange={handleChange}
             />
         </label>
@@ -78,6 +107,7 @@ const FormMusic = () => {
                 type="text" 
                 name="artist" 
                 className='input'
+                value={music.artist}
                 onChange={handleChange}
             />
         </label>
@@ -85,9 +115,10 @@ const FormMusic = () => {
         <label className='label'>
             Date de sortie de la musique : 
             <input 
-                type="datetime-local" 
+                type="date" 
                 name="releasedAt" 
                 className='input'
+                value={music.releasedAt}
                 onChange={handleChange}
             />
         </label>
@@ -114,7 +145,7 @@ const FormMusic = () => {
         <div className="list-container">
           {checkList.map((item, index) => (
             <div key={index}>
-              <input value={item} type="checkbox" onChange={handleCheck} />
+              <input value={item} type="checkbox" onChange={handleCheck} checked={checked.includes(item)}/>
               <span className={isChecked(item)}>{item}</span>
             </div>
           ))}

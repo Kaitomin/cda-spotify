@@ -12,7 +12,7 @@ const UpdatePlaylistForm = ( { playlistName, handleUpdatePlaylist }) => {
     }
 
     return (
-        <div className=''>
+        <div className='edit-playlist-modal'>
             <form onSubmit={handleUpdate} >
                 <input type="text" placeholder="Nouveau nom de la playlist" value={newName} onChange={update} autoFocus />
                 <button type="submit">Modifier le nom</button>

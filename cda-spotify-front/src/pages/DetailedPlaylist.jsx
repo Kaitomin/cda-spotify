@@ -137,16 +137,22 @@ const DetailedPlaylist = () => {
     return (
         <div className="playlist-page">
             <div>
-                <h2>{playlist && playlist.name}</h2>
-                {!isModalOpen && <i className="fa-solid fa-pen-to-square" onClick={() => setIsModalOpen(true)}></i>}
+                <h1>{playlist && playlist.name}</h1>
+                {!isModalOpen && <i className="fa-solid fa-pen-to-square edit-btn" onClick={() => setIsModalOpen(true)}></i>}
             </div>
             {isModalOpen && (
-                <div className=''>
+                <div className='modal-window'>
                     <UpdatePlaylistForm playlistName={playlist.name} handleUpdatePlaylist={handleUpdatePlaylist} />
                     <button onClick={() => setIsModalOpen(false)}>Annuler</button>
                 </div>
             )} 
             <div className="music-list">
+                {musicList.length == 0 && (
+                    <div className="w-100 mt-5">
+                        <h2>Empty playlist </h2>
+                        <Link to="/musics">Visiter la bibliothèque de musiques</Link>
+                    </div >
+                )}
                 {musicList && musicList.map((music, index) => (
                     <div key={music.id} className={`music-item track-${music.id}`}>
                         <div className="music-track">
