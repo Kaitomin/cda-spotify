@@ -8,11 +8,8 @@ import Account from './pages/Account'
 import Home from './pages/Home'
 import MyPlaylist from './pages/MyPlaylist'
 import DetailedPlaylist from './pages/DetailedPlaylist'
-<<<<<<< HEAD
 import  Search  from './pages/Search'
-=======
 import Dashboard from './pages/Dashboard'
->>>>>>> dev-dai
 
 function App() {
   return (

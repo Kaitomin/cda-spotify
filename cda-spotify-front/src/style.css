@@ -32,7 +32,7 @@ h1 {
   margin-top: 2em !important; /* Override BS */
   text-align: center;
 }
-.nav {
+nav.nav {
   background-color: var(--dark-blue-1);
   color: white;
   display : flex;
@@ -311,6 +311,7 @@ h1 {
   object-fit: cover;
   background-size: cover;
   border-radius: 5px 5px 0 0;
+  border-bottom: 1px solid #80808054;
   /* box-shadow: 5px 5px 20px 4px rgba(0, 0, 0, 0.1);  */
 }
 
@@ -493,6 +494,12 @@ i.fa-xmark:hover {
 .container-search{
   padding-top: 5vh ;
 }
+
+.search-form {
+  display: flex;
+  justify-content: center;
+}
+
 .music-grid-search {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -505,7 +512,14 @@ i.fa-xmark:hover {
   align-items: center;
   height: 225px;
   width: 100%;
+}
 
+.music-item-search a {
+  width: 150px;
+  text-align: center;
+  text-decoration: none;
+  background: white;
+  border-radius: 5%;
 }
 
 .music-image-search {
@@ -513,29 +527,21 @@ i.fa-xmark:hover {
   height: 150px;
   object-fit: cover;
   border-radius: 5px;
+  border-bottom: 1px solid #80808054;
 }
-
+.music-title-search,
+.music-author-search {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+  padding: 0 10px;
+}
 .music-title-search {
-  margin: 0 !important;
-  align-items: flex-start;
-  font-size: medium;
-  color: black;
+  font-size: 1.2em;
   margin-top: 10px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100%;
-  width: 70%;
-  white-space: nowrap;
 }
-.music-author-search{
-  margin: 0 !important; 
-  font-size: small;
-  color: #1DB954;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100%;
-  width: 90%;
-  white-space: nowrap;
+.music-author-search {
+  font-size: 1.1em;
 }
 
 .play-button-search {

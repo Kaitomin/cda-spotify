@@ -10,16 +10,19 @@ const Search = () => {
       setMusicList(result)
   }
   return (
-    <div>
+    <div className="search-page">
+      <h1>Rechercher</h1>
       <SearchBar getResult={getResult}/>
+      <hr />
+
         <div className="container-search">
           <div className="music-grid-search">
-            {musicList.map((music, index) => (
+            {musicList.map(music => (
               <div key={music.id} className="music-item-search">
-                <Link to={`/music/${music.id}`} className="text-decoration-non">                
-                  <img src={`${import.meta.env.VITE_BACKEND_URL}/img/${music.imgUri}`} alt={music.title} className="music-image-search" />
-                  <h2 className="music-title-search">{music.title}</h2>
-                  <h3 className="music-author-search">{music.artist}</h3>
+                <Link to={`/music/${music.id}`}>            
+                  <img src={`${import.meta.env.VITE_BACKEND_URL}/img/${music.imgUri}`} alt={music.title} className="music-image-search" width={150} height={150}/>
+                  <h2 className="music-title-search" title={music.title}>{music.title}</h2>
+                  <h3 className="music-author-search" title={music.artist}>{music.artist}</h3>
                 </Link>
               </div>
             ))}

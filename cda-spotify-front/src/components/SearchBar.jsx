@@ -4,22 +4,19 @@ import axios from 'axios';
 const SearchBar = ({getResult}) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = () => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/music/search/${searchQuery}`)
-      .then(response => {
-         getResult(response.data);
-      })
+  const handleSearch = e => {
+    e.preventDefault()
 
-    console.log(searchQuery);
-  };
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/music/search/${searchQuery}`)
+      .then(response => getResult(response.data))
+  }
 
   return (
-    <div>
-      <h1>Recherche</h1>
+    <form onSubmit={handleSearch} className='search-form'>
       <input type="text" placeholder="recherche" value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}/>
-      <button onClick={handleSearch}>Rechercher</button>
-    </div>
+      <button>Rechercher</button>
+    </form>
   );
 };
 

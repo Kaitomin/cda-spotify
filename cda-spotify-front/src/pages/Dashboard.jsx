@@ -59,21 +59,21 @@ function Dashboard() {
             <table className='w-100 text-center'>
               <thead>
                 <tr>
-                  <th className='py-4'>Image</th>
-                  <th className='py-4'>Artiste</th>
-                  <th className='py-4'>Titre</th>
-                  <th className='py-4'>Durée</th>
-                  <th className='py-4'>Sortie</th>
-                  <th className='py-4'>Actions</th>
+                  <th className='py-4 d-none d-sm-table-cell' width="15%">Image</th>
+                  <th className='py-4' width="20%">Artiste</th>
+                  <th className='py-4' width="20%">Titre</th>
+                  <th className='py-4' width="15%">Durée</th>
+                  <th className='py-4' width="15%">Sortie</th>
+                  <th className='py-4' width="15%">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 { musics && musics.map(m => (
                   <tr key={m.id} className="">
-                    <td className='py-3'>
+                    <td className='py-3 d-none d-sm-block'>
                       <img src={`${import.meta.env.VITE_BACKEND_URL}/img/${m.imgUri}`} alt="music cover" width={75} height={75} />
                     </td>
-                    <td>{m.artist}</td>
+                    <td className='py-3'>{m.artist}</td>
                     <td>{m.title}</td>
                     <td>{m.duration}</td>
                     <td>{m.releasedAt}</td>
