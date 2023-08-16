@@ -86,11 +86,11 @@ public class MusicService {
 		}
 		throw new IOException("File not found");
 	}
-	public void delete(long id){
+	public void delete(long id) throws IOException {
 		Music m = repository.findById(id).orElse(null);
+		repository.deleteById(id);
 		storageService.deleteFile(m.getImgUri());
 		storageService.deleteFile(m.getAudioUri());
-		repository.deleteById(id);
 	}
 	public MusicDTO getById(long id) {
 		return repository.findById(id).map(music -> mapper.map(music, MusicDTO.class)).orElse(null);

@@ -30,7 +30,11 @@ public class MusicController {
 	}
 	@DeleteMapping("/delete/{id}")
 	public void delete(@PathVariable long id){
-		 service.delete(id);
+		try {
+			service.delete(id);
+		} catch (IOException e) {
+			System.out.println("ERRRRRROR" + e.getMessage());
+		}
 	}
 	@GetMapping("/{id}")
 	public MusicDTO getById(@PathVariable long id){
