@@ -7,7 +7,7 @@ import '../style.css'
 
 const MusicPlayer = () => {
   const audioRef = useRef()
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true)
   const [currentIndex, setCurrentIndex] = useState()
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
@@ -16,7 +16,6 @@ const MusicPlayer = () => {
   const [currentMusic, setCurrentMusic] = useState(null)
   const [musicList, setMusicList] = useState([])
   const [playlists, setPlaylists] = useState([])
-  const [playlistIdToAdd, setPlaylistIdToAdd] = useState()
   const [showModal, setShowModal] = useState(false)
 
   const { playlistId, musicIndex, musicId } = useParams()
@@ -37,13 +36,12 @@ const MusicPlayer = () => {
   useEffect( () =>{
     setCurrentMusic(musicList[currentIndex])
   }, [currentIndex])
-  
-  // useEffect(() => {
-  //   if (audioRef.current && currentMusic) {
-  //   audioRef.current.play()
-  //   setIsPlaying(true);
-  // } 
-  // }, [currentMusic])
+
+  useEffect(() => {
+    if (isPlaying && audioRef.current && currentMusic) {
+      audioRef.current.play()
+    }
+  }, [currentMusic])
 
   const togglePlay = () => {
     if (isPlaying) {
@@ -107,7 +105,11 @@ const MusicPlayer = () => {
     setIsLooping(!isLooping);
   }
     
-  const handleRandom = () => setIsRandom(!isRandom)
+  const handleRandom = e => {
+    if (!isRandom) e.target.classList.add("active")
+    else e.target.classList.remove("active")
+    setIsRandom(!isRandom)
+  }
 
   const getPlaylists = () => {
     setShowModal(!showModal)
@@ -119,18 +121,19 @@ const MusicPlayer = () => {
       })
   }
 
-  const addToPlaylist = e => {
-    e.preventDefault()
-
+  const addToPlaylist = id => {
     // Check if music already exists in playlist
-    const filteredMusic = playlists.filter(p => p.id == playlistIdToAdd)
-    if (filteredMusic) {
+    const filteredMusic = playlists.filter(p => p.id == id)[0].musics.filter(m => m.id == currentMusic.id)
+    if (filteredMusic.length != 0) {
       console.log("Cette musique existe déjà dans cette playlist")
       return
     }
 
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/${playlistIdToAdd}/addMusic`, currentMusic)
-      .then(() => setShowModal(!showModal))
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/${id}/addMusic`, currentMusic)
+      .then(() => {
+        console.log("Musique ajoutée")
+        setShowModal(!showModal)
+      })
   }
 
   return (
@@ -147,15 +150,15 @@ const MusicPlayer = () => {
             <div>
               <i className="fa-solid fa-circle-plus" onClick={getPlaylists}></i>
               { showModal &&
-                <form onSubmit={addToPlaylist}>
-                <select name="selectedPlaylist" onChange={e => setPlaylistIdToAdd(e.target.value)}>
-                  <option style={{display: "none"}}>Sélectionner une playlist</option>
-                  {playlists && playlists.map(p => (
-                    <option key={p.id} value={p.id}>{p.name}</option>
+                <div className='playlist-modal'>
+                    <p>Ajouter à ...</p>
+                    { playlists && playlists.map(p => (
+                      <div key={p.id} onClick={() => addToPlaylist(p.id)}>{p.name}</div>
                     ))}
-                </select>
-                <button>Add</button>
-              </form>
+                    <div onClick={() => setShowModal(false)}>
+                      <i className="fa-solid fa-circle-xmark"></i>
+                    </div>
+                </div>
               }
             </div>
             <i className="fa-solid fa-share"></i>

@@ -17,8 +17,8 @@ function Dashboard() {
   }
 
   const getUsers = () => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/playlist`)
-      .then(res => setPlaylists(res.data))
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user`)
+      .then(res => setUsers(res.data))
   }
 
   useEffect(() => {
@@ -52,19 +52,19 @@ function Dashboard() {
           className="mb-3 m-0 p-0 bg-transparent justify-content-start"
         >
           <Tab eventKey="musics" title="Musics">
-            <Link to="/new-music" className='text-center d-flex justify-content-center text-decoration-none align-items-center column-gap-2 my-3'>
+            <Link to="/new-music" className='new-music-icon text-center d-flex flex-column justify-content-center text-decoration-none align-items-center column-gap-2 my-3'>
               <i className="fa-solid fa-circle-plus"></i>
               <span>Music</span>
             </Link>
             <table className='w-100 text-center'>
               <thead>
                 <tr>
-                  <th className='pb-4'>Image</th>
-                  <th className='pb-4'>Artiste</th>
-                  <th className='pb-4'>Titre</th>
-                  <th className='pb-4'>Durée</th>
-                  <th className='pb-4'>Sortie</th>
-                  <th className='pb-4'>Actions</th>
+                  <th className='py-4'>Image</th>
+                  <th className='py-4'>Artiste</th>
+                  <th className='py-4'>Titre</th>
+                  <th className='py-4'>Durée</th>
+                  <th className='py-4'>Sortie</th>
+                  <th className='py-4'>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -92,15 +92,15 @@ function Dashboard() {
             <table className='w-100 text-center'>
                 <thead>
                   <tr>
-                    <th className='pb-4'>Image</th>
-                    <th className='pb-4'>Nom</th>
-                    <th className='pb-4'>Créée le</th>
+                    <th className='py-4'>Image</th>
+                    <th className='py-4'>Nom</th>
+                    <th className='py-4'>Créée le</th>
                   </tr>
                 </thead>
                 <tbody>
                   { playlists && playlists.map(p => (
                     <tr key={p.id}>
-                      <td>
+                      <td className='py-3'>
                         {p.musics.length > 0 ? (<img src={`${import.meta.env.VITE_BACKEND_URL}/img/${p.musics[0]?.imgUri}`} alt="" width={75} height={75} />) : null}
                       </td>
                       <td>{p.name}</td>
@@ -114,16 +114,16 @@ function Dashboard() {
             <table className='w-100 text-center'>
               <thead>
                 <tr>
-                  <th className='pb-4'>Avatar</th>
-                  <th className='pb-4'>Nom</th>
-                  <th className='pb-4'>Role</th>
-                  <th className='pb-4'>Actions</th>
+                  <th className='py-4'>Avatar</th>
+                  <th className='py-4'>Nom</th>
+                  <th className='py-4'>Role</th>
+                  <th className='py-4'>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 { users && users.map(u =>(
                   <tr key={u.id}>
-                    <td><i className="fa-solid fa-user"></i></td>
+                    <td className='py-3'><i className="fa-solid fa-user"></i></td>
                     <td>{u.username}</td>
                     <td>{u.role}</td>
                     <td className='actions'>
