@@ -10,5 +10,6 @@ import java.util.List;
 public interface MusicRepository extends JpaRepository<Music, Long> {
     //List<Music> findTop10ByTags(Tag tag);
     List<Music> findTop10ByArtist(String artist);
-	
+
+	List<Music> findByTitleContainingIgnoreCaseOrArtistContainingIgnoreCase(String title, String artist);
 }

@@ -4,18 +4,19 @@ import './style.css'
 import NavBar from './components/Navbar'
 import MusicPlayer from './components/MusicPlayer'
 import Account from './pages/Account'
-import Searching from './pages/Searching'
 import Home from './pages/Home'
 import MyPlaylist from './pages/MyPlaylist'
 import DetailedPlaylist from './pages/DetailedPlaylist'
+import  Search  from './pages/Search'
 
 function App() {
   return (
     <>
       <NavBar/>
+      {/* <Search/> */}
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="/search" element={<Searching/>} />
+        <Route path="/search" element={<Search/>} />
         <Route path="/playlists" element={<MyPlaylist/>} />
         <Route path="/account" element={<Account/>} />
         <Route path="/playlist/:playlistId" element={<DetailedPlaylist/>} />

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dreamteam.app.dto.MusicDTO;
+import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.enums.Tag;
 import lombok.RequiredArgsConstructor;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -35,6 +36,10 @@ public class MusicController {
 	@GetMapping("/{id}")
 	public MusicDTO getById(@PathVariable long id){
 		return service.getById(id);
+	}
+	@GetMapping("/search/{searchKey}")
+	public List<MusicDTO> searchMusic(@PathVariable String searchKey){
+		return service.searchMusic(searchKey);
 	}
 	@PostMapping("/new")
 	public MusicDTO add(
