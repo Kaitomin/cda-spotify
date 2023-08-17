@@ -45,6 +45,14 @@ public class MusicController {
 	public List<MusicDTO> searchMusic(@PathVariable String searchKey){
 		return service.searchMusic(searchKey);
 	}
+	@GetMapping("/search/title/{searchKey}")
+	public List<MusicDTO> searchMusicByTitle(@PathVariable String searchKey){
+		return service.searchMusicByTitle(searchKey);
+	}
+	@GetMapping("/search/artist/{searchKey}")
+	public List<MusicDTO> searchMusicByArtist(@PathVariable String searchKey){
+		return service.searchMusicByArtist(searchKey);
+	}
 	@PostMapping("/new")
 	public MusicDTO add(
 		@RequestPart("fileUpload") MusicDTO musicDTO,

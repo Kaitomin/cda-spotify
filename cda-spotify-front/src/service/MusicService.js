@@ -7,8 +7,14 @@ export default {
   getById(id) {
     return Api().get(`/api/music/${id}`);
   },
-  searchBy(searchkey) {
-    return Api().get(`/api/music/search/${searchkey}`)
+  searchBy(searchKey) {
+    return Api().get(`/api/music/search/${searchKey}`)
+  },
+  searchByTitle(searchKey) {
+    return Api().get(`/api/music/search/title/${searchKey}`)
+  },
+  searchByArtist(searchKey) {
+    return Api().get(`/api/music/search/artist/${searchKey}`)
   },
   add(music) {
     return Api().post(`/api/music/new`, music);

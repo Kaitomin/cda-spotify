@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MusicService from '../service/MusicService';
 
-const SearchBar = ({getResult}) => {
+const SearchBar = ({ getResult, refresh }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = e => {
-    e.preventDefault()
+  useEffect(() => {
+    if (!searchQuery) return
 
-    MusicService.searchBy(searchQuery)
-      .then(response => getResult(response.data))
-  }
+    getResult(searchQuery)
+  }, [searchQuery, refresh])
 
   return (
-    <form onSubmit={handleSearch} className='search-form'>
-      <input type="text" placeholder="recherche" value={searchQuery}
-        onChange={(event) => setSearchQuery(event.target.value)}/>
-      <button>Rechercher</button>
-    </form>
-  );
-};
+    <input 
+      type="text" 
+      placeholder="Chercher une musique ou un artiste"
+      className='w-100'
+      value={searchQuery}
+      onChange={e => setSearchQuery(e.target.value)}
+    />
+  )
+}
 
 export default SearchBar;

@@ -31,14 +31,15 @@ const FormMusic = () => {
     }
 
     const handleCheck = (event) => {
-        var updatedList = [...checkedTags];
+        let updatedList = [...checkedTags]
+
         if (event.target.checked) {
-          updatedList = [...checkedTags, event.target.value];
+          updatedList = [...checkedTags, event.target.value]
         } else {
-          updatedList.splice(checkedTags.indexOf(event.target.value), 1);
+          updatedList.splice(checkedTags.indexOf(event.target.value), 1)
         }
-        setCheckedTags(updatedList);
-      };
+        setCheckedTags(updatedList)
+    }
 
     const isChecked = (item) =>
     checkedTags.includes(item) ? "checked-item" : "not-checked-item";
@@ -82,9 +83,9 @@ const FormMusic = () => {
   
     return (    
     <form className='music-form' onSubmit={handleSubmit}>
-        <h1>Enregistrer une nouvelle musique</h1>
+        <h1>Ajouter une musique</h1>
         <label className='label' >
-            Titre de la musique :
+            Titre :
             <input type="text" 
                 name="title" 
                 className='input'
@@ -93,7 +94,7 @@ const FormMusic = () => {
             />
         </label>
         <label className='label'>
-            Artiste de la musique :
+            Artiste :
             <input 
                 type="text" 
                 name="artist" 
@@ -104,7 +105,7 @@ const FormMusic = () => {
         </label>
        
         <label className='label'>
-            Date de sortie de la musique : 
+            Date de sortie : 
             <input 
                 type="date" 
                 name="releasedAt" 
@@ -114,7 +115,7 @@ const FormMusic = () => {
             />
         </label>
         <label className='label'>
-            Image associée :
+            Image :
             <input 
                 type="file" 
                 name="imgFile" 
@@ -123,7 +124,7 @@ const FormMusic = () => {
             />
         </label>
         <label className='label'>
-            Fichier de la musique :
+            Audio :
             <input 
                 type="file" 
                 name="audioFile" 
@@ -132,9 +133,9 @@ const FormMusic = () => {
             />
         </label>
         <div className="tags">
-        <div className="title">Les tags de la musique:</div>
+        <div className="title">Tags : </div>
         <div className="list-container">
-          {tags && tags.map(item => (
+          { tags && tags.map(item => (
             <div key={item}>
               <input value={item} type="checkbox" onChange={handleCheck} checked={checkedTags.includes(item)}/>
               <span className={isChecked(item)}>{item}</span>

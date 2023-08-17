@@ -36,7 +36,13 @@ public class MusicService {
 		return repository.findAll().stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
 	}
 	public  List<MusicDTO> searchMusic(String searchKey){
-			return repository.findByTitleContainingIgnoreCaseOrArtistContainingIgnoreCase(searchKey, searchKey).stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
+		return repository.findByTitleContainingIgnoreCaseOrArtistContainingIgnoreCase(searchKey, searchKey).stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
+	}
+	public  List<MusicDTO> searchMusicByTitle(String searchKey){
+		return repository.findByTitleContainingIgnoreCase(searchKey).stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
+	}
+	public  List<MusicDTO> searchMusicByArtist(String searchKey){
+		return repository.findByArtistContainingIgnoreCase(searchKey).stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
 	}
 	public MusicDTO add(
 			MusicDTO mDto,
