@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useEffect } from 'react';
-import { FaPlay, FaPause, FaForward, FaBackward  } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import '../style.css'
+import MusicService from '../service/MusicService';
+import PlaylistService from '../service/PlaylistService';
 
-const MusicPlayer = () => {
+const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   const audioRef = useRef()
   const [isPlaying, setIsPlaying] = useState(true)
   const [currentIndex, setCurrentIndex] = useState()
@@ -18,14 +17,12 @@ const MusicPlayer = () => {
   const [playlists, setPlaylists] = useState([])
   const [showModal, setShowModal] = useState(false)
 
-  const { playlistId, musicIndex, musicId } = useParams()
-
   useEffect(() => {
     if (musicId) {
-      axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/music/${musicId}`)
+      MusicService.getById(musicId)
         .then(res => setCurrentMusic(res.data))
     } else {
-      axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/${playlistId}`)
+      PlaylistService.getPlaylist(playlistId)
         .then(res => {
           setMusicList(res.data.musics);
           setCurrentMusic(res.data.musics[musicIndex]);
@@ -114,7 +111,7 @@ const MusicPlayer = () => {
   const getPlaylists = () => {
     setShowModal(!showModal)
     // Get all playlists from user
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/user/1`)
+    PlaylistService.getPlaylistByUserId(1)
       .then(res => {
         console.log(res.data)
         setPlaylists(res.data)
@@ -129,7 +126,7 @@ const MusicPlayer = () => {
       return
     }
 
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/${id}/addMusic`, currentMusic)
+    PlaylistService.addMusic(id, currentMusic)
       .then(() => {
         console.log("Musique ajoutée")
         setShowModal(!showModal)

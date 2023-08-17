@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import UpdatePlaylistForm from '../components/UpdatePlaylistForm';
 import { Link, useParams } from 'react-router-dom';
+import PlaylistService from '../service/PlaylistService';
 
 const DetailedPlaylist = () => {
     const [musicList, setMusicList] = useState([]);
@@ -13,33 +13,33 @@ const DetailedPlaylist = () => {
     const { playlistId } = useParams();
 
     const getPlaylist = () => {
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/${playlistId}`)
+        PlaylistService.getById(playlistId)
             .then(response => {
                 const data = response.data;
                 setMusicList(data.musics)
                 setPlaylist(data)
             });
     }
-    useEffect(() => {
-        getPlaylist()
-    }, []);
+
+    useEffect(() => getPlaylist(), []);
 
     const handleDelete = (id) => {
         const answer = confirm("Retirer de la playlist ?")
         if (!answer) return
 
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/${playlistId}/removeMusic/${id}`)
-            .then(getPlaylist())
+        PlaylistService.removeMusic(playlistId, id)
+            .then(() => getPlaylist())
     }
     const handleUpdatePlaylist = (childName) => {
         const newPlaylistData = {
             ...playlist,
             name:childName,
         }
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/1/updatePlaylist`,  newPlaylistData)
+
+        PlaylistService.updateName(1, newPlaylistData)
             .then(() =>{
-            getPlaylist();
-            setIsModalOpen(false);
+                setIsModalOpen(false);
+                getPlaylist()
             })
       }
 
@@ -135,7 +135,7 @@ const DetailedPlaylist = () => {
     }
 
     return (
-        <div className="playlist-page">
+        <div className="detailed-playlist">
             <div>
                 <h1>{playlist && playlist.name}</h1>
                 {!isModalOpen && <i className="fa-solid fa-pen-to-square edit-btn" onClick={() => setIsModalOpen(true)}></i>}
@@ -156,7 +156,7 @@ const DetailedPlaylist = () => {
                 {musicList && musicList.map((music, index) => (
                     <div key={music.id} className={`music-item track-${music.id}`}>
                         <div className="music-track">
-                            <img src={`http://localhost:8080/img/${music.imgUri}`} alt={music.title} className="music-image" />
+                            <img src={`http://localhost:8080/img/${music.imgUri}`} alt={music.title} className="music-image object-fit-cover" width={70} height={70} />
                             <audio className={`music-${music.id} audio-tag`} onEnded={handleEnded}>
                                 <source src={`http://localhost:8080/audio/${music.audioUri}`} type='audio/mp3' />
                             </audio>
@@ -168,7 +168,7 @@ const DetailedPlaylist = () => {
                         <div>
                             <div className="music-details">
                                 <Link to={`/playlist/${playlist.id}/music/${index}`}>
-                                    <p className="music-title">{music.artist} - {music.title}</p>
+                                    <p className="music-title m-0">{music.artist} - {music.title}</p>
                                 </Link>
                             </div>
 

@@ -17,6 +17,12 @@ export default function NavBar() {
         <li>
           <Link to="/dashboard">Dashboard</Link>
         </li>
+        <li>
+          <Link to="/">S'inscrire</Link>
+        </li>
+        <li>
+          <Link to="/">Connexion</Link>
+        </li>
       </ul>
     </nav>
   )

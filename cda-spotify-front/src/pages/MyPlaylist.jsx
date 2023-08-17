@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import PlaylistService from '../service/PlaylistService';
 
 const MyPlaylist = () => {
     const [playlists, setPlaylists] = useState([]);
     
     useEffect(() => {
-      axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/playlist/user/1`)
+      PlaylistService.getPlaylistByUserId(1)
         .then(res => {
           setPlaylists(res.data)
         })
     }, []);
 
   return (
-    <div className="my-playlist">
+    <div className="my-playlist container">
       <h1>Playlists</h1>
+      {/* <div className="playlist-container"> */}
       <div className="playlist-container">
         {playlists.map((playlist) => ( 
           <Link to={`/playlist/${playlist.id}`} key={playlist.id} className="playlist-item">

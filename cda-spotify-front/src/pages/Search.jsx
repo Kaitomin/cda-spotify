@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 const Search = () => {
   const [musicList, setMusicList] = useState([]);
 
-  const getResult = (result) => {
-      setMusicList(result)
-  }
+  const getResult = result => setMusicList(result)
+  
   return (
     <div className="search-page">
       <h1>Rechercher</h1>

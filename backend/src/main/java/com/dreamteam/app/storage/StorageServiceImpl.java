@@ -38,7 +38,7 @@ public class StorageServiceImpl implements StorageService {
 
         // Assign folder directory
         Path rootLocation = null;
-        if (file.getOriginalFilename().matches("((.*).png|(.*).jpg|(.*).jpeg)")){
+        if (file.getOriginalFilename().matches("((.*).png|(.*).jpg|(.*).jpeg|(.*).jfif|(.*).webp)")) {
             rootLocation = this.imgLocation;
         } else if (file.getOriginalFilename().matches("((.*).mp3|(.*).wav)")){
             rootLocation = this.audioLocation;

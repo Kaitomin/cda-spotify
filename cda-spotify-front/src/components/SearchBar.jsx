@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import MusicService from '../service/MusicService';
 
 const SearchBar = ({getResult}) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -7,7 +7,7 @@ const SearchBar = ({getResult}) => {
   const handleSearch = e => {
     e.preventDefault()
 
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/music/search/${searchQuery}`)
+    MusicService.searchBy(searchQuery)
       .then(response => getResult(response.data))
   }
 

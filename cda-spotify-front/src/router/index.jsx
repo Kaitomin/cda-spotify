@@ -1,0 +1,29 @@
+import { Routes, Route } from 'react-router-dom'
+import FormMusic from '../components/FormMusic'
+import Account from '../pages/Account'
+import Home from '../pages/Home'
+import MyPlaylist from '../pages/MyPlaylist'
+import DetailedPlaylist from '../pages/DetailedPlaylist'
+import Search  from '../pages/Search'
+import Dashboard from '../pages/Dashboard'
+import MusicDetails from '../pages/MusicDetails'
+
+const index = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Home/>} />
+      <Route path="/search" element={<Search/>} />
+      <Route path="/playlists" element={<MyPlaylist/>} />
+      <Route path="/account" element={<Account/>} />
+      <Route path="/new-music" element={<FormMusic/>} />
+      <Route path="/update-music/:musicId" element={<FormMusic/>} />
+      <Route path="/playlist/:playlistId" element={<DetailedPlaylist/>} />
+      <Route path="/music/:musicId" element={<MusicDetails/>} />
+      <Route path="/playlist/:playlistId/music/:musicIndex" element={<MusicDetails/>} />
+      <Route path="/dashboard" element={<Dashboard/>} />
+      <Route path="*" render={() => <Redirect to="/" />} /> {/* Fallback route */}
+    </Routes>
+  )
+}
+
+export default index
