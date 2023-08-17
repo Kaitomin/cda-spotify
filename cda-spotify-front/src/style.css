@@ -20,7 +20,7 @@
 body {
   background-color: var(--dark-blue-4) !important; /* Override BS */
   color: white !important; /* Override BS */
-  margin-bottom: 2em !important; /* Override BS */
+  margin-bottom: 4em !important; /* Override BS */
 }
 h1 {
   margin-bottom: 3rem !important; /* Override BS */
@@ -530,6 +530,42 @@ nav.nav li {
   color: black;
 }
 
+.search-page .form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid grey;
+  outline: 0;
+  color: white;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.search-page .form__field-span::before {
+  content: "\f002";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  top: -5px;
+  left: 10px;
+  font-size: 1.3em;
+}
+
+.search-page  .form__field:focus {
+  padding-bottom: 6px;  
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, rgb(0, 102, 102), darkcyan);
+  border-image-slice: 1;
+}
+
+/* reset input */
+.form__field:required,
+.form__field:invalid {
+  box-shadow:none; 
+}
+
 
 /* ------------------- */
 
@@ -667,6 +703,9 @@ nav.nav li {
 /* Dashboard */
 /* --------- */
 .dashboard {
+  color: white;
+}
+.dashboard a {
   color: white;
 }
 .dashboard .nav-item button:hover {

@@ -1,11 +1,8 @@
 package com.dreamteam.app.services;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.entities.Music;
@@ -13,8 +10,6 @@ import com.dreamteam.app.enums.Tag;
 import com.dreamteam.app.storage.StorageService;
 import com.dreamteam.app.utils.CustomUtils;
 import lombok.RequiredArgsConstructor;
-import org.jaudiotagger.audio.AudioFile;
-import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
