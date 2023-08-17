@@ -64,7 +64,7 @@ const Dashboard = () => {
                   <th className='py-3' width="20%">Artiste</th>
                   <th className='py-3' width="20%">Titre</th>
                   <th className='py-3' width="15%">Durée</th>
-                  <th className='py-3' width="15%">Sortie</th>
+                  <th className='py-3 d-none d-sm-table-cell' width="15%">Sortie</th>
                   <th className='py-3' width="15%">Actions</th>
                 </tr>
               </thead>
@@ -75,9 +75,13 @@ const Dashboard = () => {
                       <img src={`${import.meta.env.VITE_BACKEND_URL}/img/${m.imgUri}`} alt="music cover image" className='object-fit-cover' width={60} height={60} />
                     </td>
                     <td className='py-2'>{m.artist}</td>
-                    <td>{m.title}</td>
+                    <td>
+                      <Link to={`/music/${m.id}`}>
+                        {m.title}
+                      </Link>
+                    </td>
                     <td>{m.duration}</td>
-                    <td>{m.releasedAt}</td>
+                    <td className='d-none d-sm-table-cell'>{m.releasedAt}</td>
                     <td className='actions'>
                       <Link to={`/update-music/${m.id}`}>
                         <i className="fa-solid fa-pen-to-square me-3"></i>

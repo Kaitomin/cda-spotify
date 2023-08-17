@@ -1,17 +1,25 @@
 package com.dreamteam.app.auth;
 
+import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.dto.UserDTO;
+import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.entities.User;
 import com.dreamteam.app.enums.Role;
 import com.dreamteam.app.jwt.JwtService;
 import com.dreamteam.app.repositories.UserRepository;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,13 +28,24 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final ModelMapper mapper;
 
     public AuthenticationResponse register(UserDTO req) {
+
+        // Auto create 'Favoris' playlist
+        PlaylistDTO playlistDTO = new PlaylistDTO();
+        playlistDTO.setName("Favoris");
+        playlistDTO.setCreatedAt(LocalDate.now());
+        playlistDTO.setMusics(Collections.emptyList());
+
+        List<Playlist> playlists = new ArrayList<>();
+        playlists.add(mapper.map(playlistDTO, Playlist.class));
+
         var user = User.builder()
             .username(req.getUsername())
             .password(passwordEncoder.encode(req.getPassword()))
             .role(Role.CLIENT)
-            .playlists(req.getPlaylists())
+            .playlists(playlists)
             .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);

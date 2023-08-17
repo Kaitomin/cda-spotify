@@ -13,9 +13,8 @@ const MyPlaylist = () => {
     }, []);
 
   return (
-    <div className="my-playlist container">
+    <div className="my-playlist px-3">
       <h1>Playlists</h1>
-      {/* <div className="playlist-container"> */}
       <div className="playlist-container">
         {playlists.map((playlist) => ( 
           <Link to={`/playlist/${playlist.id}`} key={playlist.id} className="playlist-item">
@@ -24,7 +23,7 @@ const MyPlaylist = () => {
           </Link>
         ))}
       </div>
-
+      <Link to="/">Créer une playlist</Link>  
     </div>
 
   )

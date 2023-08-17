@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 
 export default function NavBar() {
   return (
-    <nav className="nav">
+    <nav className="nav border-bottom border-1">
       <Link to="/" className="site-title">Spotify</Link>
       <ul>
         <li>
@@ -11,18 +11,18 @@ export default function NavBar() {
         <li>
           <Link to="/playlists">Mes Playlists</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/account">Mon Compte</Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/dashboard">Dashboard</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/">S'inscrire</Link>
         </li>
         <li>
           <Link to="/">Connexion</Link>
-        </li>
+        </li> */}
       </ul>
     </nav>
   )

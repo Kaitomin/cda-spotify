@@ -3,11 +3,11 @@ import '../style.css'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import MusicService from '../service/MusicService';
+import TagService from '../service/TagService';
 
 const FormMusic = () => { 
-    const checkList = ["POP", "ROCK", "ADRIEN"];
-    const [checked, setChecked] = useState([]);
-    const { musicId } = useParams()
+    const [tags, setTags] = useState();
+    const [checkedTags, setCheckedTags] = useState([]);
     const [music, setMusic] = useState({
         title: "",
         artist: "",
@@ -16,32 +16,32 @@ const FormMusic = () => {
         imgFile: null,
         audioFile: null
     })
+    const { musicId } = useParams()
 
     if (musicId) {
         useEffect(() => {
             MusicService.getById(musicId)
-            // axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/music/${musicId}`)
                 .then(res => {
                     setMusic(res.data)
-                    setChecked(res.data.tags)
+                    setCheckedTags(res.data.tags)
                 })
+            TagService.getAll()
+                .then(res => setTags(res.data))
         }, [])
     }
 
-    // useEffect to get tags
-
     const handleCheck = (event) => {
-        var updatedList = [...checked];
+        var updatedList = [...checkedTags];
         if (event.target.checked) {
-          updatedList = [...checked, event.target.value];
+          updatedList = [...checkedTags, event.target.value];
         } else {
-          updatedList.splice(checked.indexOf(event.target.value), 1);
+          updatedList.splice(checkedTags.indexOf(event.target.value), 1);
         }
-        setChecked(updatedList);
+        setCheckedTags(updatedList);
       };
 
     const isChecked = (item) =>
-    checked.includes(item) ? "checked-item" : "not-checked-item";
+    checkedTags.includes(item) ? "checked-item" : "not-checked-item";
 
     const handleChange = e => {
         let { name, value, files } = e.target
@@ -60,7 +60,7 @@ const FormMusic = () => {
             "title" : music.title,
             "artist" : music.artist,
             "releasedAt" : music.releasedAt,
-            "tags" : checked
+            "tags" : checkedTags
         }
         
         formData.append("fileUpload", 
@@ -81,7 +81,7 @@ const FormMusic = () => {
     }
   
     return (    
-    <form className='form' onSubmit={handleSubmit}>
+    <form className='music-form' onSubmit={handleSubmit}>
         <h1>Enregistrer une nouvelle musique</h1>
         <label className='label' >
             Titre de la musique :
@@ -131,12 +131,12 @@ const FormMusic = () => {
                 onChange={handleChange}
             />
         </label>
-        <div className="checkList">
+        <div className="tags">
         <div className="title">Les tags de la musique:</div>
         <div className="list-container">
-          {checkList.map((item, index) => (
-            <div key={index}>
-              <input value={item} type="checkbox" onChange={handleCheck} checked={checked.includes(item)}/>
+          {tags && tags.map(item => (
+            <div key={item}>
+              <input value={item} type="checkbox" onChange={handleCheck} checked={checkedTags.includes(item)}/>
               <span className={isChecked(item)}>{item}</span>
             </div>
           ))}

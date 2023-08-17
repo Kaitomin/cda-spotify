@@ -16,21 +16,27 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   const [musicList, setMusicList] = useState([])
   const [playlists, setPlaylists] = useState([])
   const [showModal, setShowModal] = useState(false)
+  const [isFavorite, setIsFavorite] = useState()
 
   useEffect(() => {
     if (musicId) {
       MusicService.getById(musicId)
         .then(res => setCurrentMusic(res.data))
     } else {
-      PlaylistService.getPlaylist(playlistId)
+      PlaylistService.getById(playlistId)
         .then(res => {
-          setMusicList(res.data.musics);
-          setCurrentMusic(res.data.musics[musicIndex]);
+          setMusicList(res.data.musics)
+          setCurrentMusic(res.data.musics[musicIndex])
           setCurrentIndex(+musicIndex)
         })
     }
+
+    // If user is connected
+    PlaylistService.getPlaylistByUserId(1)
+      .then(res => setPlaylists(res.data))
   }, []);
-  useEffect( () =>{
+
+  useEffect(() => {
     setCurrentMusic(musicList[currentIndex])
   }, [currentIndex])
 
@@ -39,6 +45,20 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
       audioRef.current.play()
     }
   }, [currentMusic])
+
+  useEffect(() => {
+    if (playlists.length == 0) return
+
+    const filteredMusic = playlists[0].musics.filter(m => m.id == currentMusic.id)
+
+    if (filteredMusic.length != 0) {
+      console.log("Cette musique est déjà en favoris")
+      setIsFavorite(true)
+    } else {
+      console.log("Non en favoris")
+      setIsFavorite(false)
+    }
+  }, [playlists])
 
   const togglePlay = () => {
     if (isPlaying) {
@@ -95,8 +115,8 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }
 
   const handleLoop = e => {
-    if (!isLooping) e.target.classList.add("loop")
-    else e.target.classList.remove("loop")
+    if (!isLooping) e.target.classList.add("loop", "active")
+    else e.target.classList.remove("loop", "active")
 
     audioRef.current.loop = !isLooping;
     setIsLooping(!isLooping);
@@ -106,16 +126,6 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
     if (!isRandom) e.target.classList.add("active")
     else e.target.classList.remove("active")
     setIsRandom(!isRandom)
-  }
-
-  const getPlaylists = () => {
-    setShowModal(!showModal)
-    // Get all playlists from user
-    PlaylistService.getPlaylistByUserId(1)
-      .then(res => {
-        console.log(res.data)
-        setPlaylists(res.data)
-      })
   }
 
   const addToPlaylist = id => {
@@ -128,24 +138,41 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
 
     PlaylistService.addMusic(id, currentMusic)
       .then(() => {
-        console.log("Musique ajoutée")
+        console.log("Musique ajoutée à la playlist")
         setShowModal(!showModal)
+      })
+  }
+
+  const addToFavorite = () => {
+    PlaylistService.addMusic(playlists[0].id, currentMusic)
+      .then(() => {
+        console.log("Ajoutée aux favoris")
+        setIsFavorite(true)
+      })
+  }
+
+  const removeToFavorite = () => {
+    PlaylistService.removeMusic(playlists[0].id, currentMusic.id)
+      .then(() => {
+        console.log("Retirée des favoris")
+        setIsFavorite(false)
       })
   }
 
   return (
     <div className='music-player'>
       {currentMusic && (
-        <div className='mt-5 mx-auto'>
-          <h2 className='text-center'>{currentMusic.title}</h2>
-          <h3 className='text-center'>{currentMusic.artist}</h3>
+        <div className='mx-auto px-3 py-5'>
           <div className='d-flex justify-content-center align-items-center vh-45 mt-3'>
-            <img className='img-player shadow p-3 mb-3 bg-body rounded' src={`${import.meta.env.VITE_BACKEND_URL}/img/${currentMusic.imgUri}`}/>
+            <img className='img-player shadow bg-body rounded-top w-100 object-fit-cover' src={`${import.meta.env.VITE_BACKEND_URL}/img/${currentMusic.imgUri}`} height={350} />
           </div>
-          <div className="d-flex justify-content-center column-gap-5 actions">
-            <i className="fa-solid fa-heart"></i>
+          
+          <div className="d-flex justify-content-around py-2 rounded-bottom actions">
+            { !isFavorite && <i className="fa-regular fa-heart" onClick={addToFavorite}></i> }
+            { isFavorite && <i className="fa-solid fa-heart" onClick={removeToFavorite}></i> }
+            
             <div>
-              <i className="fa-solid fa-circle-plus" onClick={getPlaylists}></i>
+              <i className="fa-solid fa-circle-plus" onClick={() => setShowModal(true)}></i>
               { showModal &&
                 <div className='playlist-modal'>
                     <p>Ajouter à ...</p>
@@ -161,6 +188,10 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
             <i className="fa-solid fa-share"></i>
           </div>
 
+          <div className='mt-4'>
+            <h2 className='text-center fw-bold'>{currentMusic.title}</h2>
+            <h3 className='text-center'>{currentMusic.artist}</h3>
+          </div>
           <audio 
             ref={audioRef}
             onTimeUpdate={handleTimeUpdate}
