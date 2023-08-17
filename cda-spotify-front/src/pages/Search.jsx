@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import MusicService from "../service/MusicService";
 
-
-
 const Search = () => {
   const [musicList, setMusicList] = useState([]);
   const [checkedFilters, setCheckedFilters] = useState([])
@@ -12,16 +10,26 @@ const Search = () => {
 
   useEffect(() => setRefresh(!refresh), [checkedFilters])
 
+  useEffect(() => {
+    MusicService.getAll()
+      .then(res => setMusicList(res.data))
+  }, [])
+
   const getResult = searchKey => {
-    if ((checkedFilters.includes('title') && checkedFilters.includes('artist')) || (!checkedFilters.includes('title') && !checkedFilters.includes('artist'))) {
-      MusicService.searchBy(searchKey)
+    if (searchKey == '') {
+      MusicService.getAll()
         .then(res => setMusicList(res.data))
-    } else if (checkedFilters.includes('title')) {
-      MusicService.searchByTitle(searchKey)
+    } else if (searchKey) {
+      if ((checkedFilters.includes('title') && checkedFilters.includes('artist')) || (!checkedFilters.includes('title') && !checkedFilters.includes('artist'))) {
+        MusicService.searchBy(searchKey)
         .then(res => setMusicList(res.data))
-    } else {
-      MusicService.searchByArtist(searchKey)
+      } else if (checkedFilters.includes('title')) {
+        MusicService.searchByTitle(searchKey)
         .then(res => setMusicList(res.data))
+      } else if (checkedFilters.includes('artist')) {
+        MusicService.searchByArtist(searchKey)
+        .then(res => setMusicList(res.data))
+      }
     }
   }
 
@@ -29,8 +37,7 @@ const Search = () => {
     if (e.target.checked) {
       setCheckedFilters([...checkedFilters, e.target.value])
     } else {
-      const filtered = checkedFilters.filter(el => el != e.target.value)
-      setCheckedFilters(filtered)
+      setCheckedFilters(checkedFilters.filter(el => el != e.target.value))
     }
   }
 
@@ -38,15 +45,15 @@ const Search = () => {
     <div className="search-page px-3 mt-4">
       <SearchBar getResult={getResult} refresh={refresh} />
       <div className="d-flex justify-content-evenly my-2">
-        <div className="position-relative">
-          <label htmlFor="title" className="toggle">Par titre</label>
+        <div className="position-relative input">
+          <label htmlFor="title" className="toggle mb-2">Par titre</label>
           <input type="checkbox" id="title" name="title" value="title" className="toggle__input" onChange={handleFilter} />
           <span className="toggle-track">
 				    <span className="toggle-indicator"></span>
           </span>
         </div>
-        <div className="position-relative">
-          <label htmlFor="artist" className="toggle">Par artiste</label>
+        <div className="position-relative input">
+          <label htmlFor="artist" className="toggle mb-2">Par artiste</label>
           <input type="checkbox" id="artist" name="artist" value="artist" className="toggle__input" onChange={handleFilter} />
           <span className="toggle-track">
 				    <span className="toggle-indicator"></span>

@@ -16,7 +16,6 @@
   box-sizing :border-box;
   font-family: 'Quicksand', sans-serif;
 }
-
 body {
   background-color: var(--dark-blue-4) !important; /* Override BS */
   color: white !important; /* Override BS */
@@ -378,8 +377,11 @@ nav.nav li {
   flex-direction: column;
   align-items: flex-start;
 }
+.detailed-playlist .music-list > .music-item:nth-child(2n) {
+  background: var(--dark-blue-1);
+}
 .detailed-playlist .music-list > .music-item:nth-child(2n + 1) {
-  background: #192020;
+  background: var(--dark-blue-3);
 }
 .detailed-playlist .modal-window {
   display: flex;
@@ -468,7 +470,7 @@ nav.nav li {
   flex-grow: 1;
 }
 .detailed-playlist .animated {
-  background: #666;
+  background: var(--medium-blue);
   animation: sound 0ms -800ms linear infinite alternate;
 }
 
@@ -514,10 +516,18 @@ nav.nav li {
 
 .search-page .result-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 49%);
   gap: 20px;
+  justify-content: center;
 }
-
+.search-page h2,
+.search-page h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+  margin: 0 auto 0.5rem auto;
+}
 .search-page h2 {
   font-size: 1.3em;
 }
@@ -539,7 +549,7 @@ nav.nav li {
   color: white;
   padding: 7px 0;
   background: transparent;
-  transition: border-color 0.2s;
+  /* transition:  ; */
 }
 
 .search-page .form__field-span::before {
@@ -552,17 +562,21 @@ nav.nav li {
   font-size: 1.3em;
 }
 
-.search-page  .form__field:focus {
+.search-page input[type="checkbox"]:hover {
+  cursor: pointer;
+}
+
+.search-page .form__field:focus {
   padding-bottom: 6px;  
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, rgb(0, 102, 102), darkcyan);
+  border-image: linear-gradient(to right, #002d66, #00a8b9);
   border-image-slice: 1;
 }
 
 /* reset input */
-.form__field:required,
-.form__field:invalid {
+.search-page .form__field:required,
+.search-page .form__field:invalid {
   box-shadow:none; 
 }
 
@@ -766,7 +780,24 @@ nav.nav li {
 /* ======= Responsive ======= */
 /* =========================- */
 
-@media screen and (min-width: 568px) {
+@media screen and (max-width: 400px) {
+
+  /* ------------ */
+  /*  MyPlaylist  */
+  /* ------------ */
+  .my-playlist .playlist-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  /* -------*/
+  /* Search */
+  /* ------ */
+  .search-page .result-grid {
+    grid-template-columns: repeat(1, 100%);
+  }
+}
+
+@media screen and (min-width: 650px) {
   /* ------------- */
   /*  MusicPlayer  */
   /* ------------- */
@@ -782,6 +813,54 @@ nav.nav li {
   /* Search */
   /* ------ */
   .search-page .result-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 31%);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  /* ------------ */
+  /*  MyPlaylist  */
+  /* ------------ */
+  .my-playlist .playlist-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* -------*/
+  /* Search */
+  /* ------ */
+  .search-page .result-grid {
+    grid-template-columns: repeat(4, 23%);
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  /* ------------ */
+  /*  MyPlaylist  */
+  /* ------------ */
+  .my-playlist .playlist-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  /* -------*/
+  /* Search */
+  /* ------ */
+  .search-page .result-grid {
+    grid-template-columns: repeat(5, 18%);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  /* ------------ */
+  /*  MyPlaylist  */
+  /* ------------ */
+  .my-playlist .playlist-container {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  /* -------*/
+  /* Search */
+  /* ------ */
+  .search-page .result-grid {
+    grid-template-columns: repeat(6, 15%);
   }
 }

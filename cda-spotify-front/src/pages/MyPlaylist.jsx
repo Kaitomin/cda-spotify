@@ -23,7 +23,7 @@ const MyPlaylist = () => {
           </Link>
         ))}
       </div>
-      <Link to="/">Créer une playlist</Link>  
+      <Link to="/"><i className="fa-solid fa-circle-plus me-2"></i>Créer une playlist</Link>  
     </div>
 
   )

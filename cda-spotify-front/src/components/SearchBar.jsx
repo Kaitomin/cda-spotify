@@ -4,7 +4,7 @@ const SearchBar = ({ getResult, refresh }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    if (!searchQuery) return
+    // if (!searchQuery) return
 
     getResult(searchQuery)
   }, [searchQuery, refresh])

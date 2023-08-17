@@ -25,10 +25,13 @@ const FormMusic = () => {
                     setMusic(res.data)
                     setCheckedTags(res.data.tags)
                 })
-            TagService.getAll()
-                .then(res => setTags(res.data))
         }, [])
     }
+
+    useEffect(() => {
+        TagService.getAll()
+            .then(res => setTags(res.data))
+    }, [])
 
     const handleCheck = (event) => {
         let updatedList = [...checkedTags]
