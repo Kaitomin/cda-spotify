@@ -72,7 +72,7 @@ const Dashboard = () => {
                 { musics && musics.map(m => (
                   <tr key={m.id} className="">
                     <td className='py-2 d-none d-sm-block'>
-                      <img src={`${import.meta.env.VITE_BACKEND_URL}/img/${m.imgUri}`} alt="music cover image" className='object-fit-cover' width={60} height={60} />
+                      <img src={`${import.meta.env.VITE_CLOUDINARY_IMG_URL}/${m.imgUri}`} alt="music cover image" className='object-fit-cover' width={60} height={60} />
                     </td>
                     <td className='py-2'>{m.artist}</td>
                     <td>
@@ -106,7 +106,7 @@ const Dashboard = () => {
                   { playlists && playlists.map(p => (
                     <tr key={p.id}>
                       <td className='py-2'>
-                        {p.musics.length > 0 ? (<img src={`${import.meta.env.VITE_BACKEND_URL}/img/${p.musics[0]?.imgUri}`} alt="image of the first music in the playlist" className='object-fit-cover' width={60} height={60} />) : null}
+                        {p.musics.length > 0 ? (<img src={`${import.meta.env.VITE_CLOUDINARY_IMG_URL}/${p.musics[0]?.imgUri}`} alt="image of the first music in the playlist" className='object-fit-cover' width={60} height={60} />) : null}
                       </td>
                       <td>{p.name}</td>
                       <td>{p.createdAt}</td>

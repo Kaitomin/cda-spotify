@@ -15,10 +15,16 @@ const MyPlaylist = () => {
   return (
     <div className="my-playlist px-3">
       <h1>Playlists</h1>
-      <div className="playlist-container">
+      <div className="playlist-container mb-5">
         {playlists.map((playlist) => ( 
           <Link to={`/playlist/${playlist.id}`} key={playlist.id} className="playlist-item">
-            {<img src={playlist.musics.length > 0 ? `${import.meta.env.VITE_BACKEND_URL}/img/${playlist.musics[0].imgUri}` : "https://placehold.co/400x150"} alt={playlist.title} className="playlist-image" /> }
+            {<img 
+                src={playlist.musics.length > 0 ? 
+                  `${import.meta.env.VITE_CLOUDINARY_IMG_URL}/${playlist.musics[0].imgUri}` :
+                  "https://placehold.co/400x350"} 
+                alt={playlist.title} 
+                className="playlist-image" 
+            />}
             <h2 className="playlist-title">{playlist.name}</h2>
           </Link>
         ))}

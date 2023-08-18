@@ -353,7 +353,7 @@ nav.nav li {
   color: black;
   padding: 0.2em 0;
   text-align: center;
-  font-size: 1.3em;
+  font-size: 1.1em;
   font-weight: 600;
   border-radius: 0 0 5px 5px;
 }
@@ -370,6 +370,9 @@ nav.nav li {
 }
 .detailed-playlist > div h1 {
   margin: 0 !important;
+}
+.detailed-playlist h2 {
+  font-size: 1.2em;
 }
 .detailed-playlist .edit-btn:hover {
   cursor: pointer;

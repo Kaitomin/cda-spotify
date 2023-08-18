@@ -7,10 +7,16 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,17 +33,22 @@ public class CustomUtils {
      * @throws ReadOnlyFileException
      * @throws ParseException
      */
-    public static String getDuration(MultipartFile multFile) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
+    public static String getDuration(MultipartFile file) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
         SimpleDateFormat timeInFormat = new SimpleDateFormat("ss", Locale.FRANCE);
         SimpleDateFormat timeOutFormat = new SimpleDateFormat("mm:ss", Locale.FRANCE);
         SimpleDateFormat timeOutOverAnHourFormat = new SimpleDateFormat("kk:mm:ss", Locale.FRANCE);
         String duration;
 
-        // Convert 'Multipart file' to 'File'
-        File file = new File(System.getProperty("java.io.tmpdir") + "/" + multFile.getOriginalFilename());
-        multFile.transferTo(file);
+        Path pathFile = Paths.get(System.getProperty("java.io.tmpdir") + file.getOriginalFilename());
+        // Get file from path
+        File f = new File(pathFile.toUri());
 
-        AudioFile af = AudioFileIO.read(file);
+        // Convert 'Multipart file' to 'File'
+        try (InputStream inputStream = file.getInputStream()) {
+            Files.copy(inputStream, pathFile, StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        AudioFile af = AudioFileIO.read(f);
         int trackLength = af.getAudioHeader().getTrackLength();
 
         Date timeIn;
@@ -58,8 +69,8 @@ public class CustomUtils {
             }
         }
 
-        // Delete temp file from Temp folder
-        file.deleteOnExit();
+        // Delete temp file
+        Files.deleteIfExists(pathFile);
 
         return duration;
     }
@@ -69,6 +80,6 @@ public class CustomUtils {
      * @return boolean whether file is an image type or not
      */
     public static boolean isImageType(String filename) {
-        return FilenameUtils.getExtension(filename).matches("(png|jpg|jpeg)");
+        return FilenameUtils.getExtension(filename).matches("(png|jpg|jpeg|webp|jfif)");
     }
 }

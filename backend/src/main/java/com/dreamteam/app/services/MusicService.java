@@ -3,6 +3,7 @@ package com.dreamteam.app.services;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
+import java.util.stream.Stream;
 
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.entities.Music;
@@ -44,14 +45,19 @@ public class MusicService {
 			MultipartFile imgFile,
 			MultipartFile audioFile
 		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
-		String imgUuid = storageService.store(imgFile);
-		String audioUuid = storageService.store(audioFile);
 
+		if (Stream.of(mDto.getReleasedAt()).anyMatch(Objects::isNull) || mDto.getTitle().isEmpty() || mDto.getArtist().isEmpty()) {
+			System.out.println("A required field is empty or null");
+			return null;
+		}
+
+		String imgCdn = storageService.store(imgFile);
+		String audioCdn = storageService.store(audioFile);
 		String duration = CustomUtils.getDuration(audioFile);
 
 		mDto.setDuration(duration);
-		mDto.setImgUri(imgUuid);
-		mDto.setAudioUri(audioUuid);
+		mDto.setImgUri(imgCdn);
+		mDto.setAudioUri(audioCdn);
 		return mapper.map(repository.save(mapper.map(mDto, Music.class)), MusicDTO.class);
 	}
 
@@ -61,6 +67,12 @@ public class MusicService {
 			MultipartFile audioFile,
 			long id
 		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
+
+		if (Stream.of(mDto.getReleasedAt()).anyMatch(Objects::isNull) || mDto.getTitle().isEmpty() || mDto.getArtist().isEmpty()) {
+			System.out.println("A required field is empty or null");
+			return null;
+		}
+
 		if (repository.findById(id).orElse(null) != null) {
 			Music m = repository.findById(id).orElse(null);
 
@@ -71,7 +83,7 @@ public class MusicService {
 			if (imgFile == null) mDto.setImgUri(m.getImgUri());
 			else {
 				String imgUuid = storageService.store(imgFile);
-				storageService.deleteFile(m.getImgUri()); // Delete previous img file
+				storageService.deleteFile(m.getImgUri(), "img"); // Delete previous img file
 				mDto.setImgUri(imgUuid);
 			}
 
@@ -80,30 +92,27 @@ public class MusicService {
 			else {
 				String audioUuid = storageService.store(audioFile);
 				String duration = CustomUtils.getDuration(audioFile);
-				storageService.deleteFile(m.getAudioUri()); // Delete previous audio file
-
+				storageService.deleteFile(m.getAudioUri(), "audio"); // Delete previous audio file
 				mDto.setDuration(duration);
 				mDto.setAudioUri(audioUuid);
 			}
 			return mapper.map(repository.save(mapper.map(mDto, Music.class)), MusicDTO.class);
 		}
-		throw new IOException("File not found");
+		// throw new IOException("File not found");
+		return null;
 	}
 	public void delete(long id) throws IOException {
 		Music m = repository.findById(id).orElse(null);
 		repository.deleteById(id);
-		storageService.deleteFile(m.getImgUri());
-		storageService.deleteFile(m.getAudioUri());
+		storageService.deleteFile(m.getImgUri(), "img");
+		storageService.deleteFile(m.getAudioUri(), "audio") ;
 	}
 	public MusicDTO getById(long id) {
 		return repository.findById(id).map(music -> mapper.map(music, MusicDTO.class)).orElse(null);
 	}
 
 	public List<MusicDTO> getTop10ByTags(Tag tag) {
-		List<MusicDTO> musicsDTO = findAll();
-
-		return musicsDTO.stream().filter(music -> music.getTags().contains(tag)).limit(10).toList();
-		//return repository.findTop10ByTags(tag).stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
+		return findAll().stream().filter(music -> music.getTags().contains(tag)).limit(10).toList();
 	}
 	public List<MusicDTO> getTop10ByArtist(String artist) {
 		return repository.findTop10ByArtist(artist).stream().map(music -> mapper.map(music, MusicDTO.class)).toList();

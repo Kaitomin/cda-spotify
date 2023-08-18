@@ -1,11 +1,11 @@
 package com.dreamteam.app.storage;
 
+import com.cloudinary.utils.ObjectUtils;
 import com.dreamteam.app.utils.CustomUtils;
-import jakarta.persistence.Id;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,18 +13,25 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.UUID;
+import java.util.Map;
 import java.util.stream.Stream;
+import com.cloudinary.Cloudinary;
 
 @Service
 public class StorageServiceImpl implements StorageService {
     private final Path audioLocation;
     private final Path imgLocation;
+
+    Dotenv dotenv = Dotenv.load();
+    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+            "cloud_name", dotenv.get("CLOUDINARY_CLOUD_NAME"),
+            "api_key", "338554356678318",
+            "api_secret", "hOPlTA4uswfoFJIeaP3o0HaUXlM",
+            "secure", true));
 
     @Autowired
     public StorageServiceImpl(StorageProperties properties) {
@@ -32,7 +39,7 @@ public class StorageServiceImpl implements StorageService {
         this.imgLocation = Paths.get(properties.getLocationImg());
     }
 
-    @Override
+   /* @Override
     public String store(MultipartFile file) throws IOException, IllegalArgumentException {
         if (file.isEmpty()) throw new StorageException("Failed to store empty file.");
 
@@ -66,6 +73,32 @@ public class StorageServiceImpl implements StorageService {
             Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
         }
         return uuidFilename;
+    }*/
+
+    @Override
+    public String store(MultipartFile file) throws IOException, IllegalArgumentException {
+        // Extract file extension
+        String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+        // Set temp file path
+        Path pathFile = Paths.get(System.getProperty("java.io.tmpdir") + "/tmp." + ext);
+        // Get file from path
+        File f = new File(pathFile.toUri());
+        // Convert Multipart to File
+        try (InputStream inputStream = file.getInputStream()) {
+            Files.copy(inputStream, pathFile, StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        String uploadFolder = CustomUtils.isImageType(file.getOriginalFilename()) ?
+                "cda-spotify/img" :
+                "cda-spotify/audio";
+        System.out.println(uploadFolder);
+        System.out.println(file.getOriginalFilename());
+        Map uploadResult = cloudinary.uploader().upload(f, ObjectUtils.asMap("resource_type", "auto", "folder", uploadFolder));
+
+        // Delete temp file
+        Files.deleteIfExists(pathFile);
+
+        return uploadResult.get("public_id").toString();
     }
 
     @Override
@@ -116,15 +149,9 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void deleteFile(String filename) {
-        // Assign file path
-        File f = CustomUtils.isImageType(filename) ?
-                new File(this.imgLocation + "/" + filename) :
-                new File(this.audioLocation + "/" + filename);
-
-        if (f.delete()) {
-            System.out.println("File deleted : " + f.getName());
-        }
+    public void deleteFile(String filename, String format) throws IOException {
+        if (format.equals("img")) cloudinary.uploader().destroy(filename, ObjectUtils.emptyMap());
+        else cloudinary.uploader().destroy(filename, ObjectUtils.asMap("resource_type", "video"));
     }
 
     @Override

@@ -19,6 +19,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   const [isFavorite, setIsFavorite] = useState()
 
   useEffect(() => {
+    // Accessing from music page
     if (musicId) {
       MusicService.getById(musicId)
         .then(res => setCurrentMusic(res.data))
@@ -29,6 +30,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
           setCurrentIndex(indexOfCurrentMusic)
           setCurrentMusic(res.data[indexOfCurrentMusic])
         })
+    // Accessing from a specific playlist
     } else {
       PlaylistService.getById(playlistId)
         .then(res => {
@@ -38,7 +40,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
         })
     }
 
-    // If user is connected
+    // TODO: add user auth verification
     PlaylistService.getPlaylistByUserId(1)
       .then(res => setPlaylists(res.data))
   }, []);
@@ -171,7 +173,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
       {currentMusic && (
         <div className='mx-auto px-3 py-5'>
           <div className='d-flex justify-content-center align-items-center vh-45 mt-3'>
-            <img className='img-player shadow bg-body rounded-top w-100 object-fit-cover' src={`${import.meta.env.VITE_BACKEND_URL}/img/${currentMusic.imgUri}`} height={350} />
+            <img className='img-player shadow bg-body rounded-top w-100 object-fit-cover' src={`${import.meta.env.VITE_CLOUDINARY_IMG_URL}/${currentMusic.imgUri}`} height={350} />
           </div>
           
           <div className="d-flex justify-content-around py-2 rounded-bottom actions">
@@ -203,7 +205,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
             ref={audioRef}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
-            src={`${import.meta.env.VITE_BACKEND_URL}/audio/${currentMusic.audioUri}`}
+            src={`${import.meta.env.VITE_CLOUDINARY_AUDIO_URL}/${currentMusic.audioUri}`}
           />
 
           <div className="controls">
