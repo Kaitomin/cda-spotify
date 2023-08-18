@@ -8,18 +8,7 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 public interface StorageService {
-
-    void init();
-
     String store(MultipartFile file) throws IOException;
-
-    Stream<Path> loadAll();
-
-    Path load(String filename);
-
-    Resource loadAsResource(String filename);
-
-    void deleteAll();
 
     void deleteFile(String filename, String format) throws IOException;
 }
