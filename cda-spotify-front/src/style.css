@@ -8,8 +8,9 @@
   --dark-blue-4: #1f2833;
   --dark-blue-5: #1f4370;
   --medium-blue: #7CA0CC;
-  --red-warning: #ad0000;
+  --red-warning: #c30000;
   --light-blue: #00b8ff;
+  --link-hover: #262f40;
 }
 
 * {
@@ -51,6 +52,7 @@ nav.nav ul {
 }
 nav.nav li {
   padding: 0 15px;
+  transition: background-color 0.2s;
 }
 
 .site-title {
@@ -61,7 +63,7 @@ nav.nav li {
   background-color: #555;
 }
 .nav li:hover {
-  background-color: var(--dark-blue-5);
+  background-color: var(--link-hover);
 }
 
 /* --------- */
@@ -224,7 +226,7 @@ nav.nav li {
   background: var(--dark-blue-1);
   padding: 1em;
   margin: 0;
-  border-radius: 5% 5% 0 0;
+  border-radius: 15% 15% 0 0;
 }
 .music-player .playlist-modal i {
   color: var(--red-warning);
@@ -529,11 +531,11 @@ nav.nav li {
   margin: 0 auto 0.5rem auto;
 }
 .search-page h2 {
-  font-size: 1.3em;
+  font-size: 1.1em;
 }
 
 .search-page h3 {
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 .search-page a {
@@ -739,7 +741,7 @@ nav.nav li {
   color: white;
 }
 .dashboard .actions i.fa-pen-to-square {
-  color: white;
+  color: var(--light-blue);
 }
 .dashboard .actions i.fa-trash {
   color: var(--red-warning);

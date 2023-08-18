@@ -6,7 +6,7 @@ export default function NavBar() {
       <Link to="/" className="site-title">Spotify</Link>
       <ul>
         <li>
-          <Link to="/search">Rechercher</Link>
+          <Link to="/search"><i className="fa-solid fa-magnifying-glass"></i></Link>
         </li>
         <li>
           <Link to="/playlists">Mes Playlists</Link>

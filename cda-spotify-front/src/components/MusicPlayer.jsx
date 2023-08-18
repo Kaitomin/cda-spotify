@@ -22,6 +22,13 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
     if (musicId) {
       MusicService.getById(musicId)
         .then(res => setCurrentMusic(res.data))
+      MusicService.getAll()
+        .then(res => {
+          setMusicList(res.data)
+          const indexOfCurrentMusic = res.data.findIndex(m => m.id == musicId)
+          setCurrentIndex(indexOfCurrentMusic)
+          setCurrentMusic(res.data[indexOfCurrentMusic])
+        })
     } else {
       PlaylistService.getById(playlistId)
         .then(res => {
@@ -75,14 +82,14 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
-    if (audioRef.current.currentTime == duration && !musicId) handleNext()
-    if (audioRef.current.currentTime == duration && musicId) {
-      audioRef.current.pause()
-      audioRef.current.currentTime = 0;
-      if (isLooping == false) {
-        setIsPlaying(false)
-      }
-    }
+    if (audioRef.current.currentTime == duration) handleNext()
+    // if (audioRef.current.currentTime == duration && musicId) {
+    //   audioRef.current.pause()
+    //   audioRef.current.currentTime = 0;
+    //   if (isLooping == false) {
+    //     setIsPlaying(false)
+    //   }
+    // }
   }
 
   const handleLoadedMetadata = () => setDuration(audioRef.current.duration)
@@ -212,16 +219,16 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
               <div className="progress" style={{ width: `${(currentTime / duration) * 100}%` }}></div>
             </div>
             <i className="fa-solid fa-rotate-left mt-4" onClick={handleLoop}></i>
-            { !musicId && 
+            {/* { !musicId &&  */}
               <i className="fa-solid fa-backward mt-4" onClick={handlePrevious}></i>
-            }
+            {/* } */}
             { isPlaying ?  (<i className="fa-solid fa-pause mt-4 active" onClick={togglePlay}></i>) : (<i className="fa-solid fa-play mt-4" onClick={togglePlay}></i>) }
-            { !musicId &&
+            {/* { !musicId && */}
               <>
                 <i className="fa-solid fa-forward mt-4"onClick={handleNext}></i>
                 <i className="fa-solid fa-shuffle mt-4" onClick={handleRandom}></i>
               </>
-            }
+            {/* } */}
           </div>
         </div>
       )}
