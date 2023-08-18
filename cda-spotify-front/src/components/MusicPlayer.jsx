@@ -84,17 +84,13 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
-    if (audioRef.current.currentTime == duration) handleNext()
-    // if (audioRef.current.currentTime == duration && musicId) {
-    //   audioRef.current.pause()
-    //   audioRef.current.currentTime = 0;
-    //   if (isLooping == false) {
-    //     setIsPlaying(false)
-    //   }
-    // }
+    if (audioRef.current.currentTime >= duration) handleNext()
   }
 
-  const handleLoadedMetadata = () => setDuration(audioRef.current.duration)
+  const handleLoadedMetadata = () => {
+    const splitted = currentMusic.duration.split(":")
+    setDuration(parseInt(splitted[0]) * 60 + (parseInt(splitted[1]) - 1))
+  }
 
   const handleTimelineClick = (e) => {
     const timelineWidth = e.currentTarget.clientWidth;
