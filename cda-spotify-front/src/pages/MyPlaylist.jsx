@@ -20,7 +20,7 @@ const MyPlaylist = () => {
           <Link to={`/playlist/${playlist.id}`} key={playlist.id} className="playlist-item">
             {<img 
                 src={playlist.musics.length > 0 ? 
-                  `${import.meta.env.VITE_CLOUDINARY_IMG_URL}/${playlist.musics[0].imgUri}` :
+                  `${import.meta.env.VITE_RESOURCE_IMG_URL}/${playlist.musics[0].imgUri}` :
                   "https://placehold.co/400x350"} 
                 alt={playlist.title} 
                 className="playlist-image" 

@@ -7,7 +7,6 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -24,7 +23,7 @@ import java.util.Locale;
 
 public class CustomUtils {
     /**
-     * @param multFile
+     * @param file
      * @return duration in mm:ss format
      * @throws IOException
      * @throws CannotReadException
@@ -81,5 +80,9 @@ public class CustomUtils {
      */
     public static boolean isImageType(String filename) {
         return FilenameUtils.getExtension(filename).matches("(png|jpg|jpeg|webp|jfif)");
+    }
+
+    public static boolean isAudioType(String filename) {
+        return FilenameUtils.getExtension(filename).matches("(mp3|wav)");
     }
 }

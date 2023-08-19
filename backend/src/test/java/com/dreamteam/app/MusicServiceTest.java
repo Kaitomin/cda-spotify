@@ -8,7 +8,7 @@ import com.dreamteam.app.services.MusicService;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.dreamteam.app.storage.StorageService;
+import com.dreamteam.app.storage.StorageLocalService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +35,7 @@ public class MusicServiceTest {
     @Mock
     private MusicRepository repository;
     @Mock
-    private StorageService storageService;
+    private StorageLocalService storageService;
     private MusicService service;
 
     @BeforeEach

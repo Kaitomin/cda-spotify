@@ -17,7 +17,8 @@ const SearchBar = ({ getResult, refresh }) => {
         className='form__field ps-5'
         value={searchQuery}
         onChange={e => setSearchQuery(e.target.value)}
-       />
+        autoFocus
+      />
     </span>
   )
 }

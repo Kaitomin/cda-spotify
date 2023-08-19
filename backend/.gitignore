@@ -33,7 +33,12 @@ build/
 .vscode/
 
 ### ENV ###
-.env
+.env-dev
+.env-prod
+
+### Properties ###
+application-dev.properties
+application-prod.properties
 
 ### Static upload folders ###
 src/main/resources/static/

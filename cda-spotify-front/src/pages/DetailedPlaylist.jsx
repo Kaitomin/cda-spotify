@@ -156,9 +156,9 @@ const DetailedPlaylist = () => {
                 {musicList && musicList.map((music, index) => (
                     <div key={music.id} className={`music-item track-${music.id}`}>
                         <div className="music-track">
-                            <img src={`${import.meta.env.VITE_CLOUDINARY_IMG_URL}/${music.imgUri}`} alt={music.title} className="music-image object-fit-cover" width={70} height={70} />
+                            <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${music.imgUri}`} alt={music.title} className="music-image object-fit-cover" width={70} height={70} />
                             <audio className={`music-${music.id} audio-tag`} onEnded={handleEnded}>
-                                <source src={`${import.meta.env.VITE_CLOUDINARY_AUDIO_URL}/${music.audioUri}`} type='audio/mp3' />
+                                <source src={`${import.meta.env.VITE_RESOURCE_AUDIO_URL}/${music.audioUri}`} type='audio/mp3' />
                             </audio>
                             <div className={`btn-container btn-${music.id}`} onClick={(e) => handleClick(e, music.id)}>
                                 <i className="fa-solid fa-circle-play"></i>

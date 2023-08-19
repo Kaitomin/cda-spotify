@@ -11,6 +11,7 @@ import com.dreamteam.app.enums.Tag;
 import com.dreamteam.app.storage.StorageService;
 import com.dreamteam.app.utils.CustomUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -27,7 +28,7 @@ public class MusicService {
 	private final MusicRepository repository;
 	private final ModelMapper mapper;
 	private final StorageService storageService;
-	
+
 	public List<MusicDTO> findAll(){
 		return repository.findAll().stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
 	}
@@ -48,16 +49,21 @@ public class MusicService {
 
 		if (Stream.of(mDto.getReleasedAt()).anyMatch(Objects::isNull) || mDto.getTitle().isEmpty() || mDto.getArtist().isEmpty()) {
 			System.out.println("A required field is empty or null");
-			return null;
+			throw new IllegalArgumentException("Empty field");
 		}
 
-		String imgCdn = storageService.store(imgFile);
-		String audioCdn = storageService.store(audioFile);
+		if (!CustomUtils.isImageType(imgFile.getOriginalFilename()) || !CustomUtils.isAudioType(audioFile.getOriginalFilename())) {
+			System.out.println("wrong format");
+			throw new InvalidContentTypeException("Wrong format");
+		}
+
 		String duration = CustomUtils.getDuration(audioFile);
+		String imgUri = storageService.store(imgFile);
+		String audioUri = storageService.store(audioFile);
 
 		mDto.setDuration(duration);
-		mDto.setImgUri(imgCdn);
-		mDto.setAudioUri(audioCdn);
+		mDto.setImgUri(imgUri);
+		mDto.setAudioUri(audioUri);
 		return mapper.map(repository.save(mapper.map(mDto, Music.class)), MusicDTO.class);
 	}
 
@@ -82,19 +88,19 @@ public class MusicService {
 			// Check if a new image file is uploaded
 			if (imgFile == null) mDto.setImgUri(m.getImgUri());
 			else {
-				String imgUuid = storageService.store(imgFile);
+				String imgUri = storageService.store(imgFile);
 				storageService.deleteFile(m.getImgUri(), "img"); // Delete previous img file
-				mDto.setImgUri(imgUuid);
+				mDto.setImgUri(imgUri);
 			}
 
 			// Check if a new audio file is uploaded
 			if (audioFile == null) mDto.setAudioUri(m.getAudioUri());
 			else {
-				String audioUuid = storageService.store(audioFile);
+				String audioUri = storageService.store(audioFile);
 				String duration = CustomUtils.getDuration(audioFile);
 				storageService.deleteFile(m.getAudioUri(), "audio"); // Delete previous audio file
 				mDto.setDuration(duration);
-				mDto.setAudioUri(audioUuid);
+				mDto.setAudioUri(audioUri);
 			}
 			return mapper.map(repository.save(mapper.map(mDto, Music.class)), MusicDTO.class);
 		}

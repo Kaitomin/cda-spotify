@@ -23,8 +23,8 @@ body {
   margin-bottom: 4em !important; /* Override BS */
 }
 h1 {
-  margin-bottom: 3rem !important; /* Override BS */
-  margin-top: 2em !important; /* Override BS */
+  margin-bottom: 1em !important; /* Override BS */
+  margin-top: 1em !important; /* Override BS */
   text-align: center;
 }
 nav.nav {
@@ -723,6 +723,7 @@ nav.nav li {
 /* --------- */
 .dashboard {
   color: white;
+  margin-bottom: 5em;
 }
 .dashboard a {
   color: white;
@@ -799,6 +800,18 @@ nav.nav li {
   /* ------ */
   .search-page .result-grid {
     grid-template-columns: repeat(1, 100%);
+  }
+}
+
+@media screen and (max-width: 568px) {
+  /* --------- */
+  /* Dashboard */
+  /* --------- */
+  .dashboard {
+    margin-bottom: 8.5em;
+  }
+  .dashboard .new-music-icon {
+    bottom: 50px;
   }
 }
 

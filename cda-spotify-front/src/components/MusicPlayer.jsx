@@ -84,12 +84,12 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
-    if (audioRef.current.currentTime >= duration) handleNext()
+    if (Math.ceil(audioRef.current.currentTime) >= duration) handleNext()
   }
 
   const handleLoadedMetadata = () => {
     const splitted = currentMusic.duration.split(":")
-    setDuration(parseInt(splitted[0]) * 60 + (parseInt(splitted[1]) - 1))
+    setDuration(parseInt(splitted[0]) * 60 + parseInt(splitted[1]))
   }
 
   const handleTimelineClick = (e) => {
@@ -169,7 +169,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
       {currentMusic && (
         <div className='mx-auto px-3 py-5'>
           <div className='d-flex justify-content-center align-items-center vh-45 mt-3'>
-            <img className='img-player shadow bg-body rounded-top w-100 object-fit-cover' src={`${import.meta.env.VITE_CLOUDINARY_IMG_URL}/${currentMusic.imgUri}`} height={350} />
+            <img className='img-player shadow bg-body rounded-top w-100 object-fit-cover' src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${currentMusic.imgUri}`} height={350} />
           </div>
           
           <div className="d-flex justify-content-around py-2 rounded-bottom actions">
@@ -201,7 +201,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
             ref={audioRef}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
-            src={`${import.meta.env.VITE_CLOUDINARY_AUDIO_URL}/${currentMusic.audioUri}`}
+            src={`${import.meta.env.VITE_RESOURCE_AUDIO_URL}/${currentMusic.audioUri}`}
           />
 
           <div className="controls">
