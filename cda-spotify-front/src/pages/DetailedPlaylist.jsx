@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import UpdatePlaylistForm from '../components/UpdatePlaylistForm';
+import PlaylistForm from '../components/PlaylistForm';
 import { Link, useParams } from 'react-router-dom';
 import PlaylistService from '../service/PlaylistService';
 
@@ -142,7 +142,7 @@ const DetailedPlaylist = () => {
             </div>
             {isModalOpen && (
                 <div className='modal-window'>
-                    <UpdatePlaylistForm playlistName={playlist.name} handleUpdatePlaylist={handleUpdatePlaylist} />
+                    <PlaylistForm playlistName={playlist.name} handlePlaylist={handleUpdatePlaylist} />
                     <button onClick={() => setIsModalOpen(false)}>Annuler</button>
                 </div>
             )} 

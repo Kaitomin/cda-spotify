@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-const UpdatePlaylistForm = ({ playlistName, handleUpdatePlaylist }) => {
-    const [newName, setNewName] = useState(playlistName);
+const PlaylistForm = ({ playlistName, handlePlaylist }) => {
+    const [newName, setNewName] = useState(playlistName ? playlistName : '');
 
     const handleChange = e => {
         setNewName(e.target.value);
     }
     const handleSubmit = e => {
         e.preventDefault();
-        handleUpdatePlaylist(newName)
+        handlePlaylist(newName)
     }
 
     return (
@@ -21,4 +21,4 @@ const UpdatePlaylistForm = ({ playlistName, handleUpdatePlaylist }) => {
     ) 
 }
 
-export default UpdatePlaylistForm;
+export default PlaylistForm;

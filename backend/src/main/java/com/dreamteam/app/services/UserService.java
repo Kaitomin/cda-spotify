@@ -41,6 +41,9 @@ public class UserService {
         // Can not add another playlist named "Favoris"
         if (playlistDTO.getName().equals("Favoris")) return;
 
+        playlistDTO.setCreatedAt(LocalDate.now());
+        playlistDTO.setMusics(Collections.emptyList());
+
         repository.findById(userId).ifPresent(user -> {
             List<Playlist> userPlaylists = user.getPlaylists();
             userPlaylists.add(mapper.map(playlistDTO, Playlist.class));

@@ -326,8 +326,25 @@ nav.nav li {
 }
 
 .my-playlist .playlist-item {
+  position: relative;
   text-decoration: none;
   color: black;
+}
+.my-playlist .playlist-item i.fa-xmark {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border-radius: 100%;
+  font-size: 1.4em;
+  color: red;
+  background: red;
+  color: white;
+  padding: 0.3em;
+  z-index: 99;
+}
+
+.my-playlist .playlist-item i.fa-xmark:hover {
+  cursor: pointer;
 }
 
 .my-playlist .playlist-image {
