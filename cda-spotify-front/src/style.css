@@ -34,6 +34,7 @@ nav.nav {
   justify-content : space-between;
   align-items: stretch;
   gap: 2rem;
+  padding: 0 0.5em;
 }
 nav.nav a {
   color: inherit;
@@ -336,8 +337,7 @@ nav.nav li {
   right: 5px;
   border-radius: 100%;
   font-size: 1.4em;
-  color: red;
-  background: red;
+  background: var(--red-warning);
   color: white;
   padding: 0.3em;
   z-index: 99;

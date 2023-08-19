@@ -5,7 +5,7 @@ export default function NavBar() {
     <nav className="nav border-bottom border-1">
       <Link to="/" className="site-title">Spotify</Link>
       <ul>
-        <li>
+        <li className="d-none d-sm-block">
           <Link to="/search"><i className="fa-solid fa-magnifying-glass"></i></Link>
         </li>
         <li>
@@ -14,7 +14,7 @@ export default function NavBar() {
         {/* <li>
           <Link to="/account">Mon Compte</Link>
         </li> */}
-        <li>
+        <li className="d-none d-sm-block">
           <Link to="/dashboard">Dashboard</Link>
         </li>
         {/* <li>

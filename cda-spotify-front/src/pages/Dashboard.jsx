@@ -43,9 +43,9 @@ const Dashboard = () => {
   }
 
   return (
-    <div className='dashboard'>
+    <div className='dashboard px-3'>
       <h1>Dashboard</h1>
-      <div className='content gap-2 px-2'>
+      <div className='content gap-2'>
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
@@ -63,7 +63,7 @@ const Dashboard = () => {
                   <th className='py-3 d-none d-sm-table-cell' width="15%">Image</th>
                   <th className='py-3' width="20%">Artiste</th>
                   <th className='py-3' width="20%">Titre</th>
-                  <th className='py-3' width="15%">Durée</th>
+                  <th className='py-3 d-none d-sm-table-cell' width="15%">Durée</th>
                   <th className='py-3 d-none d-sm-table-cell' width="15%">Sortie</th>
                   <th className='py-3' width="15%">Actions</th>
                 </tr>
@@ -80,7 +80,7 @@ const Dashboard = () => {
                         {m.title}
                       </Link>
                     </td>
-                    <td>{m.duration}</td>
+                    <td className='d-none d-sm-table-cell'>{m.duration}</td>
                     <td className='d-none d-sm-table-cell'>{m.releasedAt}</td>
                     <td className='actions'>
                       <Link to={`/update-music/${m.id}`}>
@@ -106,7 +106,7 @@ const Dashboard = () => {
                   { playlists && playlists.map(p => (
                     <tr key={p.id}>
                       <td className='py-2'>
-                        {p.musics.length > 0 ? (<img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${p.musics[0]?.imgUri}`} alt="image of the first music in the playlist" className='object-fit-cover' width={60} height={60} />) : null}
+                        {p.musics.length > 0 ? (<img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${p.musics[0]?.imgUri}`} alt="image of the first music in the playlist" className='object-fit-cover' width={60} height={60} />) : <img src="https://placehold.co/60" /> }
                       </td>
                       <td>{p.name}</td>
                       <td>{p.createdAt}</td>
