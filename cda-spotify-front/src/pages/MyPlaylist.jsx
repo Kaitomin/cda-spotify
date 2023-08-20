@@ -3,16 +3,21 @@ import { Link } from 'react-router-dom';
 import PlaylistService from '../service/PlaylistService';
 import UserService from '../service/UserService';
 import PlaylistForm from '../components/PlaylistForm';
+import useAuth from '../hook/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 const MyPlaylist = () => {
   const [playlists, setPlaylists] = useState([])
   const [showModal, setShowModal] = useState(false)
+  const { currentUser } = useAuth()
+  const navigate = useNavigate()
 
   const getPlaylists = () => {
-    PlaylistService.getPlaylistByUserId(1)
+    PlaylistService.getPlaylistByUserId(currentUser.id, currentUser.token)
       .then(res => {
         setPlaylists(res.data)
       })
+      .catch(() => navigate('/login'))
   }
   
   useEffect(() => {
@@ -20,14 +25,14 @@ const MyPlaylist = () => {
   }, []);
 
   const addNewPlaylistToUser = newPlaylistName => {
-    UserService.addPlaylist(1, { name: newPlaylistName })
+    UserService.addPlaylist(currentUser.id, { name: newPlaylistName }, currentUser.token)
       .then(() => getPlaylists())
   }
 
   const removePlaylistFromUser = playlistId => {
     if (!confirm("Supprimer cette playlist ?")) return
 
-    UserService.deletePlaylist(1, playlistId)
+    UserService.deletePlaylist(currentUser.id, playlistId, currentUser.token)
       .then(() => getPlaylists())
   }
 

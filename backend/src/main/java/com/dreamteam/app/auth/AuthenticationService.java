@@ -31,34 +31,37 @@ public class AuthenticationService {
     private final ModelMapper mapper;
 
     public AuthenticationResponse register(UserDTO req) {
-
         // Auto create 'Favoris' playlist
         PlaylistDTO playlistDTO = new PlaylistDTO();
         playlistDTO.setName("Favoris");
         playlistDTO.setCreatedAt(LocalDate.now());
         playlistDTO.setMusics(Collections.emptyList());
-
         List<Playlist> playlists = new ArrayList<>();
         playlists.add(mapper.map(playlistDTO, Playlist.class));
 
+        // Create user
         var user = User.builder()
             .username(req.getUsername())
             .password(passwordEncoder.encode(req.getPassword()))
             .role(Role.CLIENT)
             .playlists(playlists)
             .build();
-        repository.save(user);
+        User newUser = repository.save(user);
+
+        // Generate token
         var jwtToken = jwtService.generateToken(user);
 
-
-        Cookie cookie = new Cookie("jwt", jwtToken);
-        cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
-        cookie.setSecure(true);
+        // Generate cookie
+        Cookie cookie = new Cookie("authToken", jwtToken);
+        cookie.setMaxAge(24 * 60 * 60); // expires in 1 day
+        // cookie.setSecure(true); // in production mode
         cookie.setHttpOnly(true);
         cookie.setPath("/");
 
         return AuthenticationResponse.builder()
             .token(jwtToken)
+            .id(newUser.getId())
+            .role(newUser.getRole())
             .build();
     }
 
@@ -74,12 +77,14 @@ public class AuthenticationService {
 
         Cookie cookie = new Cookie("jwt", jwtToken);
         cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
-        cookie.setSecure(true);
+        // cookie.setSecure(true); in production mode
         cookie.setHttpOnly(true);
         cookie.setPath("/");
 
         return AuthenticationResponse.builder()
             .token(jwtToken)
+            .id(user.getId())
+            .role((user.getRole()))
             .build();
     }
 }

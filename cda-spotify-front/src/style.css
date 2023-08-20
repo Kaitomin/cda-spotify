@@ -50,10 +50,15 @@ nav.nav ul {
   margin : 0;
   list-style: none;
   display : flex;
+  align-items: center;
 }
 nav.nav li {
   padding: 0 15px;
   transition: background-color 0.2s;
+}
+
+.logout:hover {
+  cursor: pointer;
 }
 
 .site-title {

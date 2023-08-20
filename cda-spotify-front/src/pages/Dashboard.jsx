@@ -5,12 +5,17 @@ import { Link } from 'react-router-dom';
 import MusicService from '../service/MusicService';
 import PlaylistService from '../service/PlaylistService';
 import UserService from '../service/UserService';
+import useAuth from '../hook/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
   const [key, setKey] = useState('musics')
   const [musics, setMusics] = useState()
   const [users, setUsers] = useState()
   const [playlists, setPlaylists] = useState()
+  const { currentUser } = useAuth()
+  const navigate = useNavigate()
+
 
   const getMusics = () => {
     MusicService.getAll()
@@ -18,7 +23,7 @@ const Dashboard = () => {
   }
 
   const getUsers = () => {
-    UserService.getAll()
+    UserService.getAll(currentUser.token)
       .then(res => setUsers(res.data))
   }
 
@@ -31,7 +36,7 @@ const Dashboard = () => {
   }, [])
 
   useEffect(() => {
-    PlaylistService.getAll()
+    PlaylistService.getAll(currentUser.token)
       .then(res => setPlaylists(res.data))
   }, [])
   

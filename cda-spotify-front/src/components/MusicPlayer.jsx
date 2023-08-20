@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import '../style.css'
 import MusicService from '../service/MusicService';
 import PlaylistService from '../service/PlaylistService';
+import useAuth from '../hook/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   const audioRef = useRef()
@@ -17,6 +19,9 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   const [playlists, setPlaylists] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [isFavorite, setIsFavorite] = useState()
+  const { currentUser } = useAuth()
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     // Accessing from music page
@@ -32,7 +37,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
         })
     // Accessing from a specific playlist
     } else {
-      PlaylistService.getById(playlistId)
+      PlaylistService.getById(playlistId, currentUser.token)
         .then(res => {
           setMusicList(res.data.musics)
           setCurrentMusic(res.data.musics[musicIndex])
@@ -40,8 +45,9 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
         })
     }
 
-    // TODO: add user auth verification
-    PlaylistService.getPlaylistByUserId(1)
+    if (!currentUser.id) return 
+
+    PlaylistService.getPlaylistByUserId(currentUser.id, currentUser.token)
       .then(res => setPlaylists(res.data))
   }, []);
 
@@ -61,10 +67,8 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
     const filteredMusic = playlists[0].musics.filter(m => m.id == currentMusic.id)
 
     if (filteredMusic.length != 0) {
-      console.log("Cette musique est déjà en favoris")
       setIsFavorite(true)
     } else {
-      console.log("Non en favoris")
       setIsFavorite(false)
     }
   }, [playlists])
@@ -134,14 +138,18 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }
 
   const addToPlaylist = id => {
-    // Check if music already exists in playlist
-    const filteredMusic = playlists.filter(p => p.id == id)[0].musics.filter(m => m.id == currentMusic.id)
-    if (filteredMusic.length != 0) {
-      console.log("Cette musique existe déjà dans cette playlist")
+     // Modal indiquant qu'un compte est nécessaire
+     if (!currentUser.id) {
       return
     }
 
-    PlaylistService.addMusic(id, currentMusic)
+    // Check if music already exists in playlist
+    const filteredMusic = playlists.filter(p => p.id == id)[0].musics.filter(m => m.id == currentMusic.id)
+    if (filteredMusic.length != 0) {
+      return
+    }
+
+    PlaylistService.addMusic(id, currentMusic, currentUser.token)
       .then(() => {
         console.log("Musique ajoutée à la playlist")
         setShowModal(!showModal)
@@ -149,7 +157,12 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }
 
   const addToFavorite = () => {
-    PlaylistService.addMusic(playlists[0].id, currentMusic)
+    // Modal indiquant qu'un compte est nécessaire
+    if (!currentUser.id) {
+      return
+    }
+
+    PlaylistService.addMusic(playlists[0].id, currentMusic, currentUser.token)
       .then(() => {
         console.log("Ajoutée aux favoris")
         setIsFavorite(true)
@@ -157,7 +170,11 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }
 
   const removeToFavorite = () => {
-    PlaylistService.removeMusic(playlists[0].id, currentMusic.id)
+    // Modal indiquant qu'un compte est nécessaire
+    if (!currentUser.id) {
+      return
+    }
+    PlaylistService.removeMusic(playlists[0].id, currentMusic.id, currentUser.token)
       .then(() => {
         console.log("Retirée des favoris")
         setIsFavorite(false)
@@ -178,6 +195,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
             
             <div>
               <i className="fa-solid fa-circle-plus" onClick={() => setShowModal(true)}></i>
+              {/* Changer le message si l'utilisateur n'est pas connecté */}
               { showModal &&
                 <div className='playlist-modal'>
                     <p>Ajouter à ...</p>

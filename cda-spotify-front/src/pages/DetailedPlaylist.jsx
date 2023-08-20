@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PlaylistForm from '../components/PlaylistForm';
 import { Link, useParams } from 'react-router-dom';
 import PlaylistService from '../service/PlaylistService';
+import useAuth from '../hook/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 const DetailedPlaylist = () => {
     const [musicList, setMusicList] = useState([]);
@@ -9,11 +11,13 @@ const DetailedPlaylist = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentMusicId, setCurrentMusicId] = useState(null);
+    const { currentUser } = useAuth()
+    const navigate = useNavigate()
 
     const { playlistId } = useParams();
 
     const getPlaylist = () => {
-        PlaylistService.getById(playlistId)
+        PlaylistService.getById(playlistId, currentUser.token)
             .then(response => {
                 const data = response.data;
                 setMusicList(data.musics)
@@ -27,7 +31,7 @@ const DetailedPlaylist = () => {
         const answer = confirm("Retirer de la playlist ?")
         if (!answer) return
 
-        PlaylistService.removeMusic(playlistId, id)
+        PlaylistService.removeMusic(playlistId, id, currentUser.token)
             .then(() => getPlaylist())
     }
     const handleUpdatePlaylist = (childName) => {
@@ -36,7 +40,7 @@ const DetailedPlaylist = () => {
             name:childName,
         }
 
-        PlaylistService.updateName(1, newPlaylistData)
+        PlaylistService.updateName(currentUser.id, newPlaylistData, currentUser.token)
             .then(() =>{
                 setIsModalOpen(false);
                 getPlaylist()

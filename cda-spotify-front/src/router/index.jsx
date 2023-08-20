@@ -7,21 +7,36 @@ import DetailedPlaylist from '../pages/DetailedPlaylist'
 import Search  from '../pages/Search'
 import Dashboard from '../pages/Dashboard'
 import MusicDetails from '../pages/MusicDetails'
+import Register from '../pages/Register'
+import Login from '../pages/Login'
+import RequireAuth from '../utils/RequireAuth'
+import RequireAuthAdmin from '../utils/RequireAuthAdmin'
 
 const index = () => {
   return (
     <Routes>
+      {/* No restrictions */}
       <Route path="/" element={<Home/>} />
       <Route path="/search" element={<Search/>} />
-      <Route path="/playlists" element={<MyPlaylist/>} />
-      <Route path="/account" element={<Account/>} />
-      <Route path="/new-music" element={<FormMusic/>} />
-      <Route path="/update-music/:musicId" element={<FormMusic/>} />
-      <Route path="/playlist/:playlistId" element={<DetailedPlaylist/>} />
+      <Route path="/register" element={<Register/>} />
+      <Route path="/login" element={<Login/>} />
       <Route path="/music/:musicId" element={<MusicDetails/>} />
-      <Route path="/playlist/:playlistId/music/:musicIndex" element={<MusicDetails/>} />
-      <Route path="/dashboard" element={<Dashboard/>} />
-      <Route path="*" render={() => <Redirect to="/" />} /> {/* Fallback route */}
+
+      {/* CLIENT and ADMIN only */}
+      <Route path="/playlists" element={<RequireAuth><MyPlaylist/></RequireAuth>} />
+      <Route path="/account" element={<RequireAuth><Account/></RequireAuth>} />
+      <Route path="/playlist/:playlistId" element={<RequireAuth><DetailedPlaylist/></RequireAuth>} />
+      <Route path="/playlist/:playlistId/music/:musicIndex" element={<RequireAuth><MusicDetails/></RequireAuth>} />
+
+      {/* ADMIN only */}
+
+
+      <Route path="/new-music" element={<RequireAuthAdmin><FormMusic/></RequireAuthAdmin>} />
+      <Route path="/update-music/:musicId" element={<RequireAuthAdmin><FormMusic/></RequireAuthAdmin>} />
+      <Route path="/dashboard" element={<RequireAuthAdmin><Dashboard/></RequireAuthAdmin>} />
+
+      {/* Fallback route */}
+      <Route path="*" render={() => <Redirect to="/" />} /> 
     </Routes>
   )
 }

@@ -6,9 +6,8 @@ import axios from "axios"
 
 const Home = () => {
 
-const [musicList, setMusicList] = useState([]);
-const [playlistName, setPlaylistName] = useState("");
-
+const [musicList, setMusicList] = useState([])
+const [playlistName, setPlaylistName] = useState("")
 
 const getPlaylist = () => {
   axios.get('http://localhost:8080/api/playlist')

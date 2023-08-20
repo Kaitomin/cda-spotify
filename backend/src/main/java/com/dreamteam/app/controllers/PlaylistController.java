@@ -5,6 +5,8 @@ import com.dreamteam.app.dto.PlaylistDTO;
 
 import com.dreamteam.app.services.PlaylistService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +35,8 @@ public class PlaylistController {
 //    }
 
     @GetMapping("/user/{id}")
-    public List<PlaylistDTO> findAllByUserId(@PathVariable long id) {
-        return service.findAllByUserId(id);
+    public ResponseEntity<List<PlaylistDTO>> findAllByUserId(@PathVariable long id) {
+        return new ResponseEntity<>(service.findAllByUserId(id), HttpStatus.OK);
     }
 
     @PostMapping("/{playlistId}/addMusic")

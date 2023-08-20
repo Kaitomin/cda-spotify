@@ -37,21 +37,25 @@ public class AppApplication {
 		};
 	}
 
-	@Bean
+/*	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
+			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins(env.getProperty("frontend_url"))
-						.allowedMethods("*")
-						.allowedHeaders("*");
+			registry.addMapping("/**")
+					.allowedHeaders("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With")
+					.exposedHeaders("Authorization")
+					.allowedOrigins(env.getProperty("frontend_url"))
+					.allowedMethods("PUT", "DELETE","POST","GET", "OPTIONS")
+					.allowCredentials(true);
 			}
 		};
-	}
+	}*/
 
 	@Bean
 	ApplicationRunner applicationRunner(Environment environment) {
 		System.out.println("Current environment : " + Arrays.stream(env.getActiveProfiles()).toList());
+		System.out.println(env.getProperty("frontend_url"));
 		return args -> System.out.println("message from application.properties " + environment.getProperty("message-from-application-properties"));
 	}
 }

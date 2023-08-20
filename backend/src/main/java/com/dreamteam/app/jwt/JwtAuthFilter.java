@@ -29,17 +29,36 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+        System.out.println("IN INTERNAL FILTER");
+
+        System.out.println(request.getMethod());
+
+//        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+//            response.setStatus(HttpServletResponse.SC_OK);
+//        } else {
+//            filterChain.doFilter(request, response);
+//        }
+
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
 
+        System.out.println("authHeader " + authHeader);
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("authHeader NULL / MALFORMED " + authHeader);
             filterChain.doFilter(request, response);
             return;
         }
 
         jwt = authHeader.substring(7);
+
+        System.out.println("JWT " + jwt);
+
         userEmail = jwtService.extractUsername(jwt);
+
+        System.out.println("USERNAME " + userEmail);
+
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(jwt, userDetails)) {
@@ -52,6 +71,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
+
+//        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+//        response.setHeader("Access-Control-Allow-Credentials", "true");
+//        response.setHeader("Access-Control-Allow-Methods", "*");
+//        response.setHeader("Access-Control-Allow-Headers", "*");
+
         filterChain.doFilter(request, response);
     }
 }
