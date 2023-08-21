@@ -30,6 +30,8 @@ public class User implements UserDetails {
     //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @NonNull
     private List<Playlist> playlists;
+    @Version
+    private int version;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

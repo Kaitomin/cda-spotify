@@ -31,4 +31,6 @@ public class Music {
 	@Enumerated(EnumType.STRING)
 	@NonNull
 	private List<Tag> tags;
+	@Version
+	private int version;
 }

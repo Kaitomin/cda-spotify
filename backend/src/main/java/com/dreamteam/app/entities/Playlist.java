@@ -21,4 +21,6 @@ public class Playlist {
     private List<Music> musics;
     @NonNull
     private LocalDate createdAt;
+    @Version
+    private int version;
 }
