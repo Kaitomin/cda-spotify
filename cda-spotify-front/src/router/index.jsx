@@ -29,16 +29,10 @@ const index = () => {
       <Route path="/playlist/:playlistId/music/:musicIndex" element={<RequireAuth><MusicDetails/></RequireAuth>} />
 
       {/* ADMIN only */}
-
-
-      {/* <Route path="/new-music" element={<RequireAuthAdmin><FormMusic/></RequireAuthAdmin>} />
+      <Route path="/new-music" element={<RequireAuthAdmin><FormMusic/></RequireAuthAdmin>} />
       <Route path="/update-music/:musicId" element={<RequireAuthAdmin><FormMusic/></RequireAuthAdmin>} />
-      <Route path="/dashboard" element={<RequireAuthAdmin><Dashboard/></RequireAuthAdmin>} /> */}
-      
-      <Route path="/new-music" element={<FormMusic/>} />
-      <Route path="/update-music/:musicId" element={<FormMusic/>} />
-      <Route path="/dashboard" element={<Dashboard/>} />
-
+      <Route path="/dashboard" element={<RequireAuthAdmin><Dashboard/></RequireAuthAdmin>} />
+  
       {/* Fallback route */}
       <Route path="*" render={() => <Redirect to="/" />} /> 
     </Routes>

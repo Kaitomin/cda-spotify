@@ -18,7 +18,6 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-
     @Autowired
     Environment env;
 

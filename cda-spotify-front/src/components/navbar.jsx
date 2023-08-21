@@ -23,9 +23,11 @@ const NavBar = () => {
         {/* <li>
           <Link to="/account">Mon Compte</Link>
         </li> */}
-        <li className="d-none d-sm-block">
-          <Link to="/dashboard">Dashboard</Link>
-        </li>
+        { currentUser.role === "ADMIN" && 
+          <li className="d-none d-sm-block">
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
+        }
         {!currentUser.id &&
           <>
             <li>
@@ -36,7 +38,7 @@ const NavBar = () => {
             </li>
           </>
         }
-        {currentUser.id && <li onClick={handleLogout} className="logout"><i className="fa-solid fa-right-from-bracket"></i></li>}
+        {currentUser.id && <li onClick={handleLogout} className="logout d-flex align-items-center"><i className="fa-solid fa-right-from-bracket"></i></li>}
       </ul>
     </nav>
   )

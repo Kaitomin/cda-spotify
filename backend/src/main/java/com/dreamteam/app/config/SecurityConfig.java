@@ -44,7 +44,6 @@ public class SecurityConfig {
                         "/api/tag",
                         "/img/**",
                         "/audio/**",
-                        "/api/playlist/**",
                         "/api/user/{userId:[0-9]+}/deletePlaylist/{playlistId:[0-9]+}"
 //                        "/api/user/{userId:[0-9]+}/updatePlaylist"
                 ).permitAll()
