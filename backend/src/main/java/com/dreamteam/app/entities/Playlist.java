@@ -2,10 +2,6 @@ package com.dreamteam.app.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OptimisticLockType;
-import org.hibernate.annotations.OptimisticLocking;
-
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
