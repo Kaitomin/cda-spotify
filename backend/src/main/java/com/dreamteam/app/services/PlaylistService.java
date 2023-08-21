@@ -20,6 +20,7 @@ public class PlaylistService {
     private final ModelMapper mapper;
 
     public PlaylistDTO update(PlaylistDTO p){
+        System.out.println("DTO : " + p);
         return mapper.map(repository.save(mapper.map(p, Playlist.class)), PlaylistDTO.class);
     }
 

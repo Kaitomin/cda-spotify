@@ -4,6 +4,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import MusicService from '../service/MusicService';
 import TagService from '../service/TagService';
+import useAuth from '../hook/useAuth'
 
 const FormMusic = () => { 
     const [tags, setTags] = useState();
@@ -16,6 +17,7 @@ const FormMusic = () => {
         imgFile: null,
         audioFile: null
     })
+    const { currentUser } = useAuth()
     const { musicId } = useParams()
 
     if (musicId) {
@@ -76,10 +78,10 @@ const FormMusic = () => {
         formData.append("audioFile", music.audioFile);
 
         if (musicId) {
-            MusicService.update(musicId, formData)
+            MusicService.update(musicId, formData, currentUser.token)
                 .then(() => console.log("updated"))
         } else {
-            MusicService.add(formData)
+            MusicService.add(formData, currentUser.token)
                 .then(() => console.log("added"))
         }      
     }

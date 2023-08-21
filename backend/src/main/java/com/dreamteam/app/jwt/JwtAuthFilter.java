@@ -33,11 +33,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         System.out.println(request.getMethod());
 
-//        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-//            response.setStatus(HttpServletResponse.SC_OK);
-//        } else {
-//            filterChain.doFilter(request, response);
-//        }
+        // With cookie
+        // Extract JWT from cookie
 
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
@@ -62,11 +59,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(jwt, userDetails)) {
+                System.out.println("userDetails : " + userDetails);
+                System.out.println("userDetails authorities : " + userDetails.getAuthorities());
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
                         userDetails.getAuthorities()
                 );
+                System.out.println(authToken);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }

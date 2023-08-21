@@ -17,4 +17,5 @@ public class MusicDTO {
 	private String imgUri;
 	private String audioUri;
 	private List<Tag> tags;
+	private Integer Version;
 }

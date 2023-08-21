@@ -30,7 +30,7 @@ const MyPlaylist = () => {
   }
 
   const removePlaylistFromUser = playlistId => {
-    if (!confirm("Supprimer cette playlist ?")) return
+    //if (!confirm("Supprimer cette playlist ?")) return
 
     UserService.deletePlaylist(currentUser.id, playlistId, currentUser.token)
       .then(() => getPlaylists())
@@ -62,10 +62,10 @@ const MyPlaylist = () => {
         Créer une playlist
       </p>
       {showModal && (
-          <div className='modal-window'>
-            <PlaylistForm handlePlaylist={addNewPlaylistToUser} />
-            <button onClick={() => setShowModal(false)}>Annuler</button>
-          </div>
+        <div className='modal-window'>
+          <PlaylistForm handlePlaylist={addNewPlaylistToUser} />
+          <button onClick={() => setShowModal(false)}>Annuler</button>
+        </div>
       )} 
     </div>
 

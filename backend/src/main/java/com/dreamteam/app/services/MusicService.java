@@ -82,9 +82,6 @@ public class MusicService {
 		if (repository.findById(id).orElse(null) != null) {
 			Music m = repository.findById(id).orElse(null);
 
-			mDto.setId(id);
-			mDto.setDuration(m.getDuration());
-
 			// Check if a new image file is uploaded
 			if (imgFile == null) mDto.setImgUri(m.getImgUri());
 			else {
@@ -102,6 +99,11 @@ public class MusicService {
 				mDto.setDuration(duration);
 				mDto.setAudioUri(audioUri);
 			}
+
+			mDto.setId(id);
+			mDto.setDuration(m.getDuration());
+			mDto.setVersion(m.getVersion());
+
 			return mapper.map(repository.save(mapper.map(mDto, Music.class)), MusicDTO.class);
 		}
 		// throw new IOException("File not found");

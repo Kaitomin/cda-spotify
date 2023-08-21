@@ -37,20 +37,28 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .requestMatchers(
-//                         "/**"
                         "/api/music",
                         "/api/music/{id:[0-9]+}",
                         "/api/music/search/**",
                         "/api/auth/**",
+                        "/api/tag",
                         "/img/**",
-                        "/audio/**"
+                        "/audio/**",
+                        "/api/playlist/**",
+                        "/api/user/{userId:[0-9]+}/deletePlaylist/{playlistId:[0-9]+}"
+//                        "/api/user/{userId:[0-9]+}/updatePlaylist"
                 ).permitAll()
+//                .requestMatchers(
+//                "/api/user/{userId:[0-9]+}/deletePlaylist/{playlistId:[0-9]+}"
+//                ).hasRole("CLIENT")
+                .requestMatchers(
+                        "/api/playlist",
+                        "/api/music/new",
+                        "/api/music/update/{id:[0-9]+}",
+                        "/api/music/delete/{id:[0-9]+}"
+                ).hasAuthority("ADMIN")
                 .anyRequest().authenticated()
             )
-            /*.formLogin(formLogin -> formLogin
-                .loginPage("/register")
-                .permitAll()
-            )*/
             //.authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         //.rememberMe(Customizer.withDefaults());

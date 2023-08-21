@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,12 +27,12 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @NonNull
     private Role role;
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @NonNull
     private List<Playlist> playlists;
     @Version
-    private int version;
+    private Integer version;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

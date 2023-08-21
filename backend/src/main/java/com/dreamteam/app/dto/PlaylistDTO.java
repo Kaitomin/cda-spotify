@@ -12,4 +12,5 @@ public class PlaylistDTO {
     private String name;
     private List<Music> musics;
     private LocalDate createdAt;
+    private Integer Version;
 }

@@ -42,7 +42,7 @@ const Dashboard = () => {
   
   const deleteMusic = id => {
     if (confirm("Supprimer cette musique ?")) {
-      MusicService.delete(id)
+      MusicService.delete(id, currentUser.token)
         .then(() => getMusics())
     }
   }

@@ -13,4 +13,5 @@ public class UserDTO {
     private String password;
     private Role role;
     private List<Playlist> playlists;
+    private Integer Version;
 }

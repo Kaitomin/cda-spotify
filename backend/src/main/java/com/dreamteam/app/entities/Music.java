@@ -1,5 +1,6 @@
 package com.dreamteam.app.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Music {
+public class Music  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -32,5 +33,5 @@ public class Music {
 	@NonNull
 	private List<Tag> tags;
 	@Version
-	private int version;
+	private Integer version;
 }

@@ -44,10 +44,13 @@ public class UserService {
         playlistDTO.setCreatedAt(LocalDate.now());
         playlistDTO.setMusics(Collections.emptyList());
 
+        System.out.println(playlistDTO);
+
         repository.findById(userId).ifPresent(user -> {
             List<Playlist> userPlaylists = user.getPlaylists();
             userPlaylists.add(mapper.map(playlistDTO, Playlist.class));
             user.setPlaylists(userPlaylists);
+            System.out.println(userPlaylists);
             repository.save(user);
         });
 
@@ -70,11 +73,17 @@ public class UserService {
         // Can not update playlist "Favoris"
         if (playlistDTO.getName().equals("Favoris")) return;
 
+        System.out.println(playlistDTO);
+
         repository.findById(userId).ifPresent(user -> {
             List<Playlist> playlists = user.getPlaylists();
             playlists.stream()
-                    .filter(playlist -> playlist.getId() == playlistDTO.getId())
-                    .findFirst().ifPresent(playlistFound -> playlistService.update(playlistDTO));
+                .filter(playlist -> playlist.getId() == playlistDTO.getId())
+                .findAny().ifPresent(playlistFound -> {
+                    playlistFound.setName(playlistDTO.getName());
+                    playlistService.update(mapper.map(playlistFound, PlaylistDTO.class));
+                });
+
         });
     }
 
