@@ -22,7 +22,6 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   const { currentUser } = useAuth()
   const navigate = useNavigate()
 
-
   useEffect(() => {
     // Accessing from music page
     if (musicId) {
@@ -137,9 +136,19 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
     setIsRandom(!isRandom)
   }
 
+  const displayPlaylistsModal = () => {
+    if (!currentUser.id) {
+      console.log('Not logged in')
+      return
+    } 
+
+    setShowModal(true)
+  }
+
   const addToPlaylist = id => {
-     // Modal indiquant qu'un compte est nécessaire
+     // Display message: "Must be connected"
      if (!currentUser.id) {
+      console.log('Not logged in')
       return
     }
 
@@ -157,8 +166,9 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }
 
   const addToFavorite = () => {
-    // Modal indiquant qu'un compte est nécessaire
+    // Display message: "Must be connected"
     if (!currentUser.id) {
+      console.log('Not logged in')
       return
     }
 
@@ -170,8 +180,8 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }
 
   const removeToFavorite = () => {
-    // Modal indiquant qu'un compte est nécessaire
     if (!currentUser.id) {
+      console.log('Not logged in')
       return
     }
     PlaylistService.removeMusic(playlists[0].id, currentMusic.id, currentUser.token)
@@ -194,8 +204,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
             { isFavorite && <i className="fa-solid fa-heart" onClick={removeToFavorite}></i> }
             
             <div>
-              <i className="fa-solid fa-circle-plus" onClick={() => setShowModal(true)}></i>
-              {/* Changer le message si l'utilisateur n'est pas connecté */}
+              <i className="fa-solid fa-circle-plus" onClick={displayPlaylistsModal}></i>
               { showModal &&
                 <div className='playlist-modal'>
                     <p>Ajouter à ...</p>

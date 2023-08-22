@@ -20,9 +20,12 @@ const NavBar = () => {
         <li className="d-none d-sm-block">
           <Link to="/search"><i className="fa-solid fa-magnifying-glass"></i></Link>
         </li>
-        <li>
-          <Link to="/playlists">Mes Playlists</Link>
-        </li>
+        { isAuthenticated &&
+          <li>
+            <Link to="/playlists">Mes Playlists</Link>
+          </li>
+        }
+        
         {/* <li>
           <Link to="/account">Mon Compte</Link>
         </li> */}
