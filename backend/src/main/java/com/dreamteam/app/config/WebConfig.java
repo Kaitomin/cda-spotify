@@ -1,17 +1,16 @@
 package com.dreamteam.app.config;
 
+import com.dreamteam.app.interceptors.CustomInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 //@EnableWebMvc
-public class CorsConfig implements WebMvcConfigurer {
-
+public class WebConfig implements WebMvcConfigurer {
     @Autowired
     Environment env;
 
@@ -25,11 +24,9 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        if (!registry.hasMappingForPattern("/static/**")) {
-            registry.addResourceHandler("/static/**")
-                    .addResourceLocations("/static/");
-        }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new CustomInterceptor());
+        WebMvcConfigurer.super.addInterceptors(registry);
     }
-
 }

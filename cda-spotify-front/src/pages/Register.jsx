@@ -28,11 +28,10 @@ const Register = () => {
   }
 
   useEffect(() => {
-    if (currentUser.id) {
+    if (localStorage.getItem('isAuthenticated')) {
       navigate('/')
     }
-  }, [currentUser])
-
+  }, [])
 
   return (
     <div className='register'>

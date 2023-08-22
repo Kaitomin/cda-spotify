@@ -28,7 +28,7 @@ const MyPlaylist = () => {
   }
 
   const removePlaylistFromUser = playlistId => {
-    //if (!confirm("Supprimer cette playlist ?")) return
+    if (!confirm("Supprimer cette playlist ?")) return
 
     UserService.deletePlaylist(currentUser.id, playlistId)
       .then(() => getPlaylists())

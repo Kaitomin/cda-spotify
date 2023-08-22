@@ -12,9 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
-    private long id;
-    private Cookie jwtCookie;
-    private String username;
-    private Role role;
-    private String token;
+    private Cookie token;
 }

@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @NonNull
     private Role role;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @NonNull
     private List<Playlist> playlists;

@@ -25,21 +25,8 @@ const useAuth = () => {
         })
     },
     register({ username, password }) {
-      try {
-        AuthService.register({ username, password })
-          .then(res => {
-            const user = {
-              id: res.data.id,
-              role: res.data.role,
-              token: res.data.token
-            }
-            setCurrentUser(user)
-            localStorage.setItem('isAuthenticated', true)
-            localStorage.setItem('isAdmin', token.role === 'ADMIN')
-          })
-      } catch(e) {
-        console.log("ERROR : ", e)
-      }
+      AuthService.register({ username, password })
+        .then(() => window.location.href = '/login')
     },
     login({ username, password }) {
       try {
@@ -52,6 +39,7 @@ const useAuth = () => {
             setCurrentUser(user)
             localStorage.setItem('isAuthenticated', true)
             localStorage.setItem('isAdmin', res.data.role === 'ADMIN')
+            window.location.href = '/'
           })
       } catch(e) {
         console.log("ERROR : ", e)

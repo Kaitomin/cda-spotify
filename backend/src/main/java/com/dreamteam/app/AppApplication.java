@@ -11,11 +11,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
@@ -36,21 +33,6 @@ public class AppApplication {
 			storageService.init();
 		};
 	}
-
-/*	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-			registry.addMapping("/**")
-					.allowedHeaders("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With")
-					.exposedHeaders("Authorization")
-					.allowedOrigins(env.getProperty("frontend_url"))
-					.allowedMethods("PUT", "DELETE","POST","GET", "OPTIONS")
-					.allowCredentials(true);
-			}
-		};
-	}*/
 
 	@Bean
 	ApplicationRunner applicationRunner(Environment environment) {

@@ -26,10 +26,10 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (currentUser.id) {
+    if (localStorage.getItem('isAuthenticated')) {
       navigate('/')
     }
-  }, [currentUser])
+  }, [])
 
   return (
     <div className='connection'>

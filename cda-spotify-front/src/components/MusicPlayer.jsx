@@ -209,7 +209,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
                 <div className='playlist-modal'>
                     <p>Ajouter à ...</p>
                     { playlists && playlists.map(p => (
-                      <div key={p.id} onClick={() => addToPlaylist(p.id)}>{p.name}</div>
+                      p.name != 'Favoris' && <div key={p.id} onClick={() => addToPlaylist(p.id)}>{p.name}</div>
                     ))}
                     <div onClick={() => setShowModal(false)}>
                       <i className="fa-solid fa-circle-xmark"></i>

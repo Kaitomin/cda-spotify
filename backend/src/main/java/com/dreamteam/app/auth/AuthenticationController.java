@@ -1,10 +1,13 @@
 package com.dreamteam.app.auth;
 
 import com.dreamteam.app.dto.UserDTO;
+import com.dreamteam.app.exceptions.Authentication;
+import com.dreamteam.app.utils.CustomUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,31 +17,20 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
     private final AuthenticationService service;
 
- /*   @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDTO req) {
-        return ResponseEntity.ok(service.register(req));
-    }*/
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDTO req, HttpServletResponse response) {
-//        AuthenticationResponse authRes = service.register(req);
-//
-//        response.addCookie(authRes.getJwtCookie());
-//        return AuthenticationResponse.builder()
-//                .id(authRes.getId())
-//                .username(authRes.getUsername())
-//                .role(authRes.getRole())
-//                .build();
-
-        return ResponseEntity.ok(service.register(req));
+        service.register(req);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest req,
-            HttpServletResponse response
+            HttpServletResponse response,
+            HttpServletRequest request
     ) {
         AuthenticationResponse authRes = service.authenticate(req);
-        response.addCookie(authRes.getJwtCookie());
+        response.addCookie(authRes.getToken());
         return ResponseEntity.ok(service.authenticate(req));
     }
 
@@ -48,7 +40,8 @@ public class AuthenticationController {
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletResponse response) {
-        return service.logout(response);
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        service.logout(response);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

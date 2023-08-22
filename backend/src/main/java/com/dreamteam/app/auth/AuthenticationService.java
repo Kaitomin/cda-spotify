@@ -9,7 +9,6 @@ import com.dreamteam.app.jwt.JwtService;
 import com.dreamteam.app.repositories.UserRepository;
 import com.dreamteam.app.utils.CustomUtils;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,7 +33,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final ModelMapper mapper;
 
-    public AuthenticationResponse register(UserDTO req) {
+    public void register(UserDTO req) {
         // Auto create 'Favoris' playlist
         PlaylistDTO playlistDTO = new PlaylistDTO();
         playlistDTO.setName("Favoris");
@@ -51,23 +49,7 @@ public class AuthenticationService {
             .role(Role.CLIENT)
             .playlists(playlists)
             .build();
-        User newUser = repository.save(user);
-
-        // Generate token
-        var jwtToken = jwtService.generateToken(user);
-
-        // Generate cookie
-        Cookie cookie = new Cookie("authToken", jwtToken);
-        cookie.setMaxAge(24 * 60 * 60); // expires in 1 day
-        // cookie.setSecure(true); // in production mode
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-
-        return AuthenticationResponse.builder()
-            .token(jwtToken)
-            .id(newUser.getId())
-            .role(newUser.getRole())
-            .build();
+        repository.save(user);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest req) {
@@ -81,16 +63,13 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
 
         Cookie cookie = new Cookie("jwt", jwtToken);
-        cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
+        cookie.setMaxAge(24 * 60 * 60); // expires in 1 day
         // cookie.setSecure(true); in production mode
         cookie.setHttpOnly(true);
         cookie.setPath("/");
 
         return AuthenticationResponse.builder()
-            .token(jwtToken)
-            .id(user.getId())
-            .jwtCookie(cookie)
-            .role((user.getRole()))
+            .token(cookie)
             .build();
     }
 
@@ -98,7 +77,7 @@ public class AuthenticationService {
         return CustomUtils.getCookie(cookies, "jwt");
     }
 
-    public ResponseEntity<String> logout(HttpServletResponse response) {
+    public void logout(HttpServletResponse response) {
         Cookie cookie = new Cookie("jwt", null);
         cookie.setMaxAge(0); // expires in 7 days
         // cookie.setSecure(true); in production mode
@@ -106,7 +85,5 @@ public class AuthenticationService {
         cookie.setPath("/");
 
         response.addCookie(cookie);
-
-        return ResponseEntity.ok("Succesfully logged out");
     }
 }
