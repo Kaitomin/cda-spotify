@@ -30,9 +30,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        System.out.println("IN INTERNAL FILTER");
+//        System.out.println("IN INTERNAL FILTER");
 //        System.out.println(request.getMethod());
-        System.out.println("Cookies" + request.getCookies());
+//        System.out.println("Cookies" + request.getCookies());
 
         // With cookie
         // Extract JWT from cookie
@@ -40,28 +40,28 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String userEmail;
 
         if (jwt == null) {
-            System.out.println("jwt NULL / MALFORMED " + jwt);
+//            System.out.println("jwt NULL / MALFORMED " + jwt);
             filterChain.doFilter(request, response);
             return;
         }
 
-        System.out.println("JWT " + jwt);
+//        System.out.println("JWT " + jwt);
 
         userEmail = jwtService.extractUsername(jwt);
 
-        System.out.println("USERNAME " + userEmail);
+//        System.out.println("USERNAME " + userEmail);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(jwt, userDetails)) {
-                System.out.println("userDetails : " + userDetails);
-                System.out.println("userDetails authorities : " + userDetails.getAuthorities());
+//                System.out.println("userDetails : " + userDetails);
+//                System.out.println("userDetails authorities : " + userDetails.getAuthorities());
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
                         userDetails.getAuthorities()
                 );
-                System.out.println("AUTHTOKEN : " + authToken);
+//                System.out.println("AUTHTOKEN : " + authToken);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
