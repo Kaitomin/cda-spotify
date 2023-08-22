@@ -1,9 +1,12 @@
 import { Link, useNavigate } from "react-router-dom"
 import useAuth from '../hook/useAuth'
+import { useEffect } from 'react';
 
 const NavBar = () => {
-  const { currentUser, logout } = useAuth()
+  const { logout, currentUser } = useAuth()
   const navigate = useNavigate()
+  const isAuthenticated = localStorage.getItem('isAuthenticated')
+  const isAdmin = localStorage.getItem('isAdmin')
 
   const handleLogout = () => {  
     logout()
@@ -23,12 +26,12 @@ const NavBar = () => {
         {/* <li>
           <Link to="/account">Mon Compte</Link>
         </li> */}
-        { currentUser.role === "ADMIN" && 
+        { isAuthenticated && isAdmin == 'true' &&
           <li className="d-none d-sm-block">
             <Link to="/dashboard">Dashboard</Link>
           </li>
         }
-        {!currentUser.id &&
+        {!isAuthenticated &&
           <>
             <li>
               <Link to="/register">S'inscrire</Link>
@@ -38,7 +41,7 @@ const NavBar = () => {
             </li>
           </>
         }
-        {currentUser.id && <li onClick={handleLogout} className="logout d-flex align-items-center"><i className="fa-solid fa-right-from-bracket"></i></li>}
+        {isAuthenticated && <li onClick={handleLogout} className="logout d-flex align-items-center"><i className="fa-solid fa-right-from-bracket"></i></li>}
       </ul>
     </nav>
   )

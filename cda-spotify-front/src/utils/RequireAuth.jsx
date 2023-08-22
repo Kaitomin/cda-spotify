@@ -1,11 +1,16 @@
+import { useEffect } from 'react';
 import useAuth from '../hook/useAuth'
-import { Navigate } from "react-router-dom";
 
 const RequireAuth = ({ children }) => {
-  const { currentUser } = useAuth()
+  const { checkCookie, currentUser } = useAuth()
 
-  console.log(currentUser)
-  return currentUser.id ? children : <Navigate to="/login" replace />
+  // Check cookie validity
+  useEffect(() => {
+    checkCookie(["CLIENT", "ADMIN"])
+  }, [])
+
+  return currentUser.id && children
+
 }
 
 export default RequireAuth

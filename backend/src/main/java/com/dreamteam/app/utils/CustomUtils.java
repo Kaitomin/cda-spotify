@@ -1,5 +1,6 @@
 package com.dreamteam.app.utils;
 
+import jakarta.servlet.http.Cookie;
 import org.apache.commons.io.FilenameUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -18,6 +19,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -84,5 +86,13 @@ public class CustomUtils {
 
     public static boolean isAudioType(String filename) {
         return FilenameUtils.getExtension(filename).matches("(mp3|wav)");
+    }
+
+    public static String getCookie(Cookie[] cookies, String name) {
+        if (cookies == null) return null;
+        return Arrays.stream(cookies)
+                .filter(cookie -> name.equals(cookie.getName()))
+                .map(Cookie::getValue)
+                .findAny().orElse(null);
     }
 }

@@ -14,8 +14,6 @@ const Dashboard = () => {
   const [users, setUsers] = useState()
   const [playlists, setPlaylists] = useState()
   const { currentUser } = useAuth()
-  const navigate = useNavigate()
-
 
   const getMusics = () => {
     MusicService.getAll()
@@ -23,7 +21,7 @@ const Dashboard = () => {
   }
 
   const getUsers = () => {
-    UserService.getAll(currentUser.token)
+    UserService.getAll()
       .then(res => setUsers(res.data))
   }
 
@@ -36,13 +34,13 @@ const Dashboard = () => {
   }, [])
 
   useEffect(() => {
-    PlaylistService.getAll(currentUser.token)
+    PlaylistService.getAll()
       .then(res => setPlaylists(res.data))
   }, [])
   
   const deleteMusic = id => {
     if (confirm("Supprimer cette musique ?")) {
-      MusicService.delete(id, currentUser.token)
+      MusicService.delete(id)
         .then(() => getMusics())
     }
   }

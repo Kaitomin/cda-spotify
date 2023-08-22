@@ -10,14 +10,12 @@ const MyPlaylist = () => {
   const [playlists, setPlaylists] = useState([])
   const [showModal, setShowModal] = useState(false)
   const { currentUser } = useAuth()
-  const navigate = useNavigate()
 
   const getPlaylists = () => {
-    PlaylistService.getPlaylistByUserId(currentUser.id, currentUser.token)
+    PlaylistService.getPlaylistByUserId(currentUser.id)
       .then(res => {
         setPlaylists(res.data)
       })
-      .catch(() => navigate('/login'))
   }
   
   useEffect(() => {
@@ -25,14 +23,14 @@ const MyPlaylist = () => {
   }, []);
 
   const addNewPlaylistToUser = newPlaylistName => {
-    UserService.addPlaylist(currentUser.id, { name: newPlaylistName }, currentUser.token)
+    UserService.addPlaylist(currentUser.id, { name: newPlaylistName })
       .then(() => getPlaylists())
   }
 
   const removePlaylistFromUser = playlistId => {
     //if (!confirm("Supprimer cette playlist ?")) return
 
-    UserService.deletePlaylist(currentUser.id, playlistId, currentUser.token)
+    UserService.deletePlaylist(currentUser.id, playlistId)
       .then(() => getPlaylists())
   }
 

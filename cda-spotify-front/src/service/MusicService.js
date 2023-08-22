@@ -18,19 +18,19 @@ export default {
   },
   add(music, token) {
     return Api().post(`/api/music/new`, music, { 
-      headers: { 'Authorization': `Bearer ${token}`},
+      // headers: { 'Authorization': `Bearer ${token}`},
       // withCredentials: true
     })
   },
   update(id, music, token) {
     return Api().post(`/api/music/update/${id}`, music, { 
-      headers: { 'Authorization': `Bearer ${token}`},
+      // headers: { 'Authorization': `Bearer ${token}`},
       // withCredentials: true
     })
   },
   delete(id, token) {
     return Api().delete(`/api/music/delete/${id}`, { 
-      headers: { 'Authorization': `Bearer ${token}`},
+      // headers: { 'Authorization': `Bearer ${token}`},
       // withCredentials: true
     })
   }

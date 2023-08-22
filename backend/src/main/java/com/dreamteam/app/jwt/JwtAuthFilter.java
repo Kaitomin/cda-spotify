@@ -1,5 +1,6 @@
 package com.dreamteam.app.jwt;
 
+import com.dreamteam.app.utils.CustomUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,25 +31,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         System.out.println("IN INTERNAL FILTER");
-
-        System.out.println(request.getMethod());
+//        System.out.println(request.getMethod());
+        System.out.println("Cookies" + request.getCookies());
 
         // With cookie
         // Extract JWT from cookie
-
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
+        final String jwt = CustomUtils.getCookie(request.getCookies(), "jwt");
         final String userEmail;
 
-        System.out.println("authHeader " + authHeader);
-
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            System.out.println("authHeader NULL / MALFORMED " + authHeader);
+        if (jwt == null) {
+            System.out.println("jwt NULL / MALFORMED " + jwt);
             filterChain.doFilter(request, response);
             return;
         }
-
-        jwt = authHeader.substring(7);
 
         System.out.println("JWT " + jwt);
 
@@ -66,7 +61,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                         null,
                         userDetails.getAuthorities()
                 );
-                System.out.println(authToken);
+                System.out.println("AUTHTOKEN : " + authToken);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }

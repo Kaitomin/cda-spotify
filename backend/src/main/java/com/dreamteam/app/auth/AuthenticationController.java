@@ -2,13 +2,11 @@ package com.dreamteam.app.auth;
 
 import com.dreamteam.app.dto.UserDTO;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -36,8 +34,21 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest req
+            @RequestBody AuthenticationRequest req,
+            HttpServletResponse response
     ) {
+        AuthenticationResponse authRes = service.authenticate(req);
+        response.addCookie(authRes.getJwtCookie());
         return ResponseEntity.ok(service.authenticate(req));
+    }
+
+    @GetMapping("/checkCookie")
+    public ResponseEntity<String> checkCookie(HttpServletRequest request) {
+        return ResponseEntity.ok(service.checkCookie(request.getCookies()));
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        return service.logout(response);
     }
 }

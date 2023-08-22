@@ -1,15 +1,29 @@
 import { useState, createContext, useContext } from "react";
 import AuthService from "../service/AuthService"
+import jwtDecode from "jwt-decode";
 
 const authContext = createContext()
 
 const useAuth = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [currentUser, setCurrentUser] = useState(localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : { id: null, role: null })
-
+  const [currentUser, setCurrentUser] = useState({})
+ 
   return {
-    // isAuthenticated,
     currentUser,
+    checkCookie(roles) {
+      AuthService.checkCookie()
+        .then(res => {
+          const token = jwtDecode(res.data)
+          setCurrentUser({
+            id: token.id,
+            role: token.role
+          })
+
+          if (!roles.includes(token.role)) throw new Error("Unauthorized")
+        }).catch((e) => {
+          // console.log(e)
+          window.location.href = '/'
+        })
+    },
     register({ username, password }) {
       try {
         AuthService.register({ username, password })
@@ -19,9 +33,9 @@ const useAuth = () => {
               role: res.data.role,
               token: res.data.token
             }
-            // setIsAuthenticated(true)
-            localStorage.setItem('user', JSON.stringify(user))
             setCurrentUser(user)
+            localStorage.setItem('isAuthenticated', true)
+            localStorage.setItem('isAdmin', token.role === 'ADMIN')
           })
       } catch(e) {
         console.log("ERROR : ", e)
@@ -33,20 +47,23 @@ const useAuth = () => {
           .then(res => {
             const user = {
               id: res.data.id,
-              role: res.data.role,
-              token: res.data.token
+              role: res.data.role
             }
-            // setIsAuthenticated(true)
-            localStorage.setItem('user', JSON.stringify(user))
             setCurrentUser(user)
+            localStorage.setItem('isAuthenticated', true)
+            localStorage.setItem('isAdmin', res.data.role === 'ADMIN')
           })
       } catch(e) {
         console.log("ERROR : ", e)
       }
     },
     logout() {
-      localStorage.removeItem('user')
-      setCurrentUser({ id: null, role: null })
+      AuthService.logout()
+        .then(() => {
+          setCurrentUser({})
+          localStorage.removeItem('isAuthenticated')
+          localStorage.removeItem('isAdmin')
+        })
     }
   }
 }

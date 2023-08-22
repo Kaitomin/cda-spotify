@@ -1,12 +1,15 @@
+import { useEffect } from 'react';
 import useAuth from '../hook/useAuth'
-import { Navigate } from "react-router-dom";
 
 const RequireAuthAdmin = ({ children }) => {
-  const { currentUser } = useAuth()
+  const { currentUser, checkCookie } = useAuth()
 
-  return currentUser.id && currentUser.role == "ADMIN" ? 
-    children : currentUser.id && currentUser.role == "CLIENT" ?
-    <Navigate to="/" replace /> :  <Navigate to="/login" replace />
+  // Check cookie validity
+  useEffect(() => {
+    checkCookie("ADMIN")
+  }, [])
+
+  return currentUser.id && currentUser.role === 'ADMIN' && children
 }
 
 export default RequireAuthAdmin

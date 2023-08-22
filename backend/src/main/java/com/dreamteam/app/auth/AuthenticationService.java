@@ -7,9 +7,13 @@ import com.dreamteam.app.entities.User;
 import com.dreamteam.app.enums.Role;
 import com.dreamteam.app.jwt.JwtService;
 import com.dreamteam.app.repositories.UserRepository;
+import com.dreamteam.app.utils.CustomUtils;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -18,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -84,7 +89,24 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
             .token(jwtToken)
             .id(user.getId())
+            .jwtCookie(cookie)
             .role((user.getRole()))
             .build();
+    }
+
+    public String checkCookie(Cookie[] cookies) {
+        return CustomUtils.getCookie(cookies, "jwt");
+    }
+
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("jwt", null);
+        cookie.setMaxAge(0); // expires in 7 days
+        // cookie.setSecure(true); in production mode
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok("Succesfully logged out");
     }
 }
