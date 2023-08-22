@@ -6,23 +6,30 @@ const authContext = createContext()
 
 const useAuth = () => {
   const [currentUser, setCurrentUser] = useState({})
+
+  const checkIfCookieExists = (roles) => {
+    AuthService.checkCookie()
+    .then(res => {
+      const token = jwtDecode(res.data)
+      setCurrentUser({
+        id: token.id,
+        role: token.role
+      })
+
+      localStorage.setItem('isAuthenticated', true)
+      localStorage.setItem('isAdmin', token.role === 'ADMIN')
+
+      if (!roles.includes(token.role)) throw new Error("Unauthorized")
+    }).catch((e) => {
+      // console.log(e)
+      window.location.href = '/'
+    })
+  } 
  
   return {
     currentUser,
     checkCookie(roles) {
-      AuthService.checkCookie()
-        .then(res => {
-          const token = jwtDecode(res.data)
-          setCurrentUser({
-            id: token.id,
-            role: token.role
-          })
-
-          if (!roles.includes(token.role)) throw new Error("Unauthorized")
-        }).catch((e) => {
-          // console.log(e)
-          window.location.href = '/'
-        })
+      checkIfCookieExists(roles)
     },
     register({ username, password }) {
       AuthService.register({ username, password })
@@ -31,14 +38,8 @@ const useAuth = () => {
     login({ username, password }) {
       try {
         AuthService.login({ username, password })
-          .then(res => {
-            const user = {
-              id: res.data.id,
-              role: res.data.role
-            }
-            setCurrentUser(user)
-            localStorage.setItem('isAuthenticated', true)
-            localStorage.setItem('isAdmin', res.data.role === 'ADMIN')
+          .then(() => {
+            checkIfCookieExists(["CLIENT", "ADMIN"])
             window.location.href = '/'
           })
       } catch(e) {

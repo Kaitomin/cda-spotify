@@ -17,16 +17,17 @@ public class PlaylistController {
     private final PlaylistService service;
 
     @GetMapping
-    public List<PlaylistDTO> findAll(){
-        return service.findAll();
+    public ResponseEntity<List<PlaylistDTO>> findAll(){
+        return ResponseEntity.ok(service.findAll());
     }
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable long id){
+    public ResponseEntity<Void> delete(@PathVariable long id){
         service.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public PlaylistDTO getById(@PathVariable long id){
-        return service.getById(id);
+    public ResponseEntity<PlaylistDTO> getById(@PathVariable long id){
+        return ResponseEntity.ok(service.getById(id));
     }
 
 //    @PostMapping("/update")
@@ -40,11 +41,13 @@ public class PlaylistController {
     }
 
     @PostMapping("/{playlistId}/addMusic")
-    public void addMusic(@PathVariable long playlistId, @RequestBody MusicDTO musicDTO){
+    public ResponseEntity<Void> addMusic(@PathVariable long playlistId, @RequestBody MusicDTO musicDTO){
         service.addMusic(playlistId , musicDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping("/{playlistId}/removeMusic/{musicId}")
-    public void removeMusic(@PathVariable long playlistId, @PathVariable long musicId){
+    public ResponseEntity<Void> removeMusic(@PathVariable long playlistId, @PathVariable long musicId){
         service.removeMusic(playlistId, musicId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

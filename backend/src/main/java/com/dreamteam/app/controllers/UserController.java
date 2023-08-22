@@ -3,11 +3,15 @@ package com.dreamteam.app.controllers;
 
 import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.dto.UserDTO;
+import com.dreamteam.app.enums.Tag;
 import com.dreamteam.app.services.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -17,36 +21,40 @@ public class UserController  {
     private final UserService service;
 
     @GetMapping
-    public List<UserDTO> findAll(){
-        return service.findAll();
+    public ResponseEntity<List<UserDTO>> findAll(){
+        return ResponseEntity.ok(service.findAll());
     }
     @PostMapping("/new")
-    public UserDTO add(@RequestBody UserDTO u) {
-        return service.add(u);
+    public ResponseEntity<UserDTO> add(@RequestBody UserDTO u) {
+        return ResponseEntity.ok(service.add(u));
     }
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable long id){
+    public ResponseEntity<Void> delete(@PathVariable long id){
         service.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public UserDTO getById(@PathVariable long id){
-        return service.getById(id);
+    public ResponseEntity<UserDTO> getById(@PathVariable long id){
+        return ResponseEntity.ok(service.getById(id));
     }
     @PostMapping("/{userId}/addPlaylist")
-    public void addPlaylistByUser(@PathVariable long userId, @RequestBody PlaylistDTO playlistDTO){
+    public ResponseEntity<Void> addPlaylistByUser(@PathVariable long userId, @RequestBody PlaylistDTO playlistDTO){
         service.addPlaylistByUser(userId, playlistDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping("/{userId}/updatePlaylist")
-    public void updatePlaylistByUser(@PathVariable long userId, @RequestBody PlaylistDTO playlistDTO){
+    public ResponseEntity<Void> updatePlaylistByUser(@PathVariable long userId, @RequestBody PlaylistDTO playlistDTO){
         service.updatePlaylistByUser(userId, playlistDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping("/update/{id}")
-    public UserDTO update(@PathVariable long id,@RequestBody UserDTO user){
-        return service.add(user);
+    public ResponseEntity<UserDTO> update(@PathVariable long id,@RequestBody UserDTO user){
+        return ResponseEntity.ok(service.add(user));
     }
     @PostMapping("/{userId}/deletePlaylist/{playlistId}")
-    public void deletePlaylistByUser(@PathVariable long userId,@PathVariable long playlistId){
+    public ResponseEntity<Void> deletePlaylistByUser(@PathVariable long userId,@PathVariable long playlistId){
         service.deletePlaylistByUser(userId, playlistId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

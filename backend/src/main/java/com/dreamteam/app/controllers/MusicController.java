@@ -11,6 +11,8 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.dreamteam.app.services.MusicService;
@@ -23,41 +25,38 @@ public class MusicController {
 	private final MusicService service;
 
 	@GetMapping
-	public List<MusicDTO> findAll(){
-		return service.findAll();
+	public ResponseEntity<List<MusicDTO>> findAll(){
+		return ResponseEntity.ok(service.findAll());
 	}
 	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable long id){
-		try {
-			service.delete(id);
-		} catch (IOException e) {
-			System.out.println("ERRRRRROR" + e.getMessage());
-		}
+	public ResponseEntity<Void> delete(@PathVariable long id) throws IOException {
+		service.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@GetMapping("/{id}")
-	public MusicDTO getById(@PathVariable long id){
-		return service.getById(id);
+	public ResponseEntity<MusicDTO> getById(@PathVariable long id){
+		return ResponseEntity.ok(service.getById(id));
 	}
 	@GetMapping("/search/{searchKey}")
-	public List<MusicDTO> searchMusic(@PathVariable String searchKey){
-		return service.searchMusic(searchKey);
+	public ResponseEntity<List<MusicDTO>> searchMusic(@PathVariable String searchKey){
+		return ResponseEntity.ok(service.searchMusic(searchKey));
 	}
 	@GetMapping("/search/title/{searchKey}")
-	public List<MusicDTO> searchMusicByTitle(@PathVariable String searchKey){
-		return service.searchMusicByTitle(searchKey);
+	public ResponseEntity<List<MusicDTO>> searchMusicByTitle(@PathVariable String searchKey){
+		return ResponseEntity.ok(service.searchMusicByTitle(searchKey));
 	}
 	@GetMapping("/search/artist/{searchKey}")
-	public List<MusicDTO> searchMusicByArtist(@PathVariable String searchKey){
-		return service.searchMusicByArtist(searchKey);
+	public ResponseEntity<List<MusicDTO>> searchMusicByArtist(@PathVariable String searchKey){
+		return ResponseEntity.ok(service.searchMusicByArtist(searchKey));
 	}
 	@PostMapping("/new")
-	public MusicDTO add(
+	public ResponseEntity<MusicDTO> add(
 		@RequestPart("fileUpload") MusicDTO musicDTO,
 		@RequestPart("imgFile") MultipartFile imgFile,
 		@RequestPart("audioFile") MultipartFile audioFile
 	) {
 		try {
-			return service.add(musicDTO, imgFile, audioFile);
+			return ResponseEntity.ok(service.add(musicDTO, imgFile, audioFile));
 		} catch (CannotReadException e) {
 			throw new RuntimeException(e);
 		} catch (TagException e) {
@@ -73,14 +72,14 @@ public class MusicController {
 		}
 	}
 	@PostMapping("/update/{id}")
-	public MusicDTO update(
+	public ResponseEntity<MusicDTO> update(
 		@PathVariable long id,
 		@RequestPart("fileUpload") MusicDTO musicDTO,
 		@RequestPart(value = "imgFile", required = false) MultipartFile imgFile,
 		@RequestPart(value = "audioFile", required = false) MultipartFile audioFile
 	) {
 		try {
-			return service.update(musicDTO, imgFile, audioFile, id);
+			return ResponseEntity.ok(service.update(musicDTO, imgFile, audioFile, id));
 		} catch (CannotReadException e) {
 			throw new RuntimeException(e);
 		} catch (TagException e) {
@@ -97,11 +96,11 @@ public class MusicController {
 	}
 
 	@GetMapping("/byTag/{tag}")
-	public List<MusicDTO> getTop10ByTags(@PathVariable Tag tag) {
-		return service.getTop10ByTags(tag);
+	public ResponseEntity<List<MusicDTO>> getTop10ByTags(@PathVariable Tag tag) {
+		return ResponseEntity.ok(service.getTop10ByTags(tag));
 	}
 	@GetMapping("/byArtist/{artist}")
-	public List<MusicDTO> getTop10ByArtist(@PathVariable String artist) {
-		return service.getTop10ByArtist(artist);
+	public ResponseEntity<List<MusicDTO>> getTop10ByArtist(@PathVariable String artist) {
+		return ResponseEntity.ok(service.getTop10ByArtist(artist));
 	}
 }

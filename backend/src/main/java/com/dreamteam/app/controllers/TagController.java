@@ -1,7 +1,7 @@
 package com.dreamteam.app.controllers;
 
 import com.dreamteam.app.enums.Tag;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +13,7 @@ import java.util.List;
 @RequestMapping("/api/tag")
 public class TagController {
     @GetMapping
-    public List<Tag> findAll() {
-        List<Tag> tags = Arrays.asList(Tag.values());
-        return tags;
+    public ResponseEntity<List<Tag>> findAll() {
+        return ResponseEntity.ok(Arrays.asList(Tag.values()));
     }
 }
