@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class CustomInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("CustomInterceptor, URI : " + request.getRequestURI());
+//        System.out.println("CustomInterceptor, URI : " + request.getRequestURI());
 
         // Check if already logged in but still tries to log in
         if (request.getRequestURI().contains("/api/auth/authenticate") || request.getRequestURI().contains("/api/auth/register")) {
