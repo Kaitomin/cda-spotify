@@ -1,7 +1,6 @@
 package com.dreamteam.app.services;
 
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.dreamteam.app.dto.MusicDTO;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PlaylistService {
+public class PlaylistServiceImpl implements IPlaylistService {
     private final PlaylistRepository repository;
     private final ModelMapper mapper;
 

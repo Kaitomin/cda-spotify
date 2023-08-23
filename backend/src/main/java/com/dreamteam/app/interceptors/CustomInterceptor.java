@@ -1,22 +1,24 @@
 package com.dreamteam.app.interceptors;
 
-import com.dreamteam.app.exceptions.Authentication;
+import com.dreamteam.app.exceptions.AuthenticationException;
 import com.dreamteam.app.utils.CustomUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 public class CustomInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 //        System.out.println("CustomInterceptor, URI : " + request.getRequestURI());
 
-        // Check if already logged in but still tries to log in
+        // Authentication - Registration check
         if (request.getRequestURI().contains("/api/auth/authenticate") || request.getRequestURI().contains("/api/auth/register")) {
+            // Check if already logged in but still tries to log in
             if (CustomUtils.getCookie(request.getCookies(), "jwt") != null) {
-                throw new Authentication("Already logged in");
+                throw new AuthenticationException("Already logged in");
             }
+
+            // Check if at least one input is empty
         }
         return true;
     }

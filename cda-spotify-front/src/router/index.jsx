@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import FormMusic from '../components/FormMusic'
 import Account from '../pages/Account'
 import Home from '../pages/Home'
@@ -28,13 +28,23 @@ const index = () => {
       <Route path="/playlist/:playlistId" element={<RequireAuth><DetailedPlaylist/></RequireAuth>} />
       <Route path="/playlist/:playlistId/music/:musicIndex" element={<RequireAuth><MusicDetails/></RequireAuth>} />
 
+      {/* <Route path="/playlists" element={<MyPlaylist/>} />
+      <Route path="/account" element={<Account/> }/>
+      <Route path="/playlist/:playlistId" element={<DetailedPlaylist/>} />
+      <Route path="/playlist/:playlistId/music/:musicIndex" element={<MusicDetails/>} /> */}
+
       {/* ADMIN only */}
       <Route path="/new-music" element={<RequireAuthAdmin><FormMusic/></RequireAuthAdmin>} />
       <Route path="/update-music/:musicId" element={<RequireAuthAdmin><FormMusic/></RequireAuthAdmin>} />
       <Route path="/dashboard" element={<RequireAuthAdmin><Dashboard/></RequireAuthAdmin>} />
+
+      {/* <Route path="/new-music" element={<FormMusic/>} />
+      <Route path="/update-music/:musicId" element={<FormMusic/>} />
+      <Route path="/dashboard" element={<Dashboard/>} /> */}
   
       {/* Fallback route */}
-      <Route path="*" render={() => <Redirect to="/" />} /> 
+      <Route path="*" element={<Navigate replace to='/' />} />
+      
     </Routes>
   )
 }

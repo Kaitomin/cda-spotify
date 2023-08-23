@@ -1,28 +1,31 @@
 import { useState, createContext, useContext } from "react";
 import AuthService from "../service/AuthService"
 import jwtDecode from "jwt-decode";
+import { useNavigate } from 'react-router-dom'
 
 const authContext = createContext()
 
 const useAuth = () => {
   const [currentUser, setCurrentUser] = useState({})
+  const navigate = useNavigate()
 
-  const checkIfCookieExists = (roles) => {
+  const checkIfCookieExists = roles => {
     AuthService.checkCookie()
     .then(res => {
       const token = jwtDecode(res.data)
+
+      localStorage.setItem('isAuthenticated', true)
+      localStorage.setItem('isAdmin', token.role === 'ADMIN')
+
       setCurrentUser({
         id: token.id,
         role: token.role
       })
 
-      localStorage.setItem('isAuthenticated', true)
-      localStorage.setItem('isAdmin', token.role === 'ADMIN')
-
       if (!roles.includes(token.role)) throw new Error("Unauthorized")
     }).catch((e) => {
       // console.log(e)
-      window.location.href = '/'
+      navigate('/')
     })
   } 
  
@@ -33,14 +36,14 @@ const useAuth = () => {
     },
     register({ username, password }) {
       AuthService.register({ username, password })
-        .then(() => window.location.href = '/login')
+        .then(() => navigate('/'))
     },
     login({ username, password }) {
       try {
         AuthService.login({ username, password })
           .then(() => {
             checkIfCookieExists(["CLIENT", "ADMIN"])
-            window.location.href = '/'
+            navigate('/')
           })
       } catch(e) {
         console.log("ERROR : ", e)

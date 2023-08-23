@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
-public class MusicService {
+public class MusicServiceImpl implements IMusicService {
 	private final MusicRepository repository;
 	private final ModelMapper mapper;
 	private final StorageService storageService;

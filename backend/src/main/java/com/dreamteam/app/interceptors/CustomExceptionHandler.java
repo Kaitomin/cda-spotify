@@ -1,6 +1,6 @@
 package com.dreamteam.app.interceptors;
 
-import com.dreamteam.app.exceptions.Authentication;
+import com.dreamteam.app.exceptions.AuthenticationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +11,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(Authentication.class)
+    @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<?> handleAuthenticateException(Exception e, WebRequest request) {
-        System.out.println("in AUTH EXCEPTION");
+        System.out.println(e.getMessage());
         return handleExceptionInternal(e, "OFF", new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 }

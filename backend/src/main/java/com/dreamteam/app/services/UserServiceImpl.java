@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserServiceImpl implements IUserService {
 
     private final UserRepository repository;
     private final ModelMapper mapper;
-    private final PlaylistService playlistService;
+    private final PlaylistServiceImpl playlistService;
 
     public List<UserDTO> findAll(){
         return repository.findAll().stream().map(user -> mapper.map(user, UserDTO.class)).toList();

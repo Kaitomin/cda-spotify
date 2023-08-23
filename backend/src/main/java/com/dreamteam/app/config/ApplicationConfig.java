@@ -46,10 +46,15 @@ public class ApplicationConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         if (!registry.hasMappingForPattern("/static/**")) {
             registry.addResourceHandler("/static/**")
                     .addResourceLocations("/static/");
+        }
+        if (!registry.hasMappingForPattern("/public/**")) {
+            registry.addResourceHandler("/public/**")
+                    .addResourceLocations("/public/");
         }
     }
 }

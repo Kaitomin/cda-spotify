@@ -1,4 +1,4 @@
-package com.dreamteam.app.storage;
+package com.dreamteam.app.exceptions;
 
 public class StorageException extends RuntimeException {
 

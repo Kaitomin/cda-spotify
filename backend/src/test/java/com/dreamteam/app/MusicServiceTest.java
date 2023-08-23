@@ -1,32 +1,8 @@
 package com.dreamteam.app;
 
-import com.dreamteam.app.dto.MusicDTO;
-import com.dreamteam.app.entities.Music;
-import com.dreamteam.app.enums.Tag;
-import com.dreamteam.app.repositories.MusicRepository;
-import com.dreamteam.app.services.MusicService;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.dreamteam.app.storage.StorageLocalService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
-import org.springframework.mock.web.MockMultipartFile;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 /*
 @ExtendWith(MockitoExtension.class)

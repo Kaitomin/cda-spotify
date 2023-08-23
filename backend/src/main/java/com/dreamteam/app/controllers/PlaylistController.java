@@ -3,7 +3,7 @@ package com.dreamteam.app.controllers;
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.dto.PlaylistDTO;
 
-import com.dreamteam.app.services.PlaylistService;
+import com.dreamteam.app.services.PlaylistServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/playlist")
 @RequiredArgsConstructor
 public class PlaylistController {
-    private final PlaylistService service;
+    private final PlaylistServiceImpl service;
 
     @GetMapping
     public ResponseEntity<List<PlaylistDTO>> findAll(){

@@ -15,14 +15,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.dreamteam.app.services.MusicService;
+import com.dreamteam.app.services.MusicServiceImpl;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/music")
 @RequiredArgsConstructor
 public class MusicController {
-	private final MusicService service;
+	private final MusicServiceImpl service;
 
 	@GetMapping
 	public ResponseEntity<List<MusicDTO>> findAll(){

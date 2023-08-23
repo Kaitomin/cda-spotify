@@ -1,7 +1,7 @@
 package com.dreamteam.app;
 
 import com.dreamteam.app.storage.StorageProperties;
-import com.dreamteam.app.storage.StorageLocalService;
+import com.dreamteam.app.storage.StorageServiceLocalImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
@@ -26,7 +26,7 @@ public class AppApplication {
 
 	@Bean
 	@Profile("dev")
-	CommandLineRunner init(StorageLocalService storageService) {
+	CommandLineRunner init(StorageServiceLocalImpl storageService) {
 		return (args) -> {
 			System.out.println("Storage init");
 			//storageService.deleteAll();

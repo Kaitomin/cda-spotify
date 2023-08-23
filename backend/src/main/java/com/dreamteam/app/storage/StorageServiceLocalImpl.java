@@ -1,6 +1,6 @@
 package com.dreamteam.app.storage;
 
-import com.dreamteam.app.utils.CustomUtils;
+import com.dreamteam.app.exceptions.StorageException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -19,12 +19,12 @@ import java.util.UUID;
 
 @Service
 @Profile("dev")
-public class StorageLocalService implements StorageService {
+public class StorageServiceLocalImpl implements StorageService {
     private final Path audioLocation;
     private final Path imgLocation;
 
     @Autowired
-    public StorageLocalService(StorageProperties properties) {
+    public StorageServiceLocalImpl(StorageProperties properties) {
         this.audioLocation = Paths.get(properties.getLocationAudio());
         this.imgLocation = Paths.get(properties.getLocationImg());
     }

@@ -37,19 +37,24 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .requestMatchers(
+//                        "/**"
+                        "/",
+                        "/index.html",
+                        "/assets/**",
                         "/api/music",
                         "/api/music/{id:[0-9]+}",
                         "/api/music/search/**",
                         "/api/auth/**",
                         "/api/tag",
                         "/img/**",
-                        "/audio/**",
-                        "/api/user/{userId:[0-9]+}/deletePlaylist/{playlistId:[0-9]+}"
+                        "/audio/**"
+//                        "/api/user/{userId:[0-9]+}/deletePlaylist/{playlistId:[0-9]+}"
 //                        "/api/user/{userId:[0-9]+}/updatePlaylist"
                 ).permitAll()
-//                .requestMatchers(
-//                "/api/user/{userId:[0-9]+}/deletePlaylist/{playlistId:[0-9]+}"
-//                ).hasRole("CLIENT")
+//                            .requestMatchers(
+//                                    "/playlists"
+//
+//                            ).hasAnyAuthority("CLIENT", "ADMIN")
                 .requestMatchers(
                         "/api/playlist",
                         "/api/music/new",

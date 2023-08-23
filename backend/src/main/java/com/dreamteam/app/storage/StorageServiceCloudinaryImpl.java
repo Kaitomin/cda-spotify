@@ -20,7 +20,7 @@ import com.cloudinary.Cloudinary;
 
 @Service
 @Profile("prod")
-public class StorageCloudinaryService implements StorageService {
+public class StorageServiceCloudinaryImpl implements StorageService {
     Dotenv dotenv = Dotenv.configure()
             .filename(".env-prod")
             .load();

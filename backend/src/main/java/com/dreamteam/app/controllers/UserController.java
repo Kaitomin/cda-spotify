@@ -3,22 +3,19 @@ package com.dreamteam.app.controllers;
 
 import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.dto.UserDTO;
-import com.dreamteam.app.enums.Tag;
-import com.dreamteam.app.services.UserService;
-import lombok.AllArgsConstructor;
+import com.dreamteam.app.services.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController  {
-    private final UserService service;
+    private final UserServiceImpl service;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll(){
