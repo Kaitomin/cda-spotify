@@ -2,8 +2,8 @@ package com.dreamteam.app.storage;
 
 import com.cloudinary.utils.ObjectUtils;
 import com.dreamteam.app.utils.CustomUtils;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,14 +21,9 @@ import com.cloudinary.Cloudinary;
 @Service
 @Profile("prod")
 public class StorageServiceCloudinaryImpl implements StorageService {
-    Dotenv dotenv = Dotenv.configure()
-            .filename(".env-prod")
-            .load();
-    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-            "cloud_name", dotenv.get("CLOUDINARY_CLOUD_NAME"),
-            "api_key", dotenv.get("CLOUDINARY_API_KEY"),
-            "api_secret", dotenv.get("CLOUDINARY_API_SECRET"),
-            "secure", true));
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Override
     public void init() {}

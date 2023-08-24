@@ -17,8 +17,6 @@ import java.util.Arrays;
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
 public class AppApplication {
-	@Autowired
-	Environment env;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppApplication.class, args);
@@ -34,10 +32,10 @@ public class AppApplication {
 		};
 	}
 
-	@Bean
-	ApplicationRunner applicationRunner(Environment environment) {
-		System.out.println("Current environment : " + Arrays.stream(env.getActiveProfiles()).toList());
-		System.out.println(env.getProperty("frontend_url"));
-		return args -> System.out.println("message from application.properties " + environment.getProperty("message-from-application-properties"));
-	}
+//	@Bean
+//	ApplicationRunner applicationRunner(Environment environment) {
+//		System.out.println("Current environment : " + Arrays.stream(env.getActiveProfiles()).toList());
+//		System.out.println(env.getProperty("frontend_url"));
+//		return args -> System.out.println("message from application.properties " + environment.getProperty("message-from-application-properties"));
+//	}
 }

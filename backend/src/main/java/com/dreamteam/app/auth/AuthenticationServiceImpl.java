@@ -63,7 +63,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
         Cookie cookie = new Cookie("jwt", jwtToken);
         cookie.setMaxAge(24 * 60 * 60); // expires in 1 day
-        // cookie.setSecure(true); in production mode
+        cookie.setSecure(true); // in production mode
         cookie.setHttpOnly(true);
         cookie.setPath("/");
 
@@ -79,7 +79,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     public void logout(HttpServletResponse response) {
         Cookie cookie = new Cookie("jwt", null);
         cookie.setMaxAge(0); // expires in 7 days
-        // cookie.setSecure(true); in production mode
+        cookie.setSecure(true); // in production mode
         cookie.setHttpOnly(true);
         cookie.setPath("/");
 

@@ -9,9 +9,9 @@ export default {
     return Api().post('/api/auth/authenticate', newUser)
   },
   logout() {
-    return Api().get('http://localhost:8080/api/auth/logout')
+    return Api().get('/api/auth/logout')
   },
   checkCookie() {
-    return Api().get('http://localhost:8080/api/auth/checkCookie')
+    return Api().get('/api/auth/checkCookie')
   }
 }
