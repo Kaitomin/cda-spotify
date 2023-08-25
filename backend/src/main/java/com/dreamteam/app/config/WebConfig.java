@@ -1,6 +1,6 @@
 package com.dreamteam.app.config;
 
-import com.dreamteam.app.interceptors.CustomInterceptor;
+import com.dreamteam.app.interceptors.AuthInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new CustomInterceptor());
+        registry.addInterceptor(new AuthInterceptor());
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 
