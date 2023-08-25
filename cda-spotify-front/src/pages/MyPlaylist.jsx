@@ -50,7 +50,7 @@ const MyPlaylist = () => {
             <Link to={`/playlist/${playlist.id}`}>
               <h2 className="playlist-title">{playlist.name}</h2>
             </Link>
-            <i className="fa-solid fa-xmark" onClick={() => removePlaylistFromUser(playlist.id)}></i>
+            { playlist.name !== 'Favoris' && <i className="fa-solid fa-xmark" onClick={() => removePlaylistFromUser(playlist.id)}></i> }
           </div>
           
         ))}

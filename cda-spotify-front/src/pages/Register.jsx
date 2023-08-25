@@ -4,7 +4,7 @@ import useAuth from '../hook/useAuth'
 
 const Register = () => {
   const navigate = useNavigate()
-  const { register, currentUser } = useAuth()
+  const { register } = useAuth()
   const [user , setUser] = useState({
     username: "",
     password: "",

@@ -33,7 +33,7 @@ const Login = () => {
 
   return (
     <div className='connection'>
-      <h1>Connexion</h1>
+      <h1>Se connecter</h1>
       <form onSubmit={handleLogin} className="d-flex flex-column w-50 m-auto">
         <div>
           <label htmlFor="username">Username</label>

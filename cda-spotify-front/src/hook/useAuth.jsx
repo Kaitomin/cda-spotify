@@ -36,7 +36,7 @@ const useAuth = () => {
     },
     register({ username, password }) {
       AuthService.register({ username, password })
-        .then(() => navigate('/'))
+        .then(() => navigate('/login'))
     },
     login({ username, password }) {
       try {

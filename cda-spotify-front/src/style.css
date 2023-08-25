@@ -34,7 +34,7 @@ nav.nav {
   justify-content : space-between;
   align-items: stretch;
   gap: 2rem;
-  padding: 0 0.5em;
+  padding: 0 1em;
 }
 nav.nav a {
   color: inherit;
@@ -44,19 +44,149 @@ nav.nav a {
   align-items: center;
   padding: 0.25rem;
 }
-
-nav.nav ul {
-  padding: 0;
-  margin : 0;
-  list-style: none;
-  display : flex;
-  align-items: center;
-}
 nav.nav li {
   padding: 0 15px;
   transition: background-color 0.2s;
   height: 100%;
 }
+
+/* ----------- */
+/* Burger Menu */
+/* ----------- */
+
+.menu-burger {
+  margin: 0;
+  padding: 0;  
+  position: fixed;
+  top: 0;
+  margin-top: 67px;
+  left: 0;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
+
+.menu-burger > li {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0.5em 0;
+  width: 100%;
+  color: white;
+  overflow: hidden;
+  height: 60px !important;
+  background-color: var(--link-hover);
+}
+
+.menu-button-container {
+  display: none;
+  height: 100%;
+  width: 30px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+.menu-button,
+.menu-button::before,
+.menu-button::after {
+  display: block;
+  background-color: #fff;
+  position: absolute;
+  height: 4px;
+  width: 30px;
+  transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 2px;
+}
+
+.menu-button::before {
+  content: '';
+  margin-top: -8px;
+}
+
+.menu-button::after {
+  content: '';
+  margin-top: 8px;
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button::before {
+  margin-top: 0px;
+  transform: rotate(45deg);
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button {
+  background: rgba(255, 255, 255, 0);
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button::after {
+  margin-top: 0px;
+  transform: rotate(-45deg);
+}
+
+.menu-button-container {
+  display: flex;
+}
+
+.burger-blocker {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 15;
+  background: var(--dark-blue-4);
+}
+
+#menu-toggle ~ .menu-burger {
+  opacity: 0;
+}
+#menu-toggle ~ .menu-burger li {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  /* transition: opacity 2s ease-in-out; */
+  opacity: 0;
+}
+#menu-toggle:checked ~ .menu-burger {
+  opacity: 1;
+}
+#menu-toggle:checked ~ .menu-burger li {
+  border-bottom: 1px solid #ffffff8a;
+  height: 2.5em;
+  padding: 0.5em;
+  opacity: 1;
+}
+
+.menu-burger-container,
+.menu-burger {
+  z-index: 20;
+}
+.menu-burger-container {
+  position: fixed;
+  top: 6%;
+  right: 5%;
+}
+.menu-burger a,
+.menu-burger .logout {
+  font-size: 1.1em;
+  gap: 0 10px;
+}
+.menu-burger-container 
+.menu-burger > li:first-child {
+  border-top: 1px solid #ffffff8a;
+}
+/* .menu-burger > li:not(:last-child) {
+  border-bottom: 1px solid #444;
+} */
+
+/* ----------- */
+
 
 .logout:hover {
   cursor: pointer;
@@ -217,7 +347,7 @@ nav.nav li {
 }
 
 .music-player .playlist-modal {
-  z-index: 99;
+  z-index: 10;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -346,7 +476,7 @@ nav.nav li {
   background: var(--red-warning);
   color: white;
   padding: 0.3em;
-  z-index: 99;
+  z-index: 10;
 }
 
 .my-playlist .playlist-item i.fa-xmark:hover {
@@ -385,10 +515,6 @@ nav.nav li {
 /*  DetailedPlayList  */
 /* ------------------ */
 .detailed-playlist > div:first-child {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2em 0;
   gap: 0 25px;
 }
 .detailed-playlist > div h1 {
@@ -401,15 +527,16 @@ nav.nav li {
   cursor: pointer;
 }
 .detailed-playlist .music-list {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  max-width: 1200px;
 }
 .detailed-playlist .music-list > .music-item:nth-child(2n) {
   background: var(--dark-blue-1);
 }
 .detailed-playlist .music-list > .music-item:nth-child(2n + 1) {
   background: var(--dark-blue-3);
+}
+.detailed-playlist .music-details a {
+  color: var(--light-blue);
 }
 .detailed-playlist .modal-window {
   display: flex;
@@ -420,12 +547,7 @@ nav.nav li {
   border-top: 1px solid;
 }
 .detailed-playlist .music-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
   gap: 0 25px;
-  padding: 10px;
   border-bottom: 1px solid #ccc;
 }
 
@@ -433,17 +555,16 @@ nav.nav li {
   border-radius: 8px;
 }
 
-.detailed-playlist .delete-button {
+/* .detailed-playlist .delete-button {
   background-color: #f44336;
   color: white;
   border: none;
   border-radius: 4px;
   padding: 5px 10px;
-  cursor: pointer;
-}
+} */
 
 .detailed-playlist .music-track {
-  position: relative;
+  /* position: relative; */
 }
 .detailed-playlist .btn-container {
   position: absolute;
@@ -634,7 +755,7 @@ nav.nav li {
 	position: absolute;
 	white-space: nowrap;
 	width: 58px;
-  z-index: 99;
+  z-index: 10;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -746,13 +867,16 @@ nav.nav li {
 /* --------- */
 .dashboard {
   color: white;
-  margin-bottom: 5em;
+  margin-bottom: 8.5em;
 }
 .dashboard a {
   color: white;
 }
 .dashboard .nav-item button:hover {
   color: var(--medium-blue);
+}
+.dashboard .musics-list p {
+  margin-bottom: 0 !important; /* BS override */
 }
 .dashboard thead tr {
   background: var(--dark-blue-2);
@@ -778,7 +902,7 @@ nav.nav li {
 }
 .dashboard .new-music-icon {
   position: fixed;
-  bottom: 0;
+  bottom: 50px;
   right: 3%;
 }
 .dashboard .fa-circle-plus {
@@ -803,7 +927,25 @@ nav.nav li {
 .secondary-nav a {
   color: white;
 }
+/* --------- */
+/*  AboutUs  */
+/* --------- */
+.about-us > div {
+  max-width: 500px;
+  margin: 0 auto;
+}
 
+/* -------- */
+/*  Footer  */
+/* -------- */
+footer {
+  border-top: 1px solid;
+  background-color: var(--dark-blue-1);
+}
+footer > div {
+  width: 300px;
+  margin: 0 auto;
+} 
 
 /* ========================== */
 /* ======= Responsive ======= */
@@ -827,15 +969,7 @@ nav.nav li {
 }
 
 @media screen and (max-width: 568px) {
-  /* --------- */
-  /* Dashboard */
-  /* --------- */
-  .dashboard {
-    margin-bottom: 8.5em;
-  }
-  .dashboard .new-music-icon {
-    bottom: 50px;
-  }
+
 }
 
 @media screen and (min-width: 650px) {

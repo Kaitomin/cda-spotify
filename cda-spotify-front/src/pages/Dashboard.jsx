@@ -57,10 +57,10 @@ const Dashboard = () => {
         >
           <Tab eventKey="musics" title="Musics">
             <Link to="/new-music" className='new-music-icon text-center d-flex flex-column justify-content-center text-decoration-none align-items-center column-gap-2 my-3 text-light'>
-              <i className="fa-solid fa-circle-plus"></i>
+              <i className="fa-solid fa-circle-plus bg-black rounded-circle"></i>
               <span>Music</span>
             </Link>
-            <table className='w-100 text-center'>
+            <table className='w-100 text-center musics-list'>
               <thead>
                 <tr>
                   <th className='py-3 d-none d-sm-table-cell' width="15%">Image</th>
@@ -77,14 +77,14 @@ const Dashboard = () => {
                     <td className='py-2 d-none d-sm-block'>
                       <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${m.imgUri}`} alt="music cover image" className='object-fit-cover' width={60} height={60} />
                     </td>
-                    <td className='py-2'><p>{m.artist}</p></td>
+                    <td className='py-4 py-sm-2'><p>{m.artist}</p></td>
                     <td>
                       <Link to={`/music/${m.id}`}>
                         {m.title}
                       </Link>
                     </td>
-                    <td className='d-none d-sm-table-cell'>{m.duration}</td>
-                    <td className='d-none d-sm-table-cell'>{m.releasedAt}</td>
+                    <td className='d-none d-sm-table-cell'>{m.duration.split('').splice(1).join('')}</td>
+                    <td className='d-none d-sm-table-cell'>{m.releasedAt.split('-')[0]}</td>
                     <td className='actions'>
                       <Link to={`/update-music/${m.id}`}>
                         <i className="fa-solid fa-pen-to-square me-3"></i>
