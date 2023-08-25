@@ -61,7 +61,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }, [currentMusic])
 
   useEffect(() => {
-    if (playlists.length == 0) return
+    if (playlists.length == 0 || currentMusic == null) return
 
     const filteredMusic = playlists[0].musics.filter(m => m.id == currentMusic.id)
 
@@ -70,7 +70,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
     } else {
       setIsFavorite(false)
     }
-  }, [playlists])
+  }, [playlists, currentMusic])
 
   const togglePlay = () => {
     if (isPlaying) {

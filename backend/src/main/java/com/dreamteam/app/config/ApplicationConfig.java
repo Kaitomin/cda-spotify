@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
 @RequiredArgsConstructor
@@ -45,16 +44,5 @@ public class ApplicationConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-    }
-
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        if (!registry.hasMappingForPattern("/static/**")) {
-            registry.addResourceHandler("/static/**")
-                    .addResourceLocations("/static/");
-        }
-        if (!registry.hasMappingForPattern("/public/**")) {
-            registry.addResourceHandler("/public/**")
-                    .addResourceLocations("/public/");
-        }
     }
 }

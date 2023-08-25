@@ -138,12 +138,19 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
-<!--				<excludes>-->
+				<excludes>
 <!--					<exclude>application-dev.properties</exclude>-->
-<!--				</excludes>-->
-			</resource><resource>
+					<exclude>static/img/**</exclude>
+					<exclude>static/audio/**</exclude>
+				</excludes>
+			</resource>
+			<resource>
 				<directory>src/main/resources/static</directory>
 				<filtering>false</filtering>
+				<excludes>
+					<exclude>img/**</exclude>
+					<exclude>audio/**</exclude>
+				</excludes>
 			</resource>
 		</resources>
 		<plugins>
@@ -223,7 +230,6 @@
 					<nonFilteredFileExtensions>
 						<nonFilteredFileExtension>mp3</nonFilteredFileExtension>
 						<nonFilteredFileExtension>webp</nonFilteredFileExtension>
-						<nonFilteredFileExtension>jpg</nonFilteredFileExtension>
 						<nonFilteredFileExtension>jfif</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 				</configuration>
