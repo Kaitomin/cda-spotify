@@ -10,7 +10,7 @@ import { AuthProvider } from './hook/useAuth.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    
+      
       {`${import.meta.env.VITE_PROFILE}` === 'DEVELOPMENT' && (
         <BrowserRouter>
           <AuthProvider>
@@ -27,6 +27,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </HashRouter>
       )}
       
-      
-  </React.StrictMode>,
+  </React.StrictMode>
 )

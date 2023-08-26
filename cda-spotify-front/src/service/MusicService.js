@@ -7,12 +7,12 @@ export default {
   getById(id) {
     return Api().get(`/api/music/${id}`);
   },
-  getByArtist(artist){
-    return Api().get(`/api/music/byArtist/${artist}`)
+  getByTypeAndSearchkey(type, searchKey){
+    return Api().get(`/api/music/by${type}/${searchKey}`)
   },
-  getByTag(tag){
-    return Api().get(`/api/music/byTag/${tag}`)
-  },
+  // getByTag(tag){
+  //   return Api().get(`/api/music/byTag/${tag}`)
+  // },
   searchBy(searchKey) {
     return Api().get(`/api/music/search/${searchKey}`)
   },

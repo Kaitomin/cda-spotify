@@ -1,12 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import '../style.css'
-import MusicService from '../service/MusicService';
 import PlaylistService from '../service/PlaylistService';
 import useAuth from '../hook/useAuth'
-import { useNavigate } from 'react-router-dom'
 
-const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
+const MusicPlayer = ({ selectedMusicsList, selectedMusic, selectedIndex, updateSelectedMusic }) => {
   const audioRef = useRef()
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState()
@@ -14,45 +12,28 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   const [duration, setDuration] = useState(0)
   const [isLooping, setIsLooping] = useState(false)
   const [isRandom, setIsRandom] = useState(false)
-  const [currentMusic, setCurrentMusic] = useState(null)
-  const [musicList, setMusicList] = useState([])
+  const [currentMusic, setCurrentMusic] = useState()
+  const [musicList, setMusicList] = useState()
   const [playlists, setPlaylists] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [isFavorite, setIsFavorite] = useState()
   const { currentUser } = useAuth()
-  const navigate = useNavigate()
 
+  // Set musics list and current music
   useEffect(() => {
-    // Accessing from music page
-    if (musicId) {
-      MusicService.getById(musicId)
-        .then(res => setCurrentMusic(res.data))
-      MusicService.getAll()
-        .then(res => {
-          setMusicList(res.data)
-          const indexOfCurrentMusic = res.data.findIndex(m => m.id == musicId)
-          setCurrentIndex(indexOfCurrentMusic)
-        })
-    // Accessing from a specific playlist
-    } else {
-      PlaylistService.getById(playlistId)
-        .then(res => {
-          setMusicList(res.data.musics)
-          setCurrentMusic(res.data.musics[musicIndex])
-          setCurrentIndex(+musicIndex)
-        })
-    }
+    setMusicList(selectedMusicsList)
+    setCurrentMusic(selectedMusic)
+    setCurrentIndex(selectedIndex ? selectedIndex : 0)
 
+    // if user is logged in, get all his playlists
     if (!currentUser.id) return 
 
     PlaylistService.getPlaylistByUserId(currentUser.id)
       .then(res => setPlaylists(res.data))
-  }, []);
+  }, [selectedMusic, selectedMusicsList]);
 
-  useEffect(() => {
-    setCurrentMusic(musicList[currentIndex])
-  }, [currentIndex])
 
+  // Autoplay audio
   useEffect(() => {
     if (audioRef.current && currentMusic) {
       audioRef.current.play()
@@ -60,6 +41,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
     }
   }, [currentMusic])
 
+  // Check if current music is in user's Favoris
   useEffect(() => {
     if (playlists.length == 0 || currentMusic == null) return
 
@@ -82,7 +64,18 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }
 
   const handlePrevious = () => {
-    setCurrentIndex(prevIndex => prevIndex == 0 ? musicList.length - 1 : prevIndex - 1 )
+    if (isRandom) {
+      let newRandomIndex = Math.floor(Math.random() * musicList.length)
+      while (newRandomIndex === currentIndex) {            
+        newRandomIndex = Math.floor(Math.random() * musicList.length)
+      }
+      setCurrentIndex(newRandomIndex);
+      updateSelectedMusic(musicList[newRandomIndex])
+    } else {
+      const prevIndex = currentIndex == 0 ? musicList.length - 1 : currentIndex - 1
+      setCurrentIndex(prevIndex)
+      updateSelectedMusic(musicList[prevIndex])
+    }
   }
   
   const handleTimeUpdate = () => {
@@ -121,8 +114,11 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
         newRandomIndex = Math.floor(Math.random() * musicList.length)
       }
       setCurrentIndex(newRandomIndex);
+      updateSelectedMusic(musicList[newRandomIndex])
     } else {
-      setCurrentIndex(prevIndex => prevIndex == musicList.length -1 ? 0 : prevIndex + 1)
+      const prevIndex = currentIndex ==  musicList.length -1 ? 0 : currentIndex + 1
+      setCurrentIndex(prevIndex)
+      updateSelectedMusic(musicList[prevIndex])
     }
   }
 
