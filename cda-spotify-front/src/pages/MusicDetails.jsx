@@ -6,6 +6,7 @@ import Slider from '../components/Slider';
 import MusicService from '../service/MusicService';
 import PlaylistService from '../service/PlaylistService';
 import { useNavigate } from 'react-router-dom'
+import useAuth from '../hook/useAuth'
 
 const MusicDetails = () => {
   const { playlistId, musicIndex, musicId } = useParams()
@@ -15,7 +16,6 @@ const MusicDetails = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log("...")
     // Acessing from music page
     if (musicId) {
       MusicService.getById(musicId) 
@@ -40,7 +40,6 @@ const MusicDetails = () => {
   }, [musicId])
 
   const updateSelectedMusic = music => {
-    console.log(music)
     setSelectedMusic(music)
     navigate(`/music/${music.id}`)
   }

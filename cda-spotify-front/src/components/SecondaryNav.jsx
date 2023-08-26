@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import useAuth from '../hook/useAuth'
 
 const SecondaryNav = () => {
-  const { currentUser, logout } = useAuth()
   const isAuthenticated = localStorage.getItem('isAuthenticated')
   const isAdmin = localStorage.getItem('isAdmin')
 

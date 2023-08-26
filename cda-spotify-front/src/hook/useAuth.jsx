@@ -11,22 +11,22 @@ const useAuth = () => {
 
   const checkIfCookieExists = roles => {
     AuthService.checkCookie()
-    .then(res => {
-      const token = jwtDecode(res.data)
+      .then(res => {
+        const token = jwtDecode(res.data)
 
-      localStorage.setItem('isAuthenticated', true)
-      localStorage.setItem('isAdmin', token.role === 'ADMIN')
+        localStorage.setItem('isAuthenticated', true)
+        localStorage.setItem('isAdmin', token.role === 'ADMIN')
 
-      setCurrentUser({
-        id: token.id,
-        role: token.role
+        setCurrentUser({
+          id: token.id,
+          role: token.role
+        })
+
+        if (!roles.includes(token.role)) throw new Error("Unauthorized")
       })
-
-      if (!roles.includes(token.role)) throw new Error("Unauthorized")
-    }).catch((e) => {
-      // console.log(e)
-      navigate('/')
-    })
+      .catch(() => {
+        navigate('/')
+      })
   } 
  
   return {

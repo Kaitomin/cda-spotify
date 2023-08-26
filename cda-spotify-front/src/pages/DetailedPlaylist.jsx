@@ -3,7 +3,6 @@ import PlaylistForm from '../components/PlaylistForm';
 import { Link, useParams } from 'react-router-dom';
 import PlaylistService from '../service/PlaylistService';
 import useAuth from '../hook/useAuth'
-import { useNavigate } from 'react-router-dom'
 
 const DetailedPlaylist = () => {
     const [musicList, setMusicList] = useState([]);
@@ -12,7 +11,6 @@ const DetailedPlaylist = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentMusicId, setCurrentMusicId] = useState(null);
     const { currentUser } = useAuth()
-    const navigate = useNavigate()
 
     const { playlistId } = useParams();
 

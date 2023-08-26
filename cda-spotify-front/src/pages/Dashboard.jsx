@@ -13,7 +13,6 @@ const Dashboard = () => {
   const [musics, setMusics] = useState()
   const [users, setUsers] = useState()
   const [playlists, setPlaylists] = useState()
-  const { currentUser } = useAuth()
 
   const getMusics = () => {
     MusicService.getAll()

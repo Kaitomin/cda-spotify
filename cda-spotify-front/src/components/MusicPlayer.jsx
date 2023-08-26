@@ -17,7 +17,15 @@ const MusicPlayer = ({ selectedMusicsList, selectedMusic, selectedIndex, updateS
   const [playlists, setPlaylists] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [isFavorite, setIsFavorite] = useState()
-  const { currentUser } = useAuth()
+  const { currentUser, checkCookie } = useAuth()
+  const isAuthenticated = localStorage.getItem('isAuthenticated')
+  
+  // Check for current connected user
+  useEffect(() => {
+    if (!isAuthenticated) return
+    
+    checkCookie(["CLIENT","ADMIN"])
+  }, [])
 
   // Set musics list and current music
   useEffect(() => {
@@ -39,6 +47,7 @@ const MusicPlayer = ({ selectedMusicsList, selectedMusic, selectedIndex, updateS
       audioRef.current.play()
       setIsPlaying(!audioRef.current.paused)
     }
+
   }, [currentMusic])
 
   // Check if current music is in user's Favoris
@@ -177,7 +186,7 @@ const MusicPlayer = ({ selectedMusicsList, selectedMusic, selectedIndex, updateS
       return
     }
 
-    PlaylistService.addMusic(playlists[0].id)
+    PlaylistService.addMusic(playlists[0].id, currentMusic)
       .then(() => {
         console.log("Ajoutée aux favoris")
         setIsFavorite(true)

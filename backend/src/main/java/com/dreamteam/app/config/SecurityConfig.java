@@ -43,6 +43,8 @@ public class SecurityConfig {
                         "/api/music",
                         "/api/music/{id:[0-9]+}",
                         "/api/music/search/**",
+                        "/api/music/byTag/{tag:[A-Z]+}",
+                        "/api/music/byArtist/{artist:[a-zA-Z]+}",
                         "/api/auth/**",
                         "/api/tag",
                         "/img/**",

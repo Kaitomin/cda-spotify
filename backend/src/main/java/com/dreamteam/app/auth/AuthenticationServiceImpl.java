@@ -5,6 +5,7 @@ import com.dreamteam.app.dto.UserDTO;
 import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.entities.User;
 import com.dreamteam.app.enums.Role;
+import com.dreamteam.app.exceptions.AuthenticationException;
 import com.dreamteam.app.jwt.JwtService;
 import com.dreamteam.app.repositories.UserRepository;
 import com.dreamteam.app.utils.CustomUtils;
@@ -66,7 +67,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         cookie.setSecure(true); // in production mode
         cookie.setHttpOnly(true);
         cookie.setPath("/");
-        System.out.println(cookie);
         return AuthenticationResponse.builder()
             .token(cookie)
             .build();
