@@ -32,11 +32,10 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
           setMusicList(res.data)
           const indexOfCurrentMusic = res.data.findIndex(m => m.id == musicId)
           setCurrentIndex(indexOfCurrentMusic)
-          setCurrentMusic(res.data[indexOfCurrentMusic])
         })
     // Accessing from a specific playlist
     } else {
-      PlaylistService.getById(playlistId, currentUser.token)
+      PlaylistService.getById(playlistId)
         .then(res => {
           setMusicList(res.data.musics)
           setCurrentMusic(res.data.musics[musicIndex])
@@ -46,7 +45,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
 
     if (!currentUser.id) return 
 
-    PlaylistService.getPlaylistByUserId(currentUser.id, currentUser.token)
+    PlaylistService.getPlaylistByUserId(currentUser.id)
       .then(res => setPlaylists(res.data))
   }, []);
 
@@ -168,7 +167,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
       return
     }
 
-    PlaylistService.addMusic(id, currentMusic, currentUser.token)
+    PlaylistService.addMusic(id, currentMusic)
       .then(() => {
         console.log("Musique ajoutée à la playlist")
         setShowModal(!showModal)
@@ -182,7 +181,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
       return
     }
 
-    PlaylistService.addMusic(playlists[0].id, currentMusic, currentUser.token)
+    PlaylistService.addMusic(playlists[0].id)
       .then(() => {
         console.log("Ajoutée aux favoris")
         setIsFavorite(true)
@@ -194,7 +193,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
       console.log('Not logged in')
       return
     }
-    PlaylistService.removeMusic(playlists[0].id, currentMusic.id, currentUser.token)
+    PlaylistService.removeMusic(playlists[0].id, currentMusic.id)
       .then(() => {
         console.log("Retirée des favoris")
         setIsFavorite(false)

@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.enums.Tag;
+import com.dreamteam.app.exceptions.MusicException;
 import com.dreamteam.app.storage.StorageService;
 import com.dreamteam.app.utils.CustomUtils;
 import lombok.RequiredArgsConstructor;
@@ -72,19 +73,25 @@ public class MusicServiceImpl implements IMusicService {
 			MultipartFile imgFile,
 			MultipartFile audioFile,
 			long id
-		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
+		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException, MusicException {
 
 		if (Stream.of(mDto.getReleasedAt()).anyMatch(Objects::isNull) || mDto.getTitle().isEmpty() || mDto.getArtist().isEmpty()) {
-			System.out.println("A required field is empty or null");
-			return null;
+			throw new MusicException("A required field is empty or null");
 		}
+
+//		if (!CustomUtils.isImageType(imgFile.getOriginalFilename()) || !CustomUtils.isAudioType(audioFile.getOriginalFilename())) {
+//			System.out.println("wrong format");
+//			throw new InvalidContentTypeException("Wrong format");
+//		}
 
 		if (repository.findById(id).orElse(null) != null) {
 			Music m = repository.findById(id).orElse(null);
 
 			// Check if a new image file is uploaded
-			if (imgFile == null) mDto.setImgUri(m.getImgUri());
-			else {
+			if (imgFile == null) mDto.setImgUri(m.getImgUri()); // Get current imgUri in DB
+			else if (!CustomUtils.isImageType(imgFile.getOriginalFilename())) { // File type is not an image
+				throw new InvalidContentTypeException("Wrong format");
+			} else { // Store new imgUri in storage and DB
 				String imgUri = storageService.store(imgFile);
 				storageService.deleteFile(m.getImgUri(), "img"); // Delete previous img file
 				mDto.setImgUri(imgUri);

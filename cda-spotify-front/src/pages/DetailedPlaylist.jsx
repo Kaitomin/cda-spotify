@@ -17,7 +17,7 @@ const DetailedPlaylist = () => {
     const { playlistId } = useParams();
 
     const getPlaylist = () => {
-        PlaylistService.getById(playlistId, currentUser.token)
+        PlaylistService.getById(playlistId)
             .then(response => {
                 const data = response.data;
                 setMusicList(data.musics)
@@ -31,7 +31,7 @@ const DetailedPlaylist = () => {
         const answer = confirm("Retirer de la playlist ?")
         if (!answer) return
 
-        PlaylistService.removeMusic(playlistId, id, currentUser.token)
+        PlaylistService.removeMusic(playlistId, id)
             .then(() => getPlaylist())
     }
     const handleUpdatePlaylist = (childName) => {
@@ -40,7 +40,7 @@ const DetailedPlaylist = () => {
             name:childName,
         }
 
-        PlaylistService.updateName(currentUser.id, newPlaylistData, currentUser.token)
+        PlaylistService.updateName(currentUser.id, newPlaylistData)
             .then(() =>{
                 setIsModalOpen(false);
                 getPlaylist()

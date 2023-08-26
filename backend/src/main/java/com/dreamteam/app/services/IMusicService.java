@@ -2,6 +2,7 @@ package com.dreamteam.app.services;
 
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.enums.Tag;
+import com.dreamteam.app.exceptions.MusicException;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -28,7 +29,7 @@ public interface IMusicService {
             MultipartFile imgFile,
             MultipartFile audioFile,
             long id
-    ) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException;
+    ) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException, MusicException;
     void delete(long id) throws IOException;
     MusicDTO getById(long id);
     List<MusicDTO> getTop10ByTags(Tag tag);

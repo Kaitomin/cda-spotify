@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.enums.Tag;
+import com.dreamteam.app.exceptions.MusicException;
 import lombok.RequiredArgsConstructor;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -77,22 +78,8 @@ public class MusicController {
 		@RequestPart("fileUpload") MusicDTO musicDTO,
 		@RequestPart(value = "imgFile", required = false) MultipartFile imgFile,
 		@RequestPart(value = "audioFile", required = false) MultipartFile audioFile
-	) {
-		try {
-			return ResponseEntity.ok(service.update(musicDTO, imgFile, audioFile, id));
-		} catch (CannotReadException e) {
-			throw new RuntimeException(e);
-		} catch (TagException e) {
-			throw new RuntimeException(e);
-		} catch (InvalidAudioFrameException e) {
-			throw new RuntimeException(e);
-		} catch (ReadOnlyFileException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
-		}
+	) throws MusicException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, IOException, ParseException {
+		return ResponseEntity.ok(service.update(musicDTO, imgFile, audioFile, id));
 	}
 
 	@GetMapping("/byTag/{tag}")

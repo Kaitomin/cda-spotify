@@ -43,6 +43,66 @@ h1 {
   background-color: var(--link-hover);
 }
 
+/* ModalMessage */
+.modal-message {
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  padding: 1em 2em;
+  border: 1px solid;
+  border-radius: 5%;
+  background: var(--dark-blue-1);
+  z-index: 15;
+}
+.form-blocker {
+  opacity: 0.4;
+  background: black;
+  z-index: 10;
+}
+
+/* -----  */
+/* Loader */
+/* ------ */
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
 /* ----------- */
 /* Burger Menu */
 /* ----------- */
@@ -294,14 +354,11 @@ h1 {
 /*  Slider  */
 /* -------- */
 .slider {
+  display: flex;
   background-color: darkcyan;
   height: 300px;
 }
 
-
-.slider {
-  display: flex;
-}
 .slider-container {
   overflow-x: auto;
   white-space: nowrap;
