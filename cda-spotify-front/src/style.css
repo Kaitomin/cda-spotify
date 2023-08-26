@@ -271,39 +271,41 @@ nav.nav li {
 /* -------- */
 /*  Slider  */
 /* -------- */
-
-.slider-area{
-  padding-top: 20vh;
-  margin-bottom: 2vh;
+.slider {
+  background-color: darkcyan;  
+  height: 300px;
 }
-.site-title{
-  margin-bottom: 10px;
 
-}
-.slider-bg{
-  padding-top: 6vh;
-  padding-bottom: 4vh;
-  background-color: #555856;
-  color : white;
-  padding: 1rem;
 
-}
 .slider {
   display: flex;
 }
 .slider-container {
   overflow-x: auto;
   white-space: nowrap;
+  background-color: darkcyan;
+
+}
+.slider-music-component > a > img{
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 .slider-music-component{
   padding : 1rem;
+  height: auto;
 
 }
-.slider-music-title{
-
+.slider-music-title {
+  font-size: large;
+  font-style: white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 150px;
 }
-
 /* ------------ */
 /*  MyPlaylist  */
 /* ------------ */

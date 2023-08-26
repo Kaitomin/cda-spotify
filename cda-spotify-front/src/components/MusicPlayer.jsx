@@ -257,6 +257,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
           </div>
         </div>
       )}
+      
     </div>
   )
 }

@@ -66,7 +66,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         cookie.setSecure(true); // in production mode
         cookie.setHttpOnly(true);
         cookie.setPath("/");
-
+        System.out.println(cookie);
         return AuthenticationResponse.builder()
             .token(cookie)
             .build();

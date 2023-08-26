@@ -34,6 +34,7 @@ public class AuthenticationController {
         }
 
         AuthenticationResponse authRes = service.authenticate(req);
+        System.out.println(authRes.getToken());
         response.addCookie(authRes.getToken());
         return new ResponseEntity<>(HttpStatus.OK);
     }
