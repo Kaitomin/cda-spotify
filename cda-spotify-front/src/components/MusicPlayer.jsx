@@ -202,7 +202,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }
 
   return (
-    <div className='music-player'>
+    <div className='music-player text-light position-relative'>
       {currentMusic && (
         <div className='mx-auto px-3 py-5'>
           <div className='d-flex justify-content-center align-items-center vh-45 mt-3'>
@@ -242,7 +242,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
             src={`${import.meta.env.VITE_RESOURCE_AUDIO_URL}/${currentMusic.audioUri}`}
           />
 
-          <div className="controls">
+          <div className="controls d-flex align-items-center flex-wrap justify-content-around">
             <div className='d-flex justify-content-between w-100 timer'>
               <div>
                 {formatTime(currentTime)}

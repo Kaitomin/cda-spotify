@@ -44,16 +44,16 @@ const Search = () => {
   return (
     <div className="search-page px-3 mt-4">
       <SearchBar getResult={getResult} refresh={refresh} />
-      <div className="d-flex justify-content-evenly my-2">
-        <div className="position-relative input">
-          <label htmlFor="title" className="toggle mb-2">Par titre</label>
+      <div className="d-flex justify-content-around my-2">
+        <div className="position-relative input d-flex flex-column align-items-center">
+          <label htmlFor="title" className="toggle mb-2">Titre</label>
           <input type="checkbox" id="title" name="title" value="title" className="toggle__input" onChange={handleFilter} />
           <span className="toggle-track">
 				    <span className="toggle-indicator"></span>
           </span>
         </div>
-        <div className="position-relative input">
-          <label htmlFor="artist" className="toggle mb-2">Par artiste</label>
+        <div className="position-relative input d-flex flex-column align-items-center">
+          <label htmlFor="artist" className="toggle mb-2">Artiste</label>
           <input type="checkbox" id="artist" name="artist" value="artist" className="toggle__input" onChange={handleFilter} />
           <span className="toggle-track">
 				    <span className="toggle-indicator"></span>
@@ -66,7 +66,7 @@ const Search = () => {
         <div className="result-grid">
           {musicList.map(music => (
             <div key={music.id} className="music-item-search bg-white rounded">
-              <Link to={`/music/${music.id}`} className="text-decoration-none">            
+              <Link to={`/music/${music.id}`} className="text-decoration-none text-black">            
                 <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${music.imgUri}`} alt={music.title} className="music-image-search rounded-top object-fit-cover" width={100 + '%'} height={185 + 'px'} />
                 <h2 className="music-title-search fw-bold mt-2" title={music.title}>{music.title}</h2>
                 <h3 className="music-author-search" title={music.artist}>{music.artist}</h3>

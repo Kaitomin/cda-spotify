@@ -39,8 +39,8 @@ const MyPlaylist = () => {
       <h1>Playlists</h1>
       <div className="playlist-container mb-5">
         { playlists.map((playlist) => (
-          <div key={playlist.id} className="playlist-item">
-            <img 
+          <div key={playlist.id} className="playlist-item position-relative text-decoration-none text-black">
+            <img
               src={playlist.musics.length > 0 ? 
                 `${import.meta.env.VITE_RESOURCE_IMG_URL}/${playlist.musics[0].imgUri}` :
                 "https://placehold.co/400x350"} 

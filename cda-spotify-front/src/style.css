@@ -13,6 +13,9 @@
   --link-hover: #262f40;
 }
 
+/* ------ */
+/* Common */
+/* ------ */
 * {
   box-sizing :border-box;
   font-family: 'Quicksand', sans-serif;
@@ -27,72 +30,32 @@ h1 {
   margin-top: 1em !important; /* Override BS */
   text-align: center;
 }
-nav.nav {
+.main-nav {
   background-color: var(--dark-blue-1);
-  color: white;
-  display : flex;
-  justify-content : space-between;
-  align-items: stretch;
-  gap: 2rem;
-  padding: 0 1em;
 }
-nav.nav a {
-  color: inherit;
-  text-decoration: none;
-  height: 100%;
-  display : flex;
-  align-items: center;
-  padding: 0.25rem;
-}
-nav.nav li {
-  padding: 0 15px;
+.main-nav li {
   transition: background-color 0.2s;
-  height: 100%;
+}
+.main-nav li.active {
+  background-color: #555;
+}
+.main-nav li:hover {
+  background-color: var(--link-hover);
 }
 
 /* ----------- */
 /* Burger Menu */
 /* ----------- */
-
 .menu-burger {
-  margin: 0;
-  padding: 0;  
-  position: fixed;
-  top: 0;
-  margin-top: 67px;
-  left: 0;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  align-items: center;
+  top: 67px;
 }
-
 .menu-burger > li {
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  padding: 0.5em 0;
-  width: 100%;
-  color: white;
-  overflow: hidden;
   height: 60px !important;
   background-color: var(--link-hover);
 }
-
 .menu-button-container {
-  display: none;
-  height: 100%;
   width: 30px;
-  cursor: pointer;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
-
-#menu-toggle {
-  display: none;
-}
-
 .menu-button,
 .menu-button::before,
 .menu-button::after {
@@ -104,45 +67,29 @@ nav.nav li {
   transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
   border-radius: 2px;
 }
-
 .menu-button::before {
   content: '';
   margin-top: -8px;
 }
-
 .menu-button::after {
   content: '';
   margin-top: 8px;
 }
-
 #menu-toggle:checked + .menu-button-container .menu-button::before {
   margin-top: 0px;
   transform: rotate(45deg);
 }
-
 #menu-toggle:checked + .menu-button-container .menu-button {
   background: rgba(255, 255, 255, 0);
 }
-
 #menu-toggle:checked + .menu-button-container .menu-button::after {
   margin-top: 0px;
   transform: rotate(-45deg);
 }
-
-.menu-button-container {
-  display: flex;
-}
-
 .burger-blocker {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
   z-index: 15;
   background: var(--dark-blue-4);
 }
-
 #menu-toggle ~ .menu-burger {
   opacity: 0;
 }
@@ -162,14 +109,13 @@ nav.nav li {
   padding: 0.5em;
   opacity: 1;
 }
-
 .menu-burger-container,
 .menu-burger {
   z-index: 20;
 }
 .menu-burger-container {
   position: fixed;
-  top: 6%;
+  top: 30px;
   right: 5%;
 }
 .menu-burger a,
@@ -181,26 +127,11 @@ nav.nav li {
 .menu-burger > li:first-child {
   border-top: 1px solid #ffffff8a;
 }
-/* .menu-burger > li:not(:last-child) {
-  border-bottom: 1px solid #444;
-} */
-
-/* ----------- */
-
-
 .logout:hover {
   cursor: pointer;
 }
-
 .site-title {
   font-size: 2rem;
-}
-
-.nav li.active {
-  background-color: #555;
-}
-.nav li:hover {
-  background-color: var(--link-hover);
 }
 
 /* --------- */
@@ -228,51 +159,23 @@ nav.nav li {
 /* ------------- */
 /*  MusicPlayer  */
 /* ------------- */
-
-/*
-#timeline {
-  width: 90%;
-  height: 2px;
-  margin-top: 20px;
-  margin-left: 10px;
-  float: left;
-  -webkit-border-radius: 15px;
-  border-radius: 15px;
-  background: rgba(0, 0, 0, 0.3);
-}
-
-*/
-.audio-player {
-  /* Styling du conteneur du lecteur */
-}
 .music-player {
-  color: white;
-  position: relative;
+  /* color: white;
+  position: relative; */
 }
-
 .music-player h2 {
   font-size: 1.3em;
 }
-
 .music-player h3 {
   font-size: 1.1em;
 }
 .music-player > div {
   max-width: 430px;
   border-radius: 1%;
-  /* background: var(--dark-blue-1); */
 }
-
 .music-player .active {
   background: #008b8b;
   border-radius: 100%;
-}
-
-.music-player .controls {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: space-around;
 }
 .music-player .control-btn {
   margin-top: 3vh;
@@ -287,7 +190,6 @@ nav.nav li {
 .music-player .timer {
   margin-bottom: 10px;
 }
-
 .music-player .progress {
   height: 3px !important;
   background-color: var(--light-blue) !important;
@@ -296,16 +198,6 @@ nav.nav li {
   left: 0;
   transition: width 0.3s ease-in-out;
 }
-/* .music-player .img-player {
-  border-radius: 5px 5px 5px 5px;
-} */
-.music-player .check {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width : 10%
-}
-
 .music-player i {
   color: var(--btn-player);
   padding: 0.4em 0.5em;
@@ -430,31 +322,10 @@ nav.nav li {
   padding : 1rem;
 
 }
-.slider-music-title{
-
-}
 
 /* ------------ */
 /*  MyPlaylist  */
 /* ------------ */
-/* .my-playlist .playlist-page {
-  text-align: center;
-}
-.my-playlist .playlist-page > div:first-child {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0 20px;
-}
-.my-playlist .playlist-page > div:first-child h2 {
-  display: inline-block;
-}
-
-.my-playlist .playlist-page > div:first-child i.fa-pen-to-square:hover {
-  cursor: pointer;
-  color: blue;
-} */
-
 .my-playlist .playlist-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -462,21 +333,17 @@ nav.nav li {
   gap: 10px;
 }
 
-.my-playlist .playlist-item {
-  position: relative;
-  text-decoration: none;
-  color: black;
-}
 .my-playlist .playlist-item i.fa-xmark {
   position: absolute;
   top: 5px;
   right: 5px;
   border-radius: 100%;
-  font-size: 1.4em;
+  font-size: 1.3em;
   background: var(--red-warning);
   color: white;
   padding: 0.3em;
   z-index: 10;
+  height: 30px;
 }
 
 .my-playlist .playlist-item i.fa-xmark:hover {
@@ -495,13 +362,6 @@ nav.nav li {
 }
 
 .my-playlist .playlist-title {
-  /*
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; 
-  max-width: 90%; 
-  */
-
   background: white;
   color: black;
   padding: 0.2em 0;
@@ -515,10 +375,10 @@ nav.nav li {
 /*  DetailedPlayList  */
 /* ------------------ */
 .detailed-playlist > div:first-child {
-  gap: 0 25px;
+  /* gap: 0 25px; */
 }
 .detailed-playlist > div h1 {
-  margin: 0 !important;
+  /* margin: 0 !important; */
 }
 .detailed-playlist h2 {
   font-size: 1.2em;
@@ -554,14 +414,6 @@ nav.nav li {
 .detailed-playlist .music-image {
   border-radius: 8px;
 }
-
-/* .detailed-playlist .delete-button {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-} */
 
 .detailed-playlist .music-track {
   /* position: relative; */
@@ -659,8 +511,8 @@ nav.nav li {
 /* Search */
 /* ------ */
 .search-page .search-form {
-  display: flex;
-  justify-content: center;
+  /* display: flex;
+  justify-content: center; */
 }
 
 .search-page .result-grid {
@@ -686,7 +538,7 @@ nav.nav li {
 }
 
 .search-page a {
-  color: black;
+  /* color: black; */
 }
 
 .search-page .form__field {
@@ -728,10 +580,6 @@ nav.nav li {
 .search-page .form__field:invalid {
   box-shadow:none; 
 }
-
-
-/* ------------------- */
-
 
 /* Toggle specific styles */
 .toggle {
@@ -809,74 +657,21 @@ nav.nav li {
 }
 
 
-
-/* ------------------- */
-
-
-
-/* .search-page .music-item-search {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 225px;
-  width: 100%;
-}
-
-.search-page .music-item-search a {
-  width: 150px;
-  text-align: center;
-  text-decoration: none;
-  background: white;
-  border-radius: 5%;
-}
-
-.search-page .music-image-search {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 5px;
-  border-bottom: 1px solid #80808054;
-}
-.search-page.music-title-search,
-.search-page.music-author-search {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100%;
-  padding: 0 10px;
-}
-.search-page .music-title-search {
-  font-size: 1.2em;
-  margin-top: 10px;
-}
-.search-page.music-author-search {
-  font-size: 1.1em;
-}
-
-.search-page .play-button-search {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-} */
-
 /* --------- */
 /* Dashboard */
 /* --------- */
 .dashboard {
-  color: white;
+  /* color: white; */
   margin-bottom: 8.5em;
 }
 .dashboard a {
-  color: white;
+  /* color: white; */
 }
 .dashboard .nav-item button:hover {
   color: var(--medium-blue);
 }
 .dashboard .musics-list p {
-  margin-bottom: 0 !important; /* BS override */
+  /* margin-bottom: 0 !important;  */
 }
 .dashboard thead tr {
   background: var(--dark-blue-2);
@@ -918,15 +713,10 @@ nav.nav li {
 .secondary-nav {
   background: var(--dark-blue-1);
 }
-.secondary-nav ul {
-  list-style-type: none;
-}
 .secondary-nav ul i {
   font-size: 1.2em;
 }
-.secondary-nav a {
-  color: white;
-}
+
 /* --------- */
 /*  AboutUs  */
 /* --------- */

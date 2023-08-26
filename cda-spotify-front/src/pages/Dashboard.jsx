@@ -73,13 +73,13 @@ const Dashboard = () => {
               </thead>
               <tbody>
                 { musics && musics.map(m => (
-                  <tr key={m.id} className="">
+                  <tr key={m.id}>
                     <td className='py-2 d-none d-sm-block'>
                       <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${m.imgUri}`} alt="music cover image" className='object-fit-cover' width={60} height={60} />
                     </td>
-                    <td className='py-4 py-sm-2'><p>{m.artist}</p></td>
+                    <td className='py-4 py-sm-2'><p className='m-0'>{m.artist}</p></td>
                     <td>
-                      <Link to={`/music/${m.id}`}>
+                      <Link to={`/music/${m.id}`} className='text-light'>
                         {m.title}
                       </Link>
                     </td>

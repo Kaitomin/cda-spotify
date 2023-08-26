@@ -140,7 +140,7 @@ const DetailedPlaylist = () => {
 
     return (
         <div className="detailed-playlist px-3">
-            <div className='d-flex justify-content-center align-items-center py-5'>
+            <div className='d-flex justify-content-center align-items-center column-gap-2'>
                 <h1>{playlist && playlist.name}</h1>
                 {!isModalOpen && <i className="fa-solid fa-pen-to-square edit-btn" onClick={() => setIsModalOpen(true)}></i>}
             </div>
