@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   const audioRef = useRef()
-  const [isPlaying, setIsPlaying] = useState(true)
+  const [isPlaying, setIsPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState()
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
@@ -55,8 +55,9 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }, [currentIndex])
 
   useEffect(() => {
-    if (isPlaying && audioRef.current && currentMusic) {
+    if (audioRef.current && currentMusic) {
       audioRef.current.play()
+      setIsPlaying(!audioRef.current.paused)
     }
   }, [currentMusic])
 
@@ -87,12 +88,22 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
-    if (Math.ceil(audioRef.current.currentTime) >= duration) handleNext()
   }
 
   const handleLoadedMetadata = () => {
     const splitted = currentMusic.duration.split(":")
     setDuration(parseInt(splitted[0]) * 60 + parseInt(splitted[1]))
+  }
+
+  const handleEnd = () => {
+    // Reset duration back to 0
+    if (!isLooping && !isRandom) {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+      setIsPlaying(false)
+    } else if (!isLooping) handleNext()
+
+    return
   }
 
   const handleTimelineClick = (e) => {
@@ -122,17 +133,16 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
 
-  const handleLoop = e => {
-    if (!isLooping) e.target.classList.add("loop", "active")
-    else e.target.classList.remove("loop", "active")
+  const handleLoop = () => {
+    if (!isLooping) setIsRandom(false)
 
     audioRef.current.loop = !isLooping;
     setIsLooping(!isLooping);
   }
     
   const handleRandom = e => {
-    if (!isRandom) e.target.classList.add("active")
-    else e.target.classList.remove("active")
+    if (!isRandom) setIsLooping(false)
+
     setIsRandom(!isRandom)
   }
 
@@ -192,7 +202,7 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
   }
 
   return (
-    <div className='music-player'>
+    <div className='music-player text-light position-relative'>
       {currentMusic && (
         <div className='mx-auto px-3 py-5'>
           <div className='d-flex justify-content-center align-items-center vh-45 mt-3'>
@@ -228,10 +238,11 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
             ref={audioRef}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
+            onEnded={handleEnd}
             src={`${import.meta.env.VITE_RESOURCE_AUDIO_URL}/${currentMusic.audioUri}`}
           />
 
-          <div className="controls">
+          <div className="controls d-flex align-items-center flex-wrap justify-content-around">
             <div className='d-flex justify-content-between w-100 timer'>
               <div>
                 {formatTime(currentTime)}
@@ -243,15 +254,15 @@ const MusicPlayer = ({ playlistId, musicIndex, musicId }) => {
             <div className="timeline" onClick={handleTimelineClick}>
               <div className="progress" style={{ width: `${(currentTime / duration) * 100}%` }}></div>
             </div>
-            <i className="fa-solid fa-rotate-left mt-4" onClick={handleLoop}></i>
+            <i className={`fa-solid fa-rotate-left mt-4 ${isLooping ? "loop active" : ""}`} onClick={handleLoop}></i>
             {/* { !musicId &&  */}
               <i className="fa-solid fa-backward mt-4" onClick={handlePrevious}></i>
             {/* } */}
             { isPlaying ?  (<i className="fa-solid fa-pause mt-4 active" onClick={togglePlay}></i>) : (<i className="fa-solid fa-play mt-4" onClick={togglePlay}></i>) }
             {/* { !musicId && */}
               <>
-                <i className="fa-solid fa-forward mt-4"onClick={handleNext}></i>
-                <i className="fa-solid fa-shuffle mt-4" onClick={handleRandom}></i>
+                <i className="fa-solid fa-forward mt-4" onClick={handleNext}></i>
+                <i className={`fa-solid fa-shuffle mt-4 ${isRandom ? "active" : ""}`} onClick={handleRandom}></i>
               </>
             {/* } */}
           </div>

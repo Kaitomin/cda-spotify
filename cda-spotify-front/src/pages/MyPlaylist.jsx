@@ -39,8 +39,8 @@ const MyPlaylist = () => {
       <h1>Playlists</h1>
       <div className="playlist-container mb-5">
         { playlists.map((playlist) => (
-          <div key={playlist.id} className="playlist-item">
-            <img 
+          <div key={playlist.id} className="playlist-item position-relative text-decoration-none text-black">
+            <img
               src={playlist.musics.length > 0 ? 
                 `${import.meta.env.VITE_RESOURCE_IMG_URL}/${playlist.musics[0].imgUri}` :
                 "https://placehold.co/400x350"} 
@@ -50,7 +50,7 @@ const MyPlaylist = () => {
             <Link to={`/playlist/${playlist.id}`}>
               <h2 className="playlist-title">{playlist.name}</h2>
             </Link>
-            <i className="fa-solid fa-xmark" onClick={() => removePlaylistFromUser(playlist.id)}></i>
+            { playlist.name !== 'Favoris' && <i className="fa-solid fa-xmark" onClick={() => removePlaylistFromUser(playlist.id)}></i> }
           </div>
           
         ))}

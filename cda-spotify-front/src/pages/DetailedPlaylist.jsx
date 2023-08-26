@@ -140,7 +140,7 @@ const DetailedPlaylist = () => {
 
     return (
         <div className="detailed-playlist px-3">
-            <div>
+            <div className='d-flex justify-content-center align-items-center column-gap-2'>
                 <h1>{playlist && playlist.name}</h1>
                 {!isModalOpen && <i className="fa-solid fa-pen-to-square edit-btn" onClick={() => setIsModalOpen(true)}></i>}
             </div>
@@ -150,7 +150,7 @@ const DetailedPlaylist = () => {
                     <button onClick={() => setIsModalOpen(false)}>Annuler</button>
                 </div>
             )} 
-            <div className="music-list">
+            <div className="music-list d-flex flex-column align-items-start m-auto">
                 {musicList.length == 0 && (
                     <div className="w-100 mt-5 text-center">
                         <h2>Playlist vide </h2>
@@ -158,8 +158,8 @@ const DetailedPlaylist = () => {
                     </div >
                 )}
                 {musicList && musicList.map((music, index) => (
-                    <div key={music.id} className={`music-item track-${music.id}`}>
-                        <div className="music-track">
+                    <div key={music.id} className={`music-item track-${music.id} d-flex align-items-center justify-content-around w-100 p-3`}>
+                        <div className="music-track position-relative">
                             <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${music.imgUri}`} alt={music.title} className="music-image object-fit-cover" width={70} height={70} />
                             <audio className={`music-${music.id} audio-tag`} onEnded={handleEnded}>
                                 <source src={`${import.meta.env.VITE_RESOURCE_AUDIO_URL}/${music.audioUri}`} type='audio/mp3' />

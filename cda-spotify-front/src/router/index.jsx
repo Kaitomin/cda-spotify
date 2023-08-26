@@ -9,6 +9,8 @@ import Dashboard from '../pages/Dashboard'
 import MusicDetails from '../pages/MusicDetails'
 import Register from '../pages/Register'
 import Login from '../pages/Login'
+import AboutUs from '../pages/AboutUs'
+import Contact from '../pages/Contact'
 import RequireAuth from '../utils/RequireAuth'
 import RequireAuthAdmin from '../utils/RequireAuthAdmin'
 
@@ -21,6 +23,8 @@ const index = () => {
       <Route path="/register" element={<Register/>} />
       <Route path="/login" element={<Login/>} />
       <Route path="/music/:musicId" element={<MusicDetails/>} />
+      <Route path="/about-us" element={<AboutUs />} />
+      <Route path="/contact" element={<Contact/>} />
 
       {/* CLIENT and ADMIN only */}
       <Route path="/playlists" element={<RequireAuth><MyPlaylist/></RequireAuth>} />
