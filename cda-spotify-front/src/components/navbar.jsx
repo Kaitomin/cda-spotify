@@ -20,7 +20,7 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="main-nav border-bottom border-1 d-flex justify-content-between align-items-stretch gap-4 px-3">
+    <nav className="main-nav border-bottom border-1 d-flex justify-content-between align-items-center gap-4 px-3">
       <Link to="/" className="site-title d-flex align-items-center p-1 h-100 text-decoration-none text-light">Streamy</Link>
       <ul className="d-none d-sm-flex p-0 m-0 align-items-center list-unstyled">
         <li className="px-3 h-100">
@@ -54,7 +54,7 @@ const NavBar = () => {
       {/* Burger nav */}
       {/* ---------- */}
       <div className={`burger-blocker d-sm-none d-flex vw-100 vh-100 position-fixed top-0 start-0 ${showBurgerMenu ? "d-block" : "d-none"}`}></div> {/* Fake layer to block clicks outside of the menu */}
-      <div className="menu-burger-container d-sm-none">
+      <div className={`menu-burger-container d-sm-none ${showBurgerMenu ? 'open-burger-menu' : 'position-relative'}`}>
 
         {/* Button to display menu */}
         <input id="menu-toggle" className="d-none" type="checkbox" readOnly checked={showBurgerMenu} onClick={handleShowBurger} />

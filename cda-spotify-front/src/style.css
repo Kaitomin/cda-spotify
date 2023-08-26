@@ -113,10 +113,10 @@ h1 {
 .menu-burger {
   z-index: 20;
 }
-.menu-burger-container {
+.menu-burger-container.open-burger-menu {
   position: fixed;
   top: 30px;
-  right: 5%;
+  right: 10px;
 }
 .menu-burger a,
 .menu-burger .logout {
