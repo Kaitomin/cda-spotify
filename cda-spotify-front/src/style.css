@@ -430,16 +430,6 @@ h1 {
 /* ------------------ */
 /*  DetailedPlayList  */
 /* ------------------ */
-.detailed-playlist {
-  max-width: 750px;
-  margin: 0 auto;
-}
-.detailed-playlist > div:first-child {
-  /* gap: 0 25px; */
-}
-.detailed-playlist > div h1 {
-  /* margin: 0 !important; */
-}
 .detailed-playlist h2 {
   font-size: 1.2em;
 }
@@ -447,10 +437,10 @@ h1 {
   cursor: pointer;
 }
 .detailed-playlist .music-list {
-  max-width: 1200px;
+  max-width: 800px;
 }
 .detailed-playlist .music-list > .music-item:nth-child(2n) {
-  /* background: var(--dark-blue-1); */
+  background: var(--dark-blue-1);
 }
 .detailed-playlist .music-list > .music-item:nth-child(2n + 1) {
   background: var(--dark-blue-2);
@@ -703,6 +693,9 @@ h1 {
 .dashboard tbody tr {
   border-top: 1px solid;
   border-bottom: 1px solid;
+}
+.dashboard table tbody td {
+  background: var(--dark-blue-1);
 }
 .dashboard table tbody > tr:nth-child(2n) td {
   background: var(--dark-blue-2);
