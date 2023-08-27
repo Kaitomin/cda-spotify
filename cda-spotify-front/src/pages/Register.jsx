@@ -34,7 +34,7 @@ const Register = () => {
   }, [])
 
   return (
-    <div className='register'>
+    <div className='register flex-grow-1'>
       <h1>Créer un compte</h1>
       <form onSubmit={handleRegister} className="d-flex flex-column w-50 m-auto">
         <div>

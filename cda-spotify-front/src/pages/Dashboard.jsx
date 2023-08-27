@@ -43,7 +43,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className='dashboard px-3'>
+    <div className='dashboard px-3 flex-grow-1'>
       <h1>Dashboard</h1>
       <div className='content gap-2'>
         <Tabs

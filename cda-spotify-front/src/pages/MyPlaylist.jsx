@@ -35,7 +35,7 @@ const MyPlaylist = () => {
   }
 
   return (
-    <div className="my-playlist px-3">
+    <div className="my-playlist px-3 flex-grow-1">
       <h1>Playlists</h1>
       <div className="playlist-container mb-5">
         { playlists.map((playlist) => (

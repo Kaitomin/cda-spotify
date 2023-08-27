@@ -45,7 +45,7 @@ const MusicDetails = () => {
   }
 
   return (
-    <div className='music-details'>
+    <div className='music-details flex-grow-1'>
       <MusicPlayer selectedMusicsList={selectedMusicsList} selectedMusic={selectedMusic} selectedIndex={musicId ? selectedIndex : musicIndex} updateSelectedMusic={updateSelectedMusic} />
       {/* Add sliders below */}
       { selectedMusic &&

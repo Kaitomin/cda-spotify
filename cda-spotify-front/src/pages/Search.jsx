@@ -42,7 +42,7 @@ const Search = () => {
   }
 
   return (
-    <div className="search-page px-3 mt-4">
+    <div className="search-page px-3 mt-4 flex-grow-1">
       <SearchBar getResult={getResult} refresh={refresh} />
       <div className="d-flex justify-content-around my-2">
         <div className="position-relative input d-flex flex-column align-items-center">

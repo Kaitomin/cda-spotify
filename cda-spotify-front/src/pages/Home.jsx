@@ -3,7 +3,7 @@ import '../style.css'
 const Home = () => {
  
   return (
-    <div></div>
+    <div className='homepage flex-grow-1'></div>
   )
 }
 

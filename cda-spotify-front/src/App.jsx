@@ -11,7 +11,7 @@ function App() {
       <NavBar />
       <Router />
       <SecondaryNav />
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }

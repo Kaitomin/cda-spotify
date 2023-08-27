@@ -2,7 +2,7 @@ import React from 'react'
 
 const Contact = () => {
   return (
-    <div>
+    <div className='contact flex-grow-1'>
       <h1>Contact</h1>
     </div>
   )

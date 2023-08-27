@@ -2,7 +2,7 @@ import React from 'react'
 
 const AboutUs = () => {
   return (
-    <div className='px-3 text-center about-us'>
+    <div className='px-3 text-center about-us flex-grow-1'>
       <h1>A propos</h1>
       <p>Streamy est un projet fullstack développé avec React et Java par 2 super développeurs lors de la POE "Développeur Java" chez Dawan en 2023</p>
       <div className='d-flex justify-content-around my-5'>
