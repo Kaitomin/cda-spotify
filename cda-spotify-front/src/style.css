@@ -197,24 +197,26 @@ h1 {
 /* --------- */
 /* FormMusic */
 /* --------- */
-.music-form {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap : 0.5rem;
-  padding : 1rem;
+.music-form form {
+  max-width: 350px;
+  margin: 0 auto;
+}
+.music-form .tags-items > div {
+  width: 100px;
+}
+.music-form .tags-items > div:hover label {
+  cursor: pointer;
+  background-color: var(--link-hover);
 }
 
-.music-form .label {
-  width: 100%;
-  justify-content: center;
-  display: flex;
+.music-form .tags-items label {
+   border: 1px solid #ffffff3d;
 }
-.music-form .input {
-  display : flex;
-  align-items: end;
-  justify-content: end;
+.music-form .tags-items input:checked + label {
+  background-color: var(--dark-blue-5);
+  border: 1px solid white;
 }
+
 
 /* ------------- */
 /*  MusicPlayer  */
@@ -804,6 +806,20 @@ footer > div {
 /* =========================- */
 
 @media screen and (max-width: 400px) {
+  /* --------- */
+  /* FormMusic */
+  /* --------- */
+  .music-form form {
+    padding: 0 1em;
+  }
+
+  .music-form .tags-container > p {
+    text-align: center;
+  }
+
+  .music-form .tags-items {
+    justify-content: center !important;
+  }
 
   /* ------------ */
   /*  MyPlaylist  */

@@ -11,7 +11,6 @@ const FormMusic = () => {
     const [tags, setTags] = useState();
     const [checkedTags, setCheckedTags] = useState([]);
     const [showLoadingModal, setShowLoadingModal] = useState(false)
-    // const [showValidationModal, setShowValidationModal] = useState(false)
     const [msgModal, setMsgModal] = useState()
     const [loader, setLoader] = useState(false)
     const [music, setMusic] = useState({
@@ -22,7 +21,6 @@ const FormMusic = () => {
         imgFile: null,
         audioFile: null
     })
-    const { currentUser } = useAuth()
     const { musicId } = useParams()
 
     if (musicId) {
@@ -123,77 +121,76 @@ const FormMusic = () => {
     }
   
     return (
-    <>
-        <form className='music-form' onSubmit={handleSubmit}>
-            <h1>{musicId ? "Modifier une musique" : "Ajouter une musique"}</h1>
-            <label className='label' >
-                Titre :
-                <input type="text" 
-                    name="title" 
-                    className='input'
-                    value={music.title}
-                    onChange={handleChange}
-                />
-            </label>
-            <label className='label'>
-                Artiste :
-                <input 
-                    type="text" 
-                    name="artist" 
-                    className='input'
-                    value={music.artist}
-                    onChange={handleChange}
-                />
-            </label>
-        
-            <label className='label'>
-                Date de sortie : 
-                <input 
-                    type="date" 
-                    name="releasedAt" 
-                    className='input'
-                    value={music.releasedAt}
-                    onChange={handleChange}
-                />
-            </label>
-            <label className='label'>
-                Image :
-                <input 
-                    type="file" 
-                    name="imgFile" 
-                    className='input'
-                    onChange={handleChange}
-                />
-            </label>
-            <label className='label'>
-                Audio :
-                <input 
-                    type="file" 
-                    name="audioFile" 
-                    className='input'
-                    onChange={handleChange}
-                />
-            </label>
-            <div className="tags">
-            <div className="title">Tags : </div>
-            <div className="list-container">
-            { tags && tags.map(item => (
-                <div key={item}>
-                <input value={item} type="checkbox" onChange={handleCheck} checked={checkedTags.includes(item)}/>
-                <span className={isChecked(item)}>{item}</span>
+        <div className='music-form'>
+            <form onSubmit={handleSubmit} className='d-flex flex-column align-items-center justify-content-center'>
+                <h1>{musicId ? "Modifier une musique" : "Ajouter une musique"}</h1>
+                <div className='w-100'>
+                    <label className='d-flex flex-column mb-3'>
+                        Titre
+                        <input type="text" 
+                            name="title" 
+                            className='input'
+                            value={music.title}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label className='d-flex flex-column mb-3'>
+                        Artiste
+                        <input 
+                            type="text" 
+                            name="artist" 
+                            className='input'
+                            value={music.artist}
+                            onChange={handleChange}
+                        />
+                    </label>
+                
+                    <label className='d-flex flex-column mb-3'>
+                        Date de sortie
+                        <input 
+                            type="date" 
+                            name="releasedAt" 
+                            className='input'
+                            value={music.releasedAt}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label className='d-flex flex-column mb-3'>
+                        Image
+                        <input 
+                            type="file" 
+                            name="imgFile" 
+                            className='input'
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label className='d-flex flex-column mb-3'>
+                        Audio
+                        <input 
+                            type="file" 
+                            name="audioFile" 
+                            className='input'
+                            onChange={handleChange}
+                        />
+                    </label>
                 </div>
-            ))}
-            </div>
+                <div className="tags-container mt-3 mb-4">
+                    <p className="title">Tags</p>
+                    <div className="tags-items d-flex justify-content-between flex-wrap text-center row-gap-1 column-gap-3">
+                        { tags && tags.map(item => (
+                            <div key={item}>
+                                <input id={item} value={item} type="checkbox" className='d-none' onChange={handleCheck} checked={checkedTags.includes(item)} />
+                                <label htmlFor={item} className={`px-3 py-1 w-100 ${isChecked(item)}`}>{item}</label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <input type="submit" name="submit" value={musicId ? "Modifier" : "Ajouter"} />
+            </form>
+            <div className={`form-blocker d-flex vw-100 vh-100 position-fixed top-0 start-0 ${showLoadingModal ? "d-block" : "d-none"}`}></div>
+            { showLoadingModal && <ModalMessage message={msgModal} loader={loader} /> }
         </div>
-        
-            <label className='label'>
-                <input type="submit" name="submit" value="Valider la musique" />
-            </label>
-        </form>
-        <div className={`form-blocker d-flex vw-100 vh-100 position-fixed top-0 start-0 ${showLoadingModal ? "d-block" : "d-none"}`}></div>
-        { showLoadingModal && <ModalMessage message={msgModal} loader={loader} /> }
-    </>
-  )
+    )
 } 
 
 export default FormMusic

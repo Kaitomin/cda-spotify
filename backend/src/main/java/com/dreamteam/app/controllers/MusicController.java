@@ -55,22 +55,8 @@ public class MusicController {
 		@RequestPart("fileUpload") MusicDTO musicDTO,
 		@RequestPart("imgFile") MultipartFile imgFile,
 		@RequestPart("audioFile") MultipartFile audioFile
-	) {
-		try {
-			return ResponseEntity.ok(service.add(musicDTO, imgFile, audioFile));
-		} catch (CannotReadException e) {
-			throw new RuntimeException(e);
-		} catch (TagException e) {
-			throw new RuntimeException(e);
-		} catch (InvalidAudioFrameException e) {
-			throw new RuntimeException(e);
-		} catch (ReadOnlyFileException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
-		}
+	) throws CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, IOException, ParseException {
+		return ResponseEntity.ok(service.add(musicDTO, imgFile, audioFile));
 	}
 	@PostMapping("/update/{id}")
 	public ResponseEntity<MusicDTO> update(

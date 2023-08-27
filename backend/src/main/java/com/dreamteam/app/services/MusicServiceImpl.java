@@ -48,7 +48,7 @@ public class MusicServiceImpl implements IMusicService {
 			MultipartFile audioFile
 		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
 
-		if (Stream.of(mDto.getReleasedAt()).anyMatch(Objects::isNull) || mDto.getTitle().isEmpty() || mDto.getArtist().isEmpty()) {
+		if (Stream.of(mDto.getReleasedAt()).anyMatch(Objects::isNull) || mDto.getTitle().isEmpty() || mDto.getArtist().isEmpty() || mDto.getTags().isEmpty()) {
 			System.out.println("A required field is empty or null");
 			throw new IllegalArgumentException("Empty field");
 		}
@@ -75,7 +75,7 @@ public class MusicServiceImpl implements IMusicService {
 			long id
 		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException, MusicException {
 
-		if (Stream.of(mDto.getReleasedAt()).anyMatch(Objects::isNull) || mDto.getTitle().isEmpty() || mDto.getArtist().isEmpty()) {
+		if (Stream.of(mDto.getReleasedAt()).anyMatch(Objects::isNull) || mDto.getTitle().isEmpty() || mDto.getArtist().isEmpty() || mDto.getTags().isEmpty()) {
 			throw new MusicException("A required field is empty or null");
 		}
 
