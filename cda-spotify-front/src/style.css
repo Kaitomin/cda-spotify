@@ -23,7 +23,7 @@
 body {
   background-color: var(--dark-blue-4) !important; /* Override BS */
   color: white !important; /* Override BS */
-  margin-bottom: 4em !important; /* Override BS */
+  margin-bottom: 5em !important;
 }
 h1 {
   margin-bottom: 1em !important; /* Override BS */
@@ -43,7 +43,9 @@ h1 {
   background-color: var(--link-hover);
 }
 
+/* ------------ */
 /* ModalMessage */
+/* ------------ */
 .modal-message {
   background: black;
   display: flex;
@@ -101,7 +103,6 @@ h1 {
     transform: rotate(360deg);
   }
 }
-
 
 /* ----------- */
 /* Burger Menu */
@@ -208,7 +209,6 @@ h1 {
   cursor: pointer;
   background-color: var(--link-hover);
 }
-
 .music-form .tags-items label {
    border: 1px solid #ffffff3d;
 }
@@ -217,14 +217,9 @@ h1 {
   border: 1px solid white;
 }
 
-
 /* ------------- */
 /*  MusicPlayer  */
 /* ------------- */
-.music-player {
-  /* color: white;
-  position: relative; */
-}
 .music-player h2 {
   font-size: 1.3em;
 }
@@ -295,11 +290,9 @@ h1 {
 .music-player i:hover {
   cursor: pointer;
 }
-
 .music-player .fa-heart {
   color: var(--red-warning);
 }
-
 .music-player .playlist-modal {
   z-index: 10;
   position: fixed;
@@ -330,7 +323,6 @@ h1 {
   cursor: pointer;
   background-color: #3e3e3e;
 }
-
 .music-player .loop {
   transform: rotate(0);
   animation: loop 2s linear infinite;
@@ -360,24 +352,20 @@ h1 {
   background-color: darkcyan;
   height: 300px;
 }
-
 .slider-container {
   overflow-x: auto;
   white-space: nowrap;
   background-color: darkcyan;
-
 }
-.slider-music-component > div > img{
+.slider-music-component > div > img {
   width: 220px;
   height: 220px;
   object-fit: cover;
   border-radius: 5px;
 }
-
-.slider-music-component{
+.slider-music-component {
   padding : 1rem;
   height: auto;
-
 }
 .slider-music-title {
   font-size: large;
@@ -387,6 +375,7 @@ h1 {
   text-overflow: ellipsis;
   max-width: 150px;
 }
+
 /* ------------ */
 /*  MyPlaylist  */
 /* ------------ */
@@ -396,7 +385,6 @@ h1 {
   grid-auto-rows: auto;
   gap: 10px;
 }
-
 .my-playlist .playlist-item i.fa-xmark {
   position: absolute;
   top: 5px;
@@ -409,11 +397,9 @@ h1 {
   z-index: 10;
   height: 30px;
 }
-
 .my-playlist .playlist-item i.fa-xmark:hover {
   cursor: pointer;
 }
-
 .my-playlist .playlist-image {
   width: 100%;
   max-height: 150px; /* Taille d'image fixe */
@@ -424,7 +410,6 @@ h1 {
   border-bottom: 1px solid #80808054;
   /* box-shadow: 5px 5px 20px 4px rgba(0, 0, 0, 0.1);  */
 }
-
 .my-playlist .playlist-title {
   background: white;
   color: black;
@@ -438,6 +423,10 @@ h1 {
 /* ------------------ */
 /*  DetailedPlayList  */
 /* ------------------ */
+.detailed-playlist {
+  max-width: 750px;
+  margin: 0 auto;
+}
 .detailed-playlist > div:first-child {
   /* gap: 0 25px; */
 }
@@ -454,13 +443,13 @@ h1 {
   max-width: 1200px;
 }
 .detailed-playlist .music-list > .music-item:nth-child(2n) {
-  background: var(--dark-blue-1);
+  /* background: var(--dark-blue-1); */
 }
 .detailed-playlist .music-list > .music-item:nth-child(2n + 1) {
-  background: var(--dark-blue-3);
+  background: var(--dark-blue-2);
 }
 .detailed-playlist .music-details a {
-  color: var(--light-blue);
+  color: white;
 }
 .detailed-playlist .modal-window {
   display: flex;
@@ -474,11 +463,9 @@ h1 {
   gap: 0 25px;
   border-bottom: 1px solid #ccc;
 }
-
 .detailed-playlist .music-image {
   border-radius: 8px;
 }
-
 .detailed-playlist .music-track {
   /* position: relative; */
 }
@@ -521,21 +508,19 @@ h1 {
 .detailed-playlist .hidden {
   display: none !important;
 }
-
 .detailed-playlist .music-bars {
   height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: end;
 }
-
 .detailed-playlist .bar {
   background: transparent;
   height: 3px;
   flex-grow: 1;
 }
 .detailed-playlist .animated {
-  background: var(--medium-blue);
+  background: var(--light-blue);
   animation: sound 0ms -800ms linear infinite alternate;
 }
 
@@ -574,11 +559,6 @@ h1 {
 /* -------*/
 /* Search */
 /* ------ */
-.search-page .search-form {
-  /* display: flex;
-  justify-content: center; */
-}
-
 .search-page .result-grid {
   display: grid;
   grid-template-columns: repeat(2, 49%);
@@ -596,13 +576,8 @@ h1 {
 .search-page h2 {
   font-size: 1.1em;
 }
-
 .search-page h3 {
   font-size: 1em;
-}
-
-.search-page a {
-  /* color: black; */
 }
 
 .search-page .form__field {
@@ -626,11 +601,9 @@ h1 {
   left: 10px;
   font-size: 1.3em;
 }
-
 .search-page input[type="checkbox"]:hover {
   cursor: pointer;
 }
-
 .search-page .form__field:focus {
   padding-bottom: 6px;  
   font-weight: 700;
@@ -653,21 +626,18 @@ h1 {
 	font-weight: 700;
 	margin-bottom: 16px;
 }
-
 .toggle:last-of-type {
   margin: 0;
 }
 
 /* Since we can't style the checkbox directly, we "hide" it so we can draw the toggle. */
 .toggle__input {
-	/* clip: rect(0 0 0 0); */
-	/* clip-path: inset(50%); */
 	height: 24px;
-	/* overflow: hidden; */
 	position: absolute;
 	white-space: nowrap;
 	width: 58px;
   z-index: 10;
+  bottom: 0;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -677,14 +647,7 @@ h1 {
 .toggle__input:not([disabled]):active + .toggle-track,
 .toggle__input:not([disabled]):focus + .toggle-track {
   border: 1px solid transparent;
-	/* box-shadow: $focus-ring; */
 }
-
-/* .toggle__input:disabled + .toggle-track {
-  cursor: not-allowed;
-	opacity: 0.7;
-} */
-
 .toggle-track {
 	background: white;
 	border: 1px solid white;
@@ -695,7 +658,6 @@ h1 {
   width: 58px;
 	position: relative;
 }
-
 .toggle-indicator {
 	align-items: center;
 	background: var(--dark-blue-1);
@@ -714,28 +676,19 @@ h1 {
   border-radius: 100%;
 	transform: translateX(30px);
 }
-
 .toggle__input:checked + .toggle-track .toggle-indicator .checkMark {
   opacity: 1;
   /* transition: opacity 2 ease-in-out; */
 }
 
-
 /* --------- */
 /* Dashboard */
 /* --------- */
 .dashboard {
-  /* color: white; */
   margin-bottom: 8.5em;
-}
-.dashboard a {
-  /* color: white; */
 }
 .dashboard .nav-item button:hover {
   color: var(--medium-blue);
-}
-.dashboard .musics-list p {
-  /* margin-bottom: 0 !important;  */
 }
 .dashboard thead tr {
   background: var(--dark-blue-2);
@@ -812,11 +765,9 @@ footer > div {
   .music-form form {
     padding: 0 1em;
   }
-
   .music-form .tags-container > p {
     text-align: center;
   }
-
   .music-form .tags-items {
     justify-content: center !important;
   }
@@ -836,15 +787,27 @@ footer > div {
   }
 }
 
-@media screen and (max-width: 568px) {
+@media screen and (min-width: 576px) {
+  /* --------- */
+  /* Dashboard */
+  /* --------- */
+  .dashboard .new-music-icon {
+    position: fixed;
+    bottom: 25px;
+    right: 3%;
+  }
 
-}
-
-@media screen and (min-width: 650px) {
   /* ------------- */
   /*  MusicPlayer  */
   /* ------------- */
- 
+  .music-player > div {
+    margin: 2em 0;
+    border: 1px solid;
+    background-color: var(--dark-blue-1);
+  }
+}
+
+@media screen and (min-width: 650px) { 
   /* ------------ */
   /*  MyPlaylist  */
   /* ------------ */

@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 import MusicService from '../service/MusicService';
 import PlaylistService from '../service/PlaylistService';
 import UserService from '../service/UserService';
-import useAuth from '../hook/useAuth'
-import { useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
   const [key, setKey] = useState('musics')
@@ -63,10 +61,11 @@ const Dashboard = () => {
               <thead>
                 <tr>
                   <th className='py-3 d-none d-sm-table-cell' width="15%">Image</th>
-                  <th className='py-3' width="20%">Artiste</th>
+                  <th className='py-3' width="15%">Artiste</th>
                   <th className='py-3' width="20%">Titre</th>
-                  <th className='py-3 d-none d-sm-table-cell' width="15%">Durée</th>
-                  <th className='py-3 d-none d-sm-table-cell' width="15%">Sortie</th>
+                  <th className='py-3 d-none d-md-table-cell' width="10%">Durée</th>
+                  <th className='py-3 d-none d-sm-table-cell' width="15%">Tags</th>
+                  <th className='py-3 d-none d-md-table-cell' width="10%">Sortie</th>
                   <th className='py-3' width="15%">Actions</th>
                 </tr>
               </thead>
@@ -82,8 +81,9 @@ const Dashboard = () => {
                         {m.title}
                       </Link>
                     </td>
-                    <td className='d-none d-sm-table-cell'>{m.duration.split('').splice(1).join('')}</td>
-                    <td className='d-none d-sm-table-cell'>{m.releasedAt.split('-')[0]}</td>
+                    <td className='d-none d-md-table-cell'>{m.duration.split('').splice(1).join('')}</td>
+                    <td className='d-none d-sm-table-cell'>{m.tags.join(', ')}</td>
+                    <td className='d-none d-md-table-cell'>{m.releasedAt.split('-')[0]}</td>
                     <td className='actions'>
                       <Link to={`/update-music/${m.id}`}>
                         <i className="fa-solid fa-pen-to-square me-3"></i>

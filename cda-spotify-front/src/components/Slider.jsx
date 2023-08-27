@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import MusicService from '../service/MusicService';
-import { Link } from "react-router-dom"
 import '../style.css'
 
 const Slider = ({musicType, searchKey, title, selectedMusic, updateSelectedMusic}) => {
@@ -13,9 +12,10 @@ const Slider = ({musicType, searchKey, title, selectedMusic, updateSelectedMusic
                 setMusicList(filtered)
                 // console.log(response.data)
             })
-    }, [])
+    }, [selectedMusic])
 
      return (
+        musicList.length > 0 && 
         <div>
             <h2 className='text-start'>{title}</h2>
             <div className=''>

@@ -156,9 +156,9 @@ const DetailedPlaylist = () => {
                     </div >
                 )}
                 {musicList && musicList.map((music, index) => (
-                    <div key={music.id} className={`music-item track-${music.id} d-flex align-items-center justify-content-around w-100 p-3`}>
+                    <div key={music.id} className={`music-item track-${music.id} d-flex align-items-center justify-content-around w-100 p-2`}>
                         <div className="music-track position-relative">
-                            <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${music.imgUri}`} alt={music.title} className="music-image object-fit-cover" width={70} height={70} />
+                            <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${music.imgUri}`} alt={music.title} className="music-image object-fit-cover" width={60} height={60} />
                             <audio className={`music-${music.id} audio-tag`} onEnded={handleEnded}>
                                 <source src={`${import.meta.env.VITE_RESOURCE_AUDIO_URL}/${music.audioUri}`} type='audio/mp3' />
                             </audio>

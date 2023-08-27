@@ -36,7 +36,7 @@ const MusicDetails = () => {
         setSelectedMusicsList(res.data)
         setSelectedMusic(res.data.musics[musicIndex])
       })
-    }
+    }    
   }, [musicId])
 
   const updateSelectedMusic = music => {
