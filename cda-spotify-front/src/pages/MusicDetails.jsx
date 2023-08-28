@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import MusicPlayer from '../components/MusicPlayer'
 import Slider from '../components/Slider';
+import DetailedPlaylist from '../pages/DetailedPlaylist';
 import MusicService from '../service/MusicService';
 import PlaylistService from '../service/PlaylistService';
 import { useNavigate } from 'react-router-dom'

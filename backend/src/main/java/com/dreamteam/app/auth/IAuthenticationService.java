@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 public interface IAuthenticationService {
-    void register(UserDTO req);
+    void register(AuthenticationRequest req);
     AuthenticationResponse authenticate(AuthenticationRequest req);
     String checkCookie(Cookie[] cookies) throws AuthenticationException;
     void logout(HttpServletResponse response);

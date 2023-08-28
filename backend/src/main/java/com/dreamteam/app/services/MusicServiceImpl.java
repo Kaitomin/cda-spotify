@@ -11,6 +11,7 @@ import com.dreamteam.app.enums.Tag;
 import com.dreamteam.app.exceptions.MusicException;
 import com.dreamteam.app.storage.StorageService;
 import com.dreamteam.app.utils.CustomUtils;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -48,11 +49,6 @@ public class MusicServiceImpl implements IMusicService {
 			MultipartFile audioFile
 		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
 
-		if (Stream.of(mDto.getReleasedAt()).anyMatch(Objects::isNull) || mDto.getTitle().isEmpty() || mDto.getArtist().isEmpty() || mDto.getTags().isEmpty()) {
-			System.out.println("A required field is empty or null");
-			throw new IllegalArgumentException("Empty field");
-		}
-
 		if (!CustomUtils.isImageType(imgFile.getOriginalFilename()) || !CustomUtils.isAudioType(audioFile.getOriginalFilename())) {
 			System.out.println("wrong format");
 			throw new InvalidContentTypeException("Wrong format");
@@ -74,15 +70,6 @@ public class MusicServiceImpl implements IMusicService {
 			MultipartFile audioFile,
 			long id
 		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException, MusicException {
-
-		if (Stream.of(mDto.getReleasedAt()).anyMatch(Objects::isNull) || mDto.getTitle().isEmpty() || mDto.getArtist().isEmpty() || mDto.getTags().isEmpty()) {
-			throw new MusicException("A required field is empty or null");
-		}
-
-//		if (!CustomUtils.isImageType(imgFile.getOriginalFilename()) || !CustomUtils.isAudioType(audioFile.getOriginalFilename())) {
-//			System.out.println("wrong format");
-//			throw new InvalidContentTypeException("Wrong format");
-//		}
 
 		if (repository.findById(id).orElse(null) != null) {
 			Music m = repository.findById(id).orElse(null);

@@ -33,12 +33,13 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final ModelMapper mapper;
 
-    public void register(UserDTO req) {
+    public void register(AuthenticationRequest req) {
         // Auto create 'Favoris' playlist
         PlaylistDTO playlistDTO = new PlaylistDTO();
         playlistDTO.setName("Favoris");
         playlistDTO.setCreatedAt(LocalDate.now());
         playlistDTO.setMusics(Collections.emptyList());
+
         List<Playlist> playlists = new ArrayList<>();
         playlists.add(mapper.map(playlistDTO, Playlist.class));
 

@@ -20,17 +20,21 @@ public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @NonNull
     private String username;
+
     @NonNull
     private String password;
+
     @Enumerated(EnumType.STRING)
     @NonNull
     private Role role;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @NonNull
     private List<Playlist> playlists;
+
     @Version
     private Integer version;
 

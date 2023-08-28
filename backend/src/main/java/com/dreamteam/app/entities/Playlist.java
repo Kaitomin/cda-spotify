@@ -1,6 +1,8 @@
 package com.dreamteam.app.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.io.Serializable;
@@ -15,13 +17,19 @@ public class Playlist implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @NonNull
+    @Pattern(regexp = "^[a-zA-Z0-9 ]+$")
+    @Size(min = 2, message = "Name must have at least 2 characters")
     private String name;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @NonNull
     private List<Music> musics;
+
     @NonNull
     private LocalDate createdAt;
+
     @Version
     private Integer version;
 }

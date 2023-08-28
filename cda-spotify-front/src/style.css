@@ -23,6 +23,7 @@
 body {
   background-color: var(--dark-blue-4) !important; /* Override BS */
   color: white !important; /* Override BS */
+  margin-bottom: 5em !important;
 }
 #root {
   display: flex;
@@ -682,7 +683,7 @@ h1 {
 /* Dashboard */
 /* --------- */
 .dashboard {
-  margin-bottom: 8.5em;
+  margin-bottom: 4em;
 }
 .dashboard .nav-item button:hover {
   color: var(--medium-blue);
@@ -789,6 +790,9 @@ footer > div {
 }
 
 @media screen and (min-width: 576px) {
+  body {
+    margin-bottom: 0 !important;
+  }
   /* --------- */
   /* Dashboard */
   /* --------- */

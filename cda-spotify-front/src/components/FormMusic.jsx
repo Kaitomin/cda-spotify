@@ -121,7 +121,7 @@ const FormMusic = () => {
     }
   
     return (
-        <div className='music-form'>
+        <div className='music-form flex-grow-1'>
             <form onSubmit={handleSubmit} className='d-flex flex-column align-items-center justify-content-center'>
                 <h1>{musicId ? "Modifier une musique" : "Ajouter une musique"}</h1>
                 <div className='w-100'>
