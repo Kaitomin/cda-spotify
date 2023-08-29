@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/",
                         "/index.html",
+                        "/favicon.ico",
                         "/assets/**",
                         "/api/music",
                         "/api/music/{id:[0-9]+}",

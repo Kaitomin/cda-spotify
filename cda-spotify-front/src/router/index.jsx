@@ -32,19 +32,10 @@ const index = () => {
       <Route path="/playlist/:playlistId" element={<RequireAuth><MyDetailedPlaylist/></RequireAuth>} />
       <Route path="/playlist/:playlistId/music/:musicIndex" element={<RequireAuth><MusicDetails key={"playlistId"}/></RequireAuth>} />
 
-      {/* <Route path="/playlists" element={<MyPlaylist/>} />
-      <Route path="/account" element={<Account/> }/>
-      <Route path="/playlist/:playlistId" element={<DetailedPlaylist/>} />
-      <Route path="/playlist/:playlistId/music/:musicIndex" element={<MusicDetails/>} /> */}
-
       {/* ADMIN only */}
       <Route path="/new-music" element={<RequireAuthAdmin><FormMusic/></RequireAuthAdmin>} />
       <Route path="/update-music/:musicId" element={<RequireAuthAdmin><FormMusic/></RequireAuthAdmin>} />
       <Route path="/dashboard" element={<RequireAuthAdmin><Dashboard/></RequireAuthAdmin>} />
-
-      {/* <Route path="/new-music" element={<FormMusic/>} />
-      <Route path="/update-music/:musicId" element={<FormMusic/>} />
-      <Route path="/dashboard" element={<Dashboard/>} /> */}
   
       {/* Fallback route */}
       <Route path="*" element={<Navigate replace to='/' />} />

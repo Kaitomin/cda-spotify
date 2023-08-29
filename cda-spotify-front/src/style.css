@@ -30,9 +30,6 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
-.homepage {
-  flex: 1;
-}
 h1 {
   margin-bottom: 1em !important; /* Override BS */
   margin-top: 1em !important; /* Override BS */
@@ -309,17 +306,18 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid;
-  background: var(--dark-blue-4);
+  background: var(--dark-blue-1);
   text-align: center;
   color: white;
   border-radius: 5%;
   min-width: 165px;
 }
 .music-player .playlist-modal p {
-  background: var(--dark-blue-1);
+  background: var(--dark-blue-3);
   padding: 1em;
   margin: 0;
   border-radius: 15% 15% 0 0;
+  border-bottom: 1px solid;
 }
 .music-player .playlist-modal i {
   color: var(--red-warning);
@@ -328,9 +326,12 @@ h1 {
 .music-player .playlist-modal > div {
   padding: 0.5em;
 }
+.music-player .playlist-modal > div:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.151);
+}
 .music-player .playlist-modal > div:hover {
   cursor: pointer;
-  background-color: #3e3e3e;
+  background-color: var(--link-hover);
 }
 .music-player .loop {
   transform: rotate(0);
@@ -353,8 +354,6 @@ h1 {
   color: var(--dark-blue-5);
 }
 
-
-
 @keyframes loop {
   0% {
     transform: rotate(0deg);
@@ -363,7 +362,6 @@ h1 {
     transform: rotate(-360deg);
   }
 }
-
 
 /* ------------ */
 /* MusicDetails */
@@ -411,7 +409,7 @@ h1 {
 }
 .slider-music-title {
   font-size: large;
-  font-style: white;
+  color: white;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -497,9 +495,6 @@ h1 {
 }
 .detailed-playlist .music-image {
   border-radius: 8px;
-}
-.detailed-playlist .music-track {
-  /* position: relative; */
 }
 .detailed-playlist .btn-container {
   position: absolute;
@@ -839,13 +834,6 @@ footer > div {
     right: 3%;
   }
 
-  /* ------------- */
-  /*  MusicPlayer  */
-  /* ------------- */
-  .music-player > div {
-    border: 1px solid;
-    background-color: var(--dark-blue-1);
-  }
 }
 
 @media screen and (min-width: 650px) { 
@@ -855,21 +843,18 @@ footer > div {
   .my-playlist .playlist-container {
     grid-template-columns: repeat(3, 1fr);
   }
-  
-  /* -------*/
-  /* Search */
-  /* ------ */
-  .search-page .result-grid {
-    grid-template-columns: repeat(3, 31%);
-  }
-}
 
-@media screen and (min-width: 768px) {
   /* ------------ */
-  /*  MyPlaylist  */
+  /* MusicDetails */
   /* ------------ */
-  .my-playlist .playlist-container {
-    grid-template-columns: repeat(4, 1fr);
+  .music-details {
+    padding: 0 15px;
+  }
+  
+  .music-details .detailed-playlist {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0;
   }
 
   /* ------------- */
@@ -880,7 +865,8 @@ footer > div {
     justify-content: space-around;
     max-width: 1000px;
     padding: 15px 0 !important;
-    /* border: 0; */
+    border: 1px solid;
+    background-color: var(--dark-blue-1);
   }
   .music-player > div > div > div {
     margin-top: 0 !important;
@@ -897,22 +883,24 @@ footer > div {
     /* border-radius: 0 !important; */
     width: 250px !important;
   }
-
   .music-player .actions {
     /* display: none !important; */
   }
   
-
-  /* ------------ */
-  /* MusicDetails */
-  /* ------------ */
-  .music-details {
-    padding: 0 15px;
+  /* -------*/
+  /* Search */
+  /* ------ */
+  .search-page .result-grid {
+    grid-template-columns: repeat(3, 31%);
   }
-  .music-details .detailed-playlist {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+  /* ------------ */
+  /*  MyPlaylist  */
+  /* ------------ */
+  .my-playlist .playlist-container {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   /* -------*/

@@ -57,7 +57,12 @@ const MusicDetails = () => {
 
   return (
     <div className='music-details flex-grow-1'>
-      <MusicPlayer selectedMusicsList={selectedMusicsList} selectedMusic={selectedMusic} selectedIndex={musicId ? selectedIndex : musicIndex} updateSelectedMusic={updateSelectedMusic} />      
+      <MusicPlayer 
+        selectedMusicsList={selectedMusicsList} 
+        selectedMusic={selectedMusic} 
+        selectedIndex={musicId ? selectedIndex : musicIndex} 
+        updateSelectedMusic={updateSelectedMusic}
+      />      
       { playlistId && <DetailedPlaylist showActions={false} isIntegrated={true} musicIndex={musicIndex} /> }
       { selectedMusic &&
         <>
