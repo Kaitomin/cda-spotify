@@ -49,9 +49,9 @@ const MusicDetails = () => {
     })
   }, [musicIndex])
 
-  const updateSelectedMusic = (music, index) => {
+  const updateSelectedMusic = (music, index, from) => {
     setSelectedMusic(music)
-    if (musicId) navigate(`/music/${music.id}`)
+    if (musicId || from) navigate(`/music/${music.id}`)
     else navigate(`/playlist/${playlistId}/music/${+index}`)
   }
 

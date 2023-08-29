@@ -23,7 +23,7 @@ const Slider = ({musicType, searchKey, title, selectedMusic, updateSelectedMusic
                     <div className='slider'>
                     {musicList.map(music  => (
                         <div className='slider-music-component' key={music.id}>
-                            <div onClick={() => updateSelectedMusic(music)}>
+                            <div onClick={() => updateSelectedMusic(music, null, true)}>
                                 <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${music.imgUri}`} alt='image de la musique' />
                                 <h3 className='slider-music-title my-3'>{music.title}</h3>
                             </div>

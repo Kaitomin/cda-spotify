@@ -394,7 +394,6 @@ h1 {
 .slider {
   display: flex;
   background-color: darkcyan;
-  height: 300px;
 }
 .slider-container {
   overflow-x: auto;
@@ -402,14 +401,13 @@ h1 {
   background-color: darkcyan;
 }
 .slider-music-component > div > img {
-  width: 220px;
-  height: 220px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 5px;
 }
 .slider-music-component {
   padding : 1rem;
-  height: auto;
 }
 .slider-music-title {
   font-size: large;
@@ -896,7 +894,7 @@ footer > div {
   }
   .music-player .img-player {
     height: 250px;
-    border-radius: 0 !important;
+    /* border-radius: 0 !important; */
     width: 250px !important;
   }
 
