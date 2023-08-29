@@ -49,25 +49,20 @@ const MusicDetails = () => {
     })
   }, [musicIndex])
 
-  const updateSelectedMusic = (music, index, from) => {
+  const updateSelectedMusic = (music, index) => {
     setSelectedMusic(music)
-    if (musicId || from) navigate(`/music/${music.id}`)
+    if (musicId) navigate(`/music/${music.id}`)
     else navigate(`/playlist/${playlistId}/music/${+index}`)
-  }
-
-  const changeIndex = index => {
-    setSelectedIndex(index)
-    navigate(`/playlist/${playlistId}/music/${index}`)
   }
 
   return (
     <div className='music-details flex-grow-1'>
       <MusicPlayer selectedMusicsList={selectedMusicsList} selectedMusic={selectedMusic} selectedIndex={musicId ? selectedIndex : musicIndex} updateSelectedMusic={updateSelectedMusic} />      
-      { playlistId && <DetailedPlaylist changeIndex={changeIndex} showActions={false} isIntegrated={true} musicIndex={musicIndex} /> }
+      { playlistId && <DetailedPlaylist showActions={false} isIntegrated={true} musicIndex={musicIndex} /> }
       { selectedMusic &&
         <>
-          <Slider musicType="Artist" searchKey={selectedMusic.artist} title="Par le même artiste" selectedMusic={selectedMusic} updateSelectedMusic={updateSelectedMusic} />
-          <Slider musicType="Tag" searchKey={selectedMusic.tags[0]} title="Dans le même genre" selectedMusic={selectedMusic} updateSelectedMusic={updateSelectedMusic} />
+          <Slider musicType="Artist" searchKey={selectedMusic.artist} title="Par le même artiste" selectedMusic={selectedMusic} />
+          <Slider musicType="Tag" searchKey={selectedMusic.tags[0]} title="Dans le même genre" selectedMusic={selectedMusic} />
         </>
       }
     </div>

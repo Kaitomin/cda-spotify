@@ -400,7 +400,7 @@ h1 {
   white-space: nowrap;
   background-color: darkcyan;
 }
-.slider-music-component > div > img {
+.slider-music-component > a > img {
   width: 150px;
   height: 150px;
   object-fit: cover;

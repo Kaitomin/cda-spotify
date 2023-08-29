@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import PlaylistService from '../service/PlaylistService';
 import useAuth from '../hook/useAuth'
 
-const DetailedPlaylist = ({ showActions, musicIndex, changeIndex, isIntegrated }) => {
+const DetailedPlaylist = ({ showActions, musicIndex }) => {
     const [musicList, setMusicList] = useState([]);
     const [playlist, setPlaylist] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -171,8 +171,7 @@ const DetailedPlaylist = ({ showActions, musicIndex, changeIndex, isIntegrated }
                         </div>
                         <div>
                             <div className="music-details">
-                                {/* <Link to={`/playlist/${playlist.id}/music/${index}`} onClick={() => changeIndex(index)}> */}
-                                <Link to={`/playlist/${playlist.id}/music/${index}`} onClick={isIntegrated ? () => changeIndex(index) : undefined}>
+                                <Link to={`/playlist/${playlist.id}/music/${index}`}>
                                     <p className="music-title m-0">{music.artist} - {music.title}</p>
                                 </Link>
                             </div>

@@ -22,7 +22,7 @@ const index = () => {
       <Route path="/search" element={<Search/>} />
       <Route path="/register" element={<Register/>} />
       <Route path="/login" element={<Login/>} />
-      <Route path="/music/:musicId" element={<MusicDetails/>} />
+      <Route path="/music/:musicId" element={<MusicDetails key={"musicId"} />} />
       <Route path="/about-us" element={<AboutUs />} />
       <Route path="/contact" element={<Contact/>} />
 
@@ -30,7 +30,7 @@ const index = () => {
       <Route path="/playlists" element={<RequireAuth><MyPlaylist/></RequireAuth>} />
       <Route path="/account" element={<RequireAuth><Account/></RequireAuth>} />
       <Route path="/playlist/:playlistId" element={<RequireAuth><MyDetailedPlaylist/></RequireAuth>} />
-      <Route path="/playlist/:playlistId/music/:musicIndex" element={<RequireAuth><MusicDetails/></RequireAuth>} />
+      <Route path="/playlist/:playlistId/music/:musicIndex" element={<RequireAuth><MusicDetails key={"playlistId"}/></RequireAuth>} />
 
       {/* <Route path="/playlists" element={<MyPlaylist/>} />
       <Route path="/account" element={<Account/> }/>
