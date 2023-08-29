@@ -237,6 +237,7 @@ h1 {
 .music-player > div {
   max-width: 430px;
   border-radius: 1%;
+  margin: 2em 0;
 }
 .music-player .active {
   background: #008b8b;
@@ -338,10 +339,21 @@ h1 {
 .music-player .actions {
   background: white;
 }
+.music-player .tags {
+  display: flex;
+  gap: 0 20px;
+}
+.music-player .tags > span {
+  background: var(--dark-blue-5);
+  border-radius: 10%;
+  padding: 5px 10px;
+}
 .music-player .actions i.fa-circle-plus,
 .music-player .actions i.fa-share {
   color: var(--dark-blue-5);
 }
+
+
 
 @keyframes loop {
   0% {
@@ -350,6 +362,30 @@ h1 {
   100% {
     transform: rotate(-360deg);
   }
+}
+
+
+/* ------------ */
+/* MusicDetails */
+/* ------------ */
+.music-details .detailed-playlist {
+  padding: 0 15px;
+}
+.music-details .detailed-playlist > div:first-child {
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  background: var(--bg-dark);
+}
+.music-details .detailed-playlist > div:first-child h1 {
+  font-size: 1.2em;
+}
+.music-details .detailed-playlist .music-list {
+  max-width: 100%;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+.music-details .detailed-playlist .music-item.active {
+  /* background-color: darkcyan !important; */
 }
 
 /* -------- */
@@ -809,7 +845,6 @@ footer > div {
   /*  MusicPlayer  */
   /* ------------- */
   .music-player > div {
-    margin: 2em 0;
     border: 1px solid;
     background-color: var(--dark-blue-1);
   }
@@ -837,6 +872,49 @@ footer > div {
   /* ------------ */
   .my-playlist .playlist-container {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* ------------- */
+  /*  MusicPlayer  */
+  /* ------------- */
+  .music-player > div {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1000px;
+    padding: 15px 0 !important;
+    /* border: 0; */
+  }
+  .music-player > div > div > div {
+    margin-top: 0 !important;
+  }
+  .music-player .controls-container {
+    width: 50%;
+  }
+  .music-player .controls > div,
+  .music-player .controls > i {
+    margin-top: 0.5em !important;
+  }
+  .music-player .img-player {
+    height: 250px;
+    border-radius: 0 !important;
+    width: 250px !important;
+  }
+
+  .music-player .actions {
+    /* display: none !important; */
+  }
+  
+
+  /* ------------ */
+  /* MusicDetails */
+  /* ------------ */
+  .music-details {
+    padding: 0 15px;
+  }
+  .music-details .detailed-playlist {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0;
   }
 
   /* -------*/

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import '../style.css'
 import PlaylistService from '../service/PlaylistService';
 import useAuth from '../hook/useAuth'
+import DetailedPlaylist from './DetailedPlaylist';
 
 const MusicPlayer = ({ selectedMusicsList, selectedMusic, selectedIndex, updateSelectedMusic }) => {
   const audioRef = useRef()
@@ -79,11 +80,11 @@ const MusicPlayer = ({ selectedMusicsList, selectedMusic, selectedIndex, updateS
         newRandomIndex = Math.floor(Math.random() * musicList.length)
       }
       setCurrentIndex(newRandomIndex);
-      updateSelectedMusic(musicList[newRandomIndex])
+      updateSelectedMusic(musicList[newRandomIndex], newRandomIndex)
     } else {
       const prevIndex = currentIndex == 0 ? musicList.length - 1 : currentIndex - 1
       setCurrentIndex(prevIndex)
-      updateSelectedMusic(musicList[prevIndex])
+      updateSelectedMusic(musicList[prevIndex], prevIndex)
     }
   }
   
@@ -123,11 +124,11 @@ const MusicPlayer = ({ selectedMusicsList, selectedMusic, selectedIndex, updateS
         newRandomIndex = Math.floor(Math.random() * musicList.length)
       }
       setCurrentIndex(newRandomIndex);
-      updateSelectedMusic(musicList[newRandomIndex])
+      updateSelectedMusic(musicList[newRandomIndex], newRandomIndex)
     } else {
-      const prevIndex = currentIndex ==  musicList.length -1 ? 0 : currentIndex + 1
+      const prevIndex = currentIndex ==  musicList.length - 1 ? 0 : +currentIndex + 1
       setCurrentIndex(prevIndex)
-      updateSelectedMusic(musicList[prevIndex])
+      updateSelectedMusic(musicList[prevIndex], prevIndex)
     }
   }
 
@@ -208,71 +209,80 @@ const MusicPlayer = ({ selectedMusicsList, selectedMusic, selectedIndex, updateS
   return (
     <div className='music-player text-light position-relative'>
       {currentMusic && (
-        <div className='mx-auto px-3 py-5'>
-          <div className='d-flex justify-content-center align-items-center vh-45 mt-3'>
-            <img className='img-player shadow bg-body rounded-top w-100 object-fit-cover' src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${currentMusic.imgUri}`} height={350} />
-          </div>
-          
-          <div className="d-flex justify-content-around py-2 rounded-bottom actions">
-            { !isFavorite && <i className="fa-regular fa-heart" onClick={addToFavorite}></i> }
-            { isFavorite && <i className="fa-solid fa-heart" onClick={removeToFavorite}></i> }
+        <div className='mx-auto px-3 py-3'>
+
+          <div>
+            <div className='d-flex justify-content-center align-items-center vh-45'>
+              <img className='img-player shadow bg-body rounded-top w-100 object-fit-cover' src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${currentMusic.imgUri}`} height={350} />
+            </div>
             
-            <div>
-              <i className="fa-solid fa-circle-plus" onClick={displayPlaylistsModal}></i>
-              { showModal &&
-                <div className='playlist-modal'>
-                    <p>Ajouter à ...</p>
-                    { playlists && playlists.map(p => (
-                      p.name != 'Favoris' && <div key={p.id} onClick={() => addToPlaylist(p.id)}>{p.name}</div>
-                    ))}
-                    <div onClick={() => setShowModal(false)}>
-                      <i className="fa-solid fa-circle-xmark"></i>
-                    </div>
+            <div className="d-flex justify-content-around rounded-bottom actions">
+              { !isFavorite && <i className="fa-regular fa-heart" onClick={addToFavorite}></i> }
+              { isFavorite && <i className="fa-solid fa-heart" onClick={removeToFavorite}></i> }
+              
+              <div>
+                <i className="fa-solid fa-circle-plus" onClick={displayPlaylistsModal}></i>
+                { showModal &&
+                  <div className='playlist-modal'>
+                      <p>Ajouter à ...</p>
+                      { playlists && playlists.map(p => (
+                        p.name != 'Favoris' && <div key={p.id} onClick={() => addToPlaylist(p.id)}>{p.name}</div>
+                      ))}
+                      <div onClick={() => setShowModal(false)}>
+                        <i className="fa-solid fa-circle-xmark"></i>
+                      </div>
+                  </div>
+                }
+              </div>
+              <i className="fa-solid fa-share"></i>
+            </div>
+          </div>
+
+
+          <div className='controls-container d-flex flex-column justify-content-around gap-3'>
+            <div className='mt-4'>
+              <h2 className='text-center fw-bold'>{currentMusic.title}</h2>
+              <h3 className='text-center'>{currentMusic.artist}</h3>
+            </div>
+            <audio 
+              ref={audioRef}
+              onTimeUpdate={handleTimeUpdate}
+              onLoadedMetadata={handleLoadedMetadata}
+              onEnded={handleEnd}
+              src={`${import.meta.env.VITE_RESOURCE_AUDIO_URL}/${currentMusic.audioUri}`}
+            />
+
+            <div className="controls d-flex align-items-center flex-wrap justify-content-around">
+              <div className='d-flex justify-content-between w-100 timer'>
+                <div>
+                  {formatTime(currentTime)}
                 </div>
+                <div>
+                  {formatTime(duration)}
+                </div>
+              </div>
+              <div className="timeline" onClick={handleTimelineClick}>
+                <div className="progress" style={{ width: `${(currentTime / duration) * 100}%` }}></div>
+              </div>
+              <i className={`fa-solid fa-rotate-left mt-4 ${isLooping ? "loop active" : ""}`} onClick={handleLoop}></i>
+                <i className="fa-solid fa-backward mt-4" onClick={handlePrevious}></i>
+              { isPlaying ?  (<i className="fa-solid fa-pause mt-4 active" onClick={togglePlay}></i>) : (<i className="fa-solid fa-play mt-4" onClick={togglePlay}></i>) }
+                <>
+                  <i className="fa-solid fa-forward mt-4" onClick={handleNext}></i>
+                  <i className={`fa-solid fa-shuffle mt-4 ${isRandom ? "active" : ""}`} onClick={handleRandom}></i>
+                </>
+            </div>
+            <div className='tags'>
+              {
+                currentMusic.tags.map(tag => (
+                  <span key={tag}>{tag}</span>
+                ))
               }
             </div>
-            <i className="fa-solid fa-share"></i>
-          </div>
-
-          <div className='mt-4'>
-            <h2 className='text-center fw-bold'>{currentMusic.title}</h2>
-            <h3 className='text-center'>{currentMusic.artist}</h3>
-          </div>
-          <audio 
-            ref={audioRef}
-            onTimeUpdate={handleTimeUpdate}
-            onLoadedMetadata={handleLoadedMetadata}
-            onEnded={handleEnd}
-            src={`${import.meta.env.VITE_RESOURCE_AUDIO_URL}/${currentMusic.audioUri}`}
-          />
-
-          <div className="controls d-flex align-items-center flex-wrap justify-content-around">
-            <div className='d-flex justify-content-between w-100 timer'>
-              <div>
-                {formatTime(currentTime)}
-              </div>
-              <div>
-                {formatTime(duration)}
-              </div>
-            </div>
-            <div className="timeline" onClick={handleTimelineClick}>
-              <div className="progress" style={{ width: `${(currentTime / duration) * 100}%` }}></div>
-            </div>
-            <i className={`fa-solid fa-rotate-left mt-4 ${isLooping ? "loop active" : ""}`} onClick={handleLoop}></i>
-            {/* { !musicId &&  */}
-              <i className="fa-solid fa-backward mt-4" onClick={handlePrevious}></i>
-            {/* } */}
-            { isPlaying ?  (<i className="fa-solid fa-pause mt-4 active" onClick={togglePlay}></i>) : (<i className="fa-solid fa-play mt-4" onClick={togglePlay}></i>) }
-            {/* { !musicId && */}
-              <>
-                <i className="fa-solid fa-forward mt-4" onClick={handleNext}></i>
-                <i className={`fa-solid fa-shuffle mt-4 ${isRandom ? "active" : ""}`} onClick={handleRandom}></i>
-              </>
-            {/* } */}
           </div>
         </div>
       )}
-      
+
     </div>
   )
 }

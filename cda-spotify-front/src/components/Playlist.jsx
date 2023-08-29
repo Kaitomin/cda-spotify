@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import PlaylistForm from '../components/PlaylistForm';
+import PlaylistForm from './PlaylistForm';
 import { Link, useParams } from 'react-router-dom';
 import PlaylistService from '../service/PlaylistService';
 import useAuth from '../hook/useAuth'
 
-const DetailedPlaylist = () => {
+const Playlist = () => {
     const [musicList, setMusicList] = useState([]);
     const [playlist, setPlaylist] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -137,7 +137,7 @@ const DetailedPlaylist = () => {
     }
 
     return (
-        <div className="detailed-playlist px-3 flex-grow-1">
+        <div className="playlist px-3">
             <div className='d-flex justify-content-center align-items-center column-gap-2'>
                 <h1>{playlist && playlist.name}</h1>
                 {!isModalOpen && <i className="fa-solid fa-pen-to-square edit-btn" onClick={() => setIsModalOpen(true)}></i>}
@@ -168,7 +168,7 @@ const DetailedPlaylist = () => {
                             </div>
                         </div>
                         <div>
-                            <div className="music-details">
+                            <div className="music-info">
                                 <Link to={`/playlist/${playlist.id}/music/${index}`}>
                                     <p className="music-title m-0">{music.artist} - {music.title}</p>
                                 </Link>
@@ -205,4 +205,4 @@ const DetailedPlaylist = () => {
     )
 }
 
-export default DetailedPlaylist
+export default Playlist

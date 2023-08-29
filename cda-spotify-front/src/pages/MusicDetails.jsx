@@ -3,11 +3,10 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import MusicPlayer from '../components/MusicPlayer'
 import Slider from '../components/Slider';
-import DetailedPlaylist from '../pages/DetailedPlaylist';
+import DetailedPlaylist from '../components/DetailedPlaylist';
 import MusicService from '../service/MusicService';
 import PlaylistService from '../service/PlaylistService';
 import { useNavigate } from 'react-router-dom'
-import useAuth from '../hook/useAuth'
 
 const MusicDetails = () => {
   const { playlistId, musicIndex, musicId } = useParams()
@@ -34,21 +33,37 @@ const MusicDetails = () => {
     } else {
       PlaylistService.getById(playlistId)
       .then(res => {
-        setSelectedMusicsList(res.data)
+        setSelectedMusicsList(res.data.musics)
         setSelectedMusic(res.data.musics[musicIndex])
       })
     }    
   }, [musicId])
 
-  const updateSelectedMusic = music => {
+  useEffect(() => {
+    if (musicId) return
+
+    PlaylistService.getById(playlistId)
+    .then(res => {
+      setSelectedMusicsList(res.data.musics)
+      setSelectedMusic(res.data.musics[musicIndex])
+    })
+  }, [musicIndex])
+
+  const updateSelectedMusic = (music, index) => {
     setSelectedMusic(music)
-    navigate(`/music/${music.id}`)
+    if (musicId) navigate(`/music/${music.id}`)
+    else navigate(`/playlist/${playlistId}/music/${+index}`)
+  }
+
+  const changeIndex = index => {
+    setSelectedIndex(index)
+    navigate(`/playlist/${playlistId}/music/${index}`)
   }
 
   return (
     <div className='music-details flex-grow-1'>
-      <MusicPlayer selectedMusicsList={selectedMusicsList} selectedMusic={selectedMusic} selectedIndex={musicId ? selectedIndex : musicIndex} updateSelectedMusic={updateSelectedMusic} />
-      {/* Add sliders below */}
+      <MusicPlayer selectedMusicsList={selectedMusicsList} selectedMusic={selectedMusic} selectedIndex={musicId ? selectedIndex : musicIndex} updateSelectedMusic={updateSelectedMusic} />      
+      { playlistId && <DetailedPlaylist changeIndex={changeIndex} showActions={false} isIntegrated={true} musicIndex={musicIndex} /> }
       { selectedMusic &&
         <>
           <Slider musicType="Artist" searchKey={selectedMusic.artist} title="Par le même artiste" selectedMusic={selectedMusic} updateSelectedMusic={updateSelectedMusic} />

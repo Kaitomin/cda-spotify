@@ -3,7 +3,6 @@ import FormMusic from '../components/FormMusic'
 import Account from '../pages/Account'
 import Home from '../pages/Home'
 import MyPlaylist from '../pages/MyPlaylist'
-import DetailedPlaylist from '../pages/DetailedPlaylist'
 import Search  from '../pages/Search'
 import Dashboard from '../pages/Dashboard'
 import MusicDetails from '../pages/MusicDetails'
@@ -13,6 +12,7 @@ import AboutUs from '../pages/AboutUs'
 import Contact from '../pages/Contact'
 import RequireAuth from '../utils/RequireAuth'
 import RequireAuthAdmin from '../utils/RequireAuthAdmin'
+import MyDetailedPlaylist from '../pages/MyDetailedPlaylist'
 
 const index = () => {
   return (
@@ -29,7 +29,7 @@ const index = () => {
       {/* CLIENT and ADMIN only */}
       <Route path="/playlists" element={<RequireAuth><MyPlaylist/></RequireAuth>} />
       <Route path="/account" element={<RequireAuth><Account/></RequireAuth>} />
-      <Route path="/playlist/:playlistId" element={<RequireAuth><DetailedPlaylist/></RequireAuth>} />
+      <Route path="/playlist/:playlistId" element={<RequireAuth><MyDetailedPlaylist/></RequireAuth>} />
       <Route path="/playlist/:playlistId/music/:musicIndex" element={<RequireAuth><MusicDetails/></RequireAuth>} />
 
       {/* <Route path="/playlists" element={<MyPlaylist/>} />
