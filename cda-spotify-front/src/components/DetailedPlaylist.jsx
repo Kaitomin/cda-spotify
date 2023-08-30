@@ -4,12 +4,13 @@ import { Link, useParams } from "react-router-dom"
 import PlaylistService from "../service/PlaylistService"
 import useAuth from "../hook/useAuth"
 
-const DetailedPlaylist = ({ showActions, musicIndex }) => {
+const DetailedPlaylist = ({ showActions, musicIndex, isIntegrated }) => {
   const [musicList, setMusicList] = useState([])
   const [playlist, setPlaylist] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentMusicId, setCurrentMusicId] = useState(null)
+  const [isToggleList, setIsToggleList] = useState(true)
   const { currentUser } = useAuth()
 
   const { playlistId } = useParams()
@@ -146,8 +147,14 @@ const DetailedPlaylist = ({ showActions, musicIndex }) => {
 
   return (
     <div className="detailed-playlist">
-      <div className="d-flex justify-content-center align-items-center column-gap-2">
+      <div className="d-flex justify-content-center align-items-center column-gap-2" onClick={isIntegrated ? () => setIsToggleList(!isToggleList) : undefined}>
         <h1>{playlist && playlist.name}</h1>
+        {isIntegrated && (
+            isToggleList 
+            ? <i className="fa-solid fa-angles-down"></i>
+            : <i className="fa-solid fa-angles-up"></i>
+          )
+        }
         {showActions && !isModalOpen && (
           <i
             className="fa-solid fa-pen-to-square edit-btn"
@@ -164,7 +171,7 @@ const DetailedPlaylist = ({ showActions, musicIndex }) => {
           <button onClick={() => setIsModalOpen(false)}>Annuler</button>
         </div>
       )}
-      <div className="music-list d-flex flex-column align-items-start m-auto">
+      <div className={`music-list d-flex flex-column align-items-start m-auto ${isToggleList ? 'toggle-list' : ''}`}>
         {musicList.length == 0 && (
           <div className="w-100 mt-5 text-center">
             <h2>Playlist vide</h2>

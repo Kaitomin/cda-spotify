@@ -17,7 +17,7 @@
 /* Common */
 /* ------ */
 * {
-  box-sizing :border-box;
+  box-sizing: border-box;
   font-family: 'Quicksand', sans-serif;
 }
 body {
@@ -370,13 +370,20 @@ h1 {
   /* border: 1px solid; */
   background: var(--dark-blue-1);
 }
+.music-details .detailed-playlist > div:first-child:hover {
+  cursor: pointer;
+}
 .music-details .detailed-playlist > div:first-child h1 {
   font-size: 1.2em;
 }
 .music-details .detailed-playlist .music-list {
   max-width: 100%;
-  max-height: 500px;
+  max-height: 0px;
   overflow-y: scroll;
+  transition: max-height 0.5s ease-in-out;
+}
+.music-details .detailed-playlist .music-list.toggle-list {
+  max-height: 500px;
 }
 .music-details .detailed-playlist .music-item.active {
   /* background-color: darkcyan !important; */
@@ -384,7 +391,6 @@ h1 {
 .music-details .detailed-playlist .music-list > .music-item:nth-child(2n) {
   background: var(--link-hover);
 }
-
 .music-details .music-list::-webkit-scrollbar {
   width: 6px;
 }
@@ -765,21 +771,22 @@ h1 {
 /* --------- */
 /*  AboutUs  */
 /* --------- */
-.about-us > div {
-  max-width: 500px;
+.about-us {
+  max-width: 750px;
   margin: 0 auto;
 }
-
+.about-us h2 {
+  font-size: 1.5em;
+}
 /* -------- */
 /*  Footer  */
 /* -------- */
 footer {
-  /* margin-top: 2em; */
   border-top: 1px solid;
   background-color: var(--dark-blue-1);
 }
 footer > div {
-  width: 300px;
+  width: 550px;
   margin: 0 auto;
 }
 
@@ -831,7 +838,6 @@ footer > div {
     bottom: 25px;
     right: 3%;
   }
-
 }
 
 @media screen and (min-width: 650px) { 
@@ -883,9 +889,6 @@ footer > div {
     height: 250px;
     /* border-radius: 0 !important; */
     width: 250px !important;
-  }
-  .music-player .actions {
-    /* display: none !important; */
   }
   
   /* -------*/

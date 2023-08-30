@@ -8,6 +8,8 @@ const Footer = () => {
       <div className='d-flex justify-content-around'>
         <span>©2023 Streamy</span> 
         <span>-</span>
+        <span>Tous droits réservés (ou pas)</span>
+        <span>-</span>
         <Link to='/about-us' className='text-light'>A propos</Link>
         <span>-</span>
         <Link to='/contact' className='text-light'>Contact</Link>

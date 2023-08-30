@@ -219,7 +219,7 @@ const MusicPlayer = ({selectedMusicsList, selectedMusic, selectedIndex, updateSe
       currentMusic && (<div className="mx-auto px-3 py-3">
         <div>
           <div className="d-flex justify-content-center align-items-center vh-45">
-            <img className="img-player shadow bg-body rounded-top w-100 object-fit-cover" src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${
+            <img className="img-player bg-body rounded-top w-100 object-fit-cover" src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${
               currentMusic.imgUri}`} height={350}/>
           </div>
 
