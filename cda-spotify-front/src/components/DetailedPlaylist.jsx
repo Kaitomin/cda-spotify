@@ -222,7 +222,7 @@ const DetailedPlaylist = ({ showActions, musicIndex }) => {
                 </div>
 
                 {showActions && (
-                  <div className={`music-bars bars-${music.id} hidden`}>
+                  <div className={`music-bars d-flex justify-content-between align-items-end bars-${music.id} hidden`}>
                     <div className="bar"></div>
                     <div className="bar"></div>
                     <div className="bar"></div>

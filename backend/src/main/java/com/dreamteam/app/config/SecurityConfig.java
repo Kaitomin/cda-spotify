@@ -53,6 +53,7 @@ public class SecurityConfig {
                 ).permitAll()
                 .requestMatchers(
                         "/api/playlist",
+                        "/api/user/delete/{id:[0-9]+}",
                         "/api/music/new",
                         "/api/music/update/{id:[0-9]+}",
                         "/api/music/delete/{id:[0-9]+}"

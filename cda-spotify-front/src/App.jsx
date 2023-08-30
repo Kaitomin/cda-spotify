@@ -5,7 +5,7 @@ import Footer from './components/Footer'
 import Router from './router'
 import SecondaryNav from './components/SecondaryNav'
 
-function App() {
+function App() {  
   return (
     <>
       <NavBar />

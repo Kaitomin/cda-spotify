@@ -260,8 +260,8 @@ const MusicPlayer = ({selectedMusicsList, selectedMusic, selectedIndex, updateSe
               <div>{formatTime(currentTime)}</div>
               <div>{formatTime(duration)}</div>
             </div>
-            <div className="timeline" onClick={handleTimelineClick}>
-              <div className="progress" style={{
+            <div className="timeline w-100 bg-white position-relative" onClick={handleTimelineClick}>
+              <div className="progress position-absolute top-0 start-0" style={{
                   width: `${ (currentTime / duration) * 100}%`
                 }}></div>
             </div>

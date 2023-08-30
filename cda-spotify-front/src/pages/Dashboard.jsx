@@ -53,7 +53,7 @@ const Dashboard = () => {
           className="mb-3 m-0 p-0 bg-transparent justify-content-start"
         >
           <Tab eventKey="musics" title="Musics">
-            <Link to="/new-music" className='new-music-icon text-center d-flex flex-column justify-content-center text-decoration-none align-items-center column-gap-2 my-3 text-light'>
+            <Link to="/new-music" className='new-music-icon text-center position-fixed d-flex flex-column justify-content-center text-decoration-none align-items-center column-gap-2 my-3 text-light'>
               <i className="fa-solid fa-circle-plus bg-black rounded-circle"></i>
               <span>Music</span>
             </Link>

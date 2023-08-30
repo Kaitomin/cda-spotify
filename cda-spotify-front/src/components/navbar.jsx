@@ -3,7 +3,7 @@ import useAuth from '../hook/useAuth'
 import { useState } from 'react';
 
 const NavBar = () => {
-  const { logout, currentUser } = useAuth()
+  const { logout } = useAuth()
   const navigate = useNavigate()
   const isAuthenticated = localStorage.getItem('isAuthenticated')
   const isAdmin = localStorage.getItem('isAdmin')

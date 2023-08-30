@@ -4,22 +4,26 @@ const SearchBar = ({ getResult, refresh }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    // if (!searchQuery) return
-
     getResult(searchQuery)
   }, [searchQuery, refresh])
 
+  // For mobile users
+  const handleSubmit = e => {
+    e.preventDefault()
+    getResult(searchQuery)
+  }
+
   return (
-    <span className='w-100 form__field-span position-relative'>
+    <form className='w-100 form__field-span position-relative' onSubmit={handleSubmit}>
       <input 
         type="text" 
         placeholder="Chercher une musique ou un artiste"
         className='form__field ps-5'
         value={searchQuery}
         onChange={e => setSearchQuery(e.target.value)}
-        autoFocus
       />
-    </span>
+      <button style={{display: "none"}}>Search</button>
+    </form>
   )
 }
 

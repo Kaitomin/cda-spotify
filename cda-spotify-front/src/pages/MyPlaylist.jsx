@@ -40,15 +40,16 @@ const MyPlaylist = () => {
       <div className="playlist-container mb-5">
         { playlists.map((playlist) => (
           <div key={playlist.id} className="playlist-item position-relative text-decoration-none text-black">
-            <img
-              src={playlist.musics.length > 0 ? 
-                `${import.meta.env.VITE_RESOURCE_IMG_URL}/${playlist.musics[0].imgUri}` :
-                "https://placehold.co/400x350"} 
-                alt={playlist.title} 
-                className="playlist-image" 
+            <Link to={`/playlist/${playlist.id}`} className='text-decoration-none'>
+              <img
+                src={playlist.musics.length > 0 ? 
+                  `${import.meta.env.VITE_RESOURCE_IMG_URL}/${playlist.musics[0].imgUri}` :
+                  "https://placehold.co/400x350"} 
+                  alt={playlist.title} 
+                  className="playlist-image w-100 h-100 object-fit-cover" 
               />
-            <Link to={`/playlist/${playlist.id}`}>
-              <h2 className="playlist-title">{playlist.name}</h2>
+            
+              <h2 className="playlist-title bg-white text-black text-center fw-bolder px-3">{playlist.name}</h2>
             </Link>
             { playlist.name !== 'Favoris' && <i className="fa-solid fa-xmark" onClick={() => removePlaylistFromUser(playlist.id)}></i> }
           </div>
