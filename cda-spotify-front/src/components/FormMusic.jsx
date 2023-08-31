@@ -21,6 +21,22 @@ const FormMusic = () => {
         imgFile: null,
         audioFile: null
     })
+    const [errors, setErrors] = useState({
+        title:"",
+        artist:"",
+        releasedAt:"",
+        imgFile:"",
+        audioFile:"",
+    })
+     const [tagError, setTagError] = useState(false);
+    // const [titleError, setTitleError] = useState(false);
+    // const [artistError, setArtistError] = useState(false);
+    // const [releasedAtError, setReleasedAtError] = useState(false);
+    // const [imgError, setImgError] = useState(false);
+    // const [audioError, setAudioError] = useState(false);
+
+
+    const { currentUser } = useAuth()
     const { musicId } = useParams()
 
     if (musicId) {
@@ -55,6 +71,19 @@ const FormMusic = () => {
     const handleChange = e => {
         let { name, value, files } = e.target
         
+        //if (music.title === "") setErrors({...errors, title : "Le titre est requis"});
+        if (e.target.value == "") setErrors
+
+
+        // const validationErrors = {
+        //     title: name === 'title' && value === '',
+        //     artist: name === 'artist' && value === '',
+        //     releasedAt: name === 'releasedAt' && value === '',
+        //     imgFile: name === 'imgFile' && !files[0],
+        //     audioFile: name === 'audioFile' && !files[0],
+        // }
+        // setErrors(prevErrors => ({ ...prevErrors, ...validationErrors }));
+
         e.target.type == 'file' ?
         setMusic({...music, [name]: files[0]}) :
         setMusic({...music, [name]: value})
@@ -67,6 +96,10 @@ const FormMusic = () => {
         setMsgModal(musicId ? "Mise à jour en cours" : "Ajout en cours")
         setLoader(true)
         setShowLoadingModal(true)
+
+        if (errors.title || errors.artist) {
+            return
+        }
 
         const formData = new FormData()
         
@@ -127,8 +160,8 @@ const FormMusic = () => {
                 <div className='w-100'>
                     <label className='d-flex flex-column mb-3'>
                         Titre
-                        <input type="text" 
-                            name="title" 
+                        <input type="text"
+                            name="title"
                             className='input'
                             value={music.title}
                             onChange={handleChange}
@@ -136,20 +169,20 @@ const FormMusic = () => {
                     </label>
                     <label className='d-flex flex-column mb-3'>
                         Artiste
-                        <input 
-                            type="text" 
-                            name="artist" 
+                        <input
+                            type="text"
+                            name="artist"
                             className='input'
                             value={music.artist}
                             onChange={handleChange}
                         />
                     </label>
-                
+
                     <label className='d-flex flex-column mb-3'>
                         Date de sortie
-                        <input 
-                            type="date" 
-                            name="releasedAt" 
+                        <input
+                            type="date"
+                            name="releasedAt"
                             className='input'
                             value={music.releasedAt}
                             onChange={handleChange}
@@ -157,18 +190,18 @@ const FormMusic = () => {
                     </label>
                     <label className='d-flex flex-column mb-3'>
                         Image
-                        <input 
-                            type="file" 
-                            name="imgFile" 
+                        <input
+                            type="file"
+                            name="imgFile"
                             className='input'
                             onChange={handleChange}
                         />
                     </label>
                     <label className='d-flex flex-column mb-3'>
                         Audio
-                        <input 
-                            type="file" 
-                            name="audioFile" 
+                        <input
+                            type="file"
+                            name="audioFile"
                             className='input'
                             onChange={handleChange}
                         />
