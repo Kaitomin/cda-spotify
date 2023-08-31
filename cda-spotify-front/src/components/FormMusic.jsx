@@ -17,6 +17,21 @@ const FormMusic = () => {
         imgFile: null,
         audioFile: null
     })
+    const [errors, setErrors] = useState({
+        title:"",
+        artist:"",
+        releasedAt:"",
+        imgFile:"",
+        audioFile:"",
+    })
+     const [tagError, setTagError] = useState(false);
+    // const [titleError, setTitleError] = useState(false);
+    // const [artistError, setArtistError] = useState(false);
+    // const [releasedAtError, setReleasedAtError] = useState(false);
+    // const [imgError, setImgError] = useState(false);
+    // const [audioError, setAudioError] = useState(false);
+
+
     const { currentUser } = useAuth()
     const { musicId } = useParams()
 
@@ -52,13 +67,32 @@ const FormMusic = () => {
     const handleChange = e => {
         let { name, value, files } = e.target
         
+        //if (music.title === "") setErrors({...errors, title : "Le titre est requis"});
+        if (e.target.value == "") setErrors
+
+
+        // const validationErrors = {
+        //     title: name === 'title' && value === '',
+        //     artist: name === 'artist' && value === '',
+        //     releasedAt: name === 'releasedAt' && value === '',
+        //     imgFile: name === 'imgFile' && !files[0],
+        //     audioFile: name === 'audioFile' && !files[0],
+        // }
+        // setErrors(prevErrors => ({ ...prevErrors, ...validationErrors }));
+
         e.target.type == 'file' ?
         setMusic({...music, [name]: files[0]}) :
         setMusic({...music, [name]: value})
+
+
     }
 
     const handleSubmit = e => {
         e.preventDefault()
+
+        if (errors.title || errors.artist) {
+            return
+        }
 
         const formData = new FormData()
         
@@ -83,7 +117,19 @@ const FormMusic = () => {
         } else {
             MusicService.add(formData, currentUser.token)
                 .then(() => console.log("added"))
-        }      
+        }
+        // pour check si au moin un tag est selec
+        if (checkedTags.length === 0) {
+            setTagError(true);
+            return; 
+        } else {
+            setTagError(false);
+        }
+       //if (music.title === "") setErrors({...errors, title : "Le titre est requis"});
+        // if (name === 'artist') setErrors(value === '');
+        // if (name === 'releasedAt') setErrors(value === '');
+        // if (name === 'imgFile') setErrors(!files[0]);
+        // if (name === 'audioFile') setErrors(!files[0]);      
     }
   
     return (    
@@ -97,6 +143,7 @@ const FormMusic = () => {
                 value={music.title}
                 onChange={handleChange}
             />
+                {errors.title && <span className="error-message">{errors.title}</span>}
         </label>
         <label className='label'>
             Artiste :
@@ -107,6 +154,7 @@ const FormMusic = () => {
                 value={music.artist}
                 onChange={handleChange}
             />
+               {errors.artist && <span className="error-message">{errors.artist}</span>}
         </label>
        
         <label className='label'>
@@ -118,6 +166,7 @@ const FormMusic = () => {
                 value={music.releasedAt}
                 onChange={handleChange}
             />
+            {errors.releasedAt && <span className="error-message">La date est requis</span>}
         </label>
         <label className='label'>
             Image :
@@ -127,6 +176,7 @@ const FormMusic = () => {
                 className='input'
                 onChange={handleChange}
             />
+            {errors.imgFile && <span className="error-message">l'image est requis</span>}
         </label>
         <label className='label'>
             Audio :
@@ -136,10 +186,12 @@ const FormMusic = () => {
                 className='input'
                 onChange={handleChange}
             />
+            {errors.audioFile && <span className="error-message">L'audio est requis</span>}
         </label>
         <div className="tags">
         <div className="title">Tags : </div>
         <div className="list-container">
+        {tagError && <span className="error-message">Sélectionnez au moins un tag</span>}
           { tags && tags.map(item => (
             <div key={item}>
               <input value={item} type="checkbox" onChange={handleCheck} checked={checkedTags.includes(item)}/>
