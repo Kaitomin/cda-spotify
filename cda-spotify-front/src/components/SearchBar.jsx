@@ -3,8 +3,15 @@ import React, { useEffect, useState } from 'react';
 const SearchBar = ({ getResult, refresh }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Debouncer
   useEffect(() => {
-    getResult(searchQuery)
+    const sendQuery = setTimeout(() => {
+      getResult(searchQuery)
+    }, 500)
+
+    return () => {
+      clearTimeout(sendQuery)
+    }
   }, [searchQuery, refresh])
 
   // For mobile users

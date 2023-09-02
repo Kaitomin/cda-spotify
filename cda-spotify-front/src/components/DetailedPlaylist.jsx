@@ -194,6 +194,7 @@ const DetailedPlaylist = ({ showActions, musicIndex, isIntegrated }) => {
                     music.imgUri
                   }`}
                   alt={music.title}
+                  loading='lazy'
                   className="music-image object-fit-cover"
                   width={60}
                   height={60}

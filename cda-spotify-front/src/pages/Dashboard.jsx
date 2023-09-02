@@ -7,7 +7,7 @@ import PlaylistService from '../service/PlaylistService';
 import UserService from '../service/UserService';
 
 const Dashboard = () => {
-  const [key, setKey] = useState('musics')
+  const [key, setKey] = useState()
   const [musics, setMusics] = useState()
   const [users, setUsers] = useState()
   const [playlists, setPlaylists] = useState()
@@ -73,7 +73,7 @@ const Dashboard = () => {
                 { musics && musics.map(m => (
                   <tr key={m.id}>
                     <td className='py-2 d-none d-sm-block'>
-                      <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${m.imgUri}`} alt="music cover image" className='object-fit-cover' width={60} height={60} />
+                      <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${m.imgUri}`} alt="music cover image" loading='lazy' className='object-fit-cover' width={60} height={60} />
                     </td>
                     <td className='py-4 py-sm-2'><p className='m-0'>{m.artist}</p></td>
                     <td>
@@ -108,7 +108,7 @@ const Dashboard = () => {
                   { playlists && playlists.map(p => (
                     <tr key={p.id}>
                       <td className='py-2'>
-                        {p.musics.length > 0 ? (<img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${p.musics[0]?.imgUri}`} alt="image of the first music in the playlist" className='object-fit-cover' width={60} height={60} />) : <img src="https://placehold.co/60" /> }
+                        {p.musics.length > 0 ? (<img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${p.musics[0]?.imgUri}`} alt="image of the first music in the playlist" loading='lazy' className='object-fit-cover' width={60} height={60} />) : <img src="https://placehold.co/60" /> }
                       </td>
                       <td>{p.name}</td>
                       <td>{p.createdAt}</td>
