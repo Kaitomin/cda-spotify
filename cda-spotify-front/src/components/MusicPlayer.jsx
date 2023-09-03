@@ -41,9 +41,9 @@ const MusicPlayer = ({
     setCurrentMusic(selectedMusic)
     setCurrentIndex(selectedIndex ? selectedIndex : 0)
 
-    // if user is logged in, get all his playlists
     if (!currentUser.id) return
-
+    
+    // if user is logged in, get all his playlists
     PlaylistService.getPlaylistByUserId(currentUser.id).then((res) =>
       setPlaylists(res.data)
     )
@@ -181,13 +181,24 @@ const MusicPlayer = ({
     const filteredMusic = playlists
       .filter((p) => p.id == id)[0]
       .musics.filter((m) => m.id == currentMusic.id)
+
     if (filteredMusic.length != 0) {
+      setActionModalMsg("Cette musique est déjà dans cette playlist")
+      setShowActionsModal(true)
+      setTimeout(() => setShowActionsModal(false), 1500)
+      setShowPlaylistModal(!showPlaylistModal)
       return
     }
 
     PlaylistService.addMusic(id, currentMusic).then(() => {
-      console.log("Musique ajoutée à la playlist")
+      setActionModalMsg("Ajoutée à la playlist")
+      setShowActionsModal(true)
+      setTimeout(() => setShowActionsModal(false), 1500)
       setShowPlaylistModal(!showPlaylistModal)
+
+      PlaylistService.getPlaylistByUserId(currentUser.id).then((res) =>
+        setPlaylists(res.data)
+      )
     })
   }
 
@@ -201,6 +212,9 @@ const MusicPlayer = ({
 
     PlaylistService.addMusic(playlists[0].id, currentMusic).then(() => {
       setIsFavorite(true)
+      setActionModalMsg("Ajoutée aux favoris")
+      setShowActionsModal(true)
+      setTimeout(() => setShowActionsModal(false), 1500)
     })
   }
 
@@ -210,6 +224,9 @@ const MusicPlayer = ({
     }
     PlaylistService.removeMusic(playlists[0].id, currentMusic.id).then(() => {
       setIsFavorite(false)
+      setActionModalMsg("Retirée des favoris")
+      setShowActionsModal(true)
+      setTimeout(() => setShowActionsModal(false), 1500)
     })
   }
 
@@ -231,7 +248,7 @@ const MusicPlayer = ({
           <div>
             <div className="d-flex justify-content-center align-items-center vh-45">
               <img
-                className="img-player bg-body object-fit-cover w-100"
+                className="img-player object-fit-cover w-100"
                 src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${currentMusic.imgUri}`}
                 height={250}
               />

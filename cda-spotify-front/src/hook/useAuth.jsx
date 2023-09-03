@@ -24,8 +24,18 @@ const useAuth = () => {
 
         if (!roles.includes(token.role)) throw new Error("Unauthorized")
       })
-      .catch(() => {
-        navigate('/')
+      .catch((e) => {
+        switch (e.message) {
+          case 'Unauthorized':
+            navigate('/')
+            break
+          // JWT expired
+          // case '':
+          //   navigate('/login')
+          //   break
+          default:
+            navigate('/')
+        }
       })
   } 
  

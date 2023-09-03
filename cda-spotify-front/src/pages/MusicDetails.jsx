@@ -65,10 +65,10 @@ const MusicDetails = () => {
       />      
       { playlistId && <DetailedPlaylist showActions={false} isIntegrated={true} musicIndex={musicIndex} /> }
       { selectedMusic &&
-        <>
+        <div className='sliders-container d-flex flex-column row-gap-4'>
           <Slider musicType="Artist" searchKey={selectedMusic.artist} title="Par le même artiste" selectedMusic={selectedMusic} />
           <Slider musicType="Tag" searchKey={selectedMusic.tags[0]} title="Dans le même genre" selectedMusic={selectedMusic} />
-        </>
+        </div>
       }
     </div>
   )

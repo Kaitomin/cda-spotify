@@ -233,7 +233,7 @@ h1 {
 }
 .music-player > div {
   max-width: 430px;
-  border-radius: 1%;
+  /* border-radius: 1%; */
   margin: 2em 0;
 }
 .music-player .active {
@@ -355,12 +355,10 @@ h1 {
   position: absolute !important;
   top: 65px !important;
   left: -10px !important;
-  width: 250px;
+  /* width: 250px; */
   font-size: 0.8em;
   padding: 10px;
   border-radius: 0;
-  /* border-color: var(--red-warning); */
-  /* color: var(--red-warning); */
 }
 
 @keyframes loop {
@@ -388,6 +386,8 @@ h1 {
 }
 .music-details .detailed-playlist > div:first-child h1 {
   font-size: 1.2em;
+  margin-bottom: 0.5em !important;
+  margin-top: 0.5em !important;
 }
 .music-details .detailed-playlist .music-list {
   max-width: 100%;
@@ -421,18 +421,35 @@ h1 {
 /* -------- */
 /*  Slider  */
 /* -------- */
+.slider-component h2 {
+  font-size: 1.2em;
+}
+.slider-component > div {
+  position: relative;
+}
 .slider {
   display: flex;
-  background-color: darkcyan;
+  background-color: var(--dark-blue-1);
+}
+
+.slider h3 {
+  font-size: 1em;
+  margin-bottom: 0 !important;
 }
 .slider-container {
   overflow-x: auto;
   white-space: nowrap;
-  background-color: darkcyan;
+  background-color: var(--dark-blue-1);
+  text-align: center;
+  box-shadow: 0px 0px 1px white;
+  scroll-behavior: smooth;
+}
+.slider-music-component > a {
+  text-decoration: none;
 }
 .slider-music-component > a > img {
-  width: 150px;
-  height: 150px;
+  width: 125px;
+  height: 125px;
   object-fit: cover;
   border-radius: 5px;
 }
@@ -445,7 +462,41 @@ h1 {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 125px;
+}
+.slider-component .slider-container::-webkit-scrollbar {
+  height: 5px;
+}
+.slider-component .slider-container::-webkit-scrollbar-thumb {
+  background-color: #009688c4;
+}
+.slider-component .slider-container::-webkit-scrollbar-track {
+	background-color: #F5F5F5;
+}
+.slider-component .slider-container::-webkit-scrollbar-corner {
+  background: pink;
+  height: 5px;
+}
+.slider-component .fa-circle-arrow-right,
+.slider-component .fa-circle-arrow-left {
+  position: absolute;
+  font-size: 2.5em;
+  background: #ffffff9c;
+  border-radius: 100%;
+  color: #008b8b75;
+  top: 75px;
+  transition: color 0.1s ease-in-out;
+}
+.slider-component .fa-circle-arrow-right:hover,
+.slider-component .fa-circle-arrow-left:hover {
+  cursor: pointer;
+  color: #008b8bcc;
+}
+.slider-component .fa-circle-arrow-right {
+  right: 25px;
+}
+.slider-component .fa-circle-arrow-left {
+  left: 25px;
 }
 
 /* ------------ */
