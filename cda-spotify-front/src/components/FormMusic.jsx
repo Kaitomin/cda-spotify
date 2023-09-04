@@ -74,6 +74,8 @@ const FormMusic = () => {
     const isChecked = (item) =>
     checkedTags.includes(item) ? "checked-item" : "not-checked-item";
 
+
+
     const handleChange = e => {
         let { name, value, files } = e.target
         
@@ -88,10 +90,14 @@ const FormMusic = () => {
                 [name]: false,
               }));
         }
+
+       
+
+
   
 
         // err msg
-        const msgError = sanitizeInput(value)
+        const msgError = sanitizeInput(value, name)
         console.log(msgError);
         setErrors(prevErrors => ({
             ...prevErrors,
@@ -111,7 +117,7 @@ const FormMusic = () => {
         
         e.preventDefault()
         for(const key in music){
-            const msgError = sanitizeInput(music[key])
+            const msgError = sanitizeInput(music[key], key)
             setErrors(prevErrors => ({
                 ...prevErrors,
                 [key]: msgError,
@@ -205,11 +211,14 @@ const FormMusic = () => {
                         <input
                             type="text"
                             name="artist"
-                            className={`form-control ${touchedFields.artist && !music.artist ? "is-invalid" : touchedFields.artist && music.artist ? "is-valid" : ""} input`}
+                            className={`form-control ${ errors.artist ? "is-invalid" : touchedFields.artist && music.artist ? "is-valid" : ""} input`}
+                            // className={`form-control ${touchedFields.artist && !music.artist ? "is-invalid" : touchedFields.artist && music.artist ? "is-valid" : ""} input`}
                             value={music.artist}
                             onChange={handleChange}
                         />
-                        {touchedFields.artist && !music.artist && formSubmitted && <div className="invalid-feedback">Le champ est requis</div>}
+                        {/* {touchedFields.artist && !music.artist && formSubmitted && <div className="invalid-feedback">Le champ est requis</div>} */}
+                        <div className="invalid-feedback" >{ formSubmitted && errors.artist}</div>
+
                     </label>
 
                     <label className='d-flex flex-column mb-3'>
@@ -217,31 +226,34 @@ const FormMusic = () => {
                         <input
                             type="date"
                             name="releasedAt"
-                            className={`form-control ${touchedFields.releasedAt && !music.releasedAt ? "is-invalid" : touchedFields.releasedAt && music.releasedAt ? "is-valid" : ""} input`}
+                            className={`form-control ${ errors.releasedAt ? "is-invalid" : touchedFields.releasedAt && music.releasedAt ? "is-valid" : ""} input`}
                             value={music.releasedAt}
                             onChange={handleChange}
                         />
-                        {touchedFields.releasedAt && !music.releasedAt && formSubmitted && <div className="invalid-feedback">Le champ est requis</div>}
+                        <div className="invalid-feedback" >{ formSubmitted && errors.releasedAt}</div>
+
                     </label>
                     <label className='d-flex flex-column mb-3'>
                         Image
                         <input
                             type="file"
                             name="imgFile"
-                            className={`form-control ${touchedFields.imgFile && !music.imgFile ? "is-invalid" : touchedFields.imgFile && music.imgFile ? "is-valid" : ""} input`}
+                            className={`form-control ${ errors.imgFile ? "is-invalid" : touchedFields.imgFile && music.imgFile ? "is-valid" : ""} input`}
                             onChange={handleChange}
                         />
-                        {touchedFields.imgFile && !music.imgFile && formSubmitted && <div className="invalid-feedback">Le champ est requis</div>}
+                        <div className="invalid-feedback" >{ formSubmitted && errors.imgFile}</div>
+
                     </label>
                     <label className='d-flex flex-column mb-3'>
                         Audio
                         <input
                             type="file"
                             name="audioFile"
-                            className={`form-control ${touchedFields.audioFile && !music.audioFile ? "is-invalid" : touchedFields.audioFile && music.audioFile ? "is-valid" : ""} input`}
+                            className={`form-control ${ errors.audioFile ? "is-invalid" : touchedFields.audioFile && music.audioFile ? "is-valid" : ""} input`}
                             onChange={handleChange}
                         />
-                        {touchedFields.audioFile && !music.audioFile && formSubmitted && <div className="invalid-feedback">Le champ est requis</div>}
+                        <div className="invalid-feedback" >{ formSubmitted && errors.audioFile}</div>
+
                     </label>
                 </div>
                 <div className="tags-container mt-3 mb-4">
