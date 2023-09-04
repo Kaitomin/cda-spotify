@@ -19,8 +19,14 @@ public class AuthInterceptor implements HandlerInterceptor {
             if (CustomUtils.getCookie(request.getCookies(), "jwt") != null) {
                 throw new AuthenticationException("Already logged in");
             }
+        }
 
-            // Check if at least one input is empty
+        // Cookie missing
+        if (request.getRequestURI().contains("/api/auth/checkCookie")) {
+            // Check if already logged in but still tries to log in
+            if (CustomUtils.getCookie(request.getCookies(), "jwt") == null) {
+                throw new AuthenticationException("Cookie not found");
+            }
         }
         return true;
     }
