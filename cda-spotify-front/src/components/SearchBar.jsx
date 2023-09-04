@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const SearchBar = ({ getResult, refresh }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('')
+  const inputRef = useRef()
 
   // Debouncer
   useEffect(() => {
@@ -18,6 +19,7 @@ const SearchBar = ({ getResult, refresh }) => {
   const handleSubmit = e => {
     e.preventDefault()
     getResult(searchQuery)
+    inputRef.current.blur()
   }
 
   return (
@@ -27,6 +29,7 @@ const SearchBar = ({ getResult, refresh }) => {
         placeholder="Chercher une musique ou un artiste"
         className='form__field ps-5'
         value={searchQuery}
+        ref={inputRef}
         onChange={e => setSearchQuery(e.target.value)}
       />
       <button style={{display: "none"}}>Search</button>

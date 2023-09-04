@@ -72,7 +72,7 @@ const Dashboard = () => {
               <tbody>
                 { musics && musics.map(m => (
                   <tr key={m.id}>
-                    <td className='py-2 d-none d-sm-block'>
+                    <td className='py-2 d-none d-sm-table-cell'>
                       <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${m.imgUri}`} alt="music cover image" loading='lazy' className='object-fit-cover' width={60} height={60} />
                     </td>
                     <td className='py-4 py-sm-2'><p className='m-0'>{m.artist}</p></td>

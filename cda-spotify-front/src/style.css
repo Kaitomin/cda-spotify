@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap'); */
 :root {
   --bg-dark: #1b1b1b;
   --btn-player: #FFF;
@@ -21,7 +21,7 @@
   font-family: 'Quicksand', sans-serif;
 }
 body {
-  background-color: var(--dark-blue-4) !important; /* Override BS */
+  background: var(--dark-blue-4) !important; /* Override BS */
   color: white !important; /* Override BS */
   margin-bottom: 5em !important;
 }
@@ -36,16 +36,16 @@ h1 {
   text-align: center;
 }
 .main-nav {
-  background-color: var(--dark-blue-1);
+  background: var(--dark-blue-1);
 }
 .main-nav li {
-  transition: background-color 0.2s;
+  transition: background 0.2s;
 }
 .main-nav li.active {
-  background-color: #555;
+  background: #555;
 }
 .main-nav li:hover {
-  background-color: var(--link-hover);
+  background: var(--link-hover);
 }
 
 /* ------------ */
@@ -117,7 +117,7 @@ h1 {
 }
 .menu-burger > li {
   height: 60px !important;
-  background-color: var(--link-hover);
+  background: var(--link-hover);
 }
 .menu-button-container {
   width: 30px;
@@ -126,7 +126,7 @@ h1 {
 .menu-button::before,
 .menu-button::after {
   display: block;
-  background-color: #fff;
+  background: white;
   position: absolute;
   height: 4px;
   width: 30px;
@@ -212,13 +212,13 @@ h1 {
 }
 .music-form .tags-items > div:hover label {
   cursor: pointer;
-  background-color: var(--link-hover);
+  background: var(--link-hover);
 }
 .music-form .tags-items label {
    border: 1px solid #ffffff3d;
 }
 .music-form .tags-items input:checked + label {
-  background-color: var(--dark-blue-5);
+  background: var(--dark-blue-5);
   border: 1px solid white;
 }
 
@@ -257,7 +257,7 @@ h1 {
 }
 .music-player .progress {
   height: 3px !important;
-  background-color: var(--light-blue) !important;
+  background: var(--light-blue) !important;
   transition: width 0.3s ease-in-out;
 }
 .music-player i {
@@ -330,7 +330,7 @@ h1 {
 }
 .music-player .playlist-modal > div:hover {
   cursor: pointer;
-  background-color: var(--link-hover);
+  background: var(--link-hover);
 }
 .music-player .loop {
   transform: rotate(0);
@@ -399,7 +399,7 @@ h1 {
   max-height: 500px;
 }
 .music-details .detailed-playlist .music-item.active {
-  /* background-color: darkcyan !important; */
+  /* background: darkcyan !important; */
 }
 .music-details .detailed-playlist .music-list > .music-item:nth-child(2n) {
   background: var(--link-hover);
@@ -408,10 +408,10 @@ h1 {
   width: 6px;
 }
 .music-details .music-list::-webkit-scrollbar-thumb {
-	background-color: #009688c4;
+	background: #009688c4;
 }
 .music-details .music-list::-webkit-scrollbar-track {
-	background-color: #F5F5F5;
+	background: white;
 }
 .music-details .music-list::-webkit-scrollbar-corner {
   background: pink;
@@ -429,7 +429,7 @@ h1 {
 }
 .slider {
   display: flex;
-  background-color: var(--dark-blue-1);
+  background: var(--dark-blue-1);
 }
 
 .slider h3 {
@@ -439,7 +439,7 @@ h1 {
 .slider-container {
   overflow-x: auto;
   white-space: nowrap;
-  background-color: var(--dark-blue-1);
+  background: var(--dark-blue-1);
   text-align: center;
   box-shadow: 0px 0px 1px white;
   scroll-behavior: smooth;
@@ -468,10 +468,10 @@ h1 {
   height: 5px;
 }
 .slider-component .slider-container::-webkit-scrollbar-thumb {
-  background-color: #009688c4;
+  background: #009688c4;
 }
 .slider-component .slider-container::-webkit-scrollbar-track {
-	background-color: #F5F5F5;
+	background: white;
 }
 .slider-component .slider-container::-webkit-scrollbar-corner {
   background: pink;
@@ -819,7 +819,7 @@ h1 {
   font-size: 2em;
 }
 .dashboard .nav li:hover {
-  background-color: transparent;
+  background: transparent;
 }
 
 /* ------------ */
@@ -850,7 +850,7 @@ h1 {
 /* -------- */
 footer {
   border-top: 1px solid;
-  background-color: var(--dark-blue-1);
+  background: var(--dark-blue-1);
 }
 footer > div {
   width: 550px;
@@ -944,7 +944,7 @@ footer > div {
     max-width: 1000px;
     padding: 15px 0 !important;
     /* border: 1px solid; */
-    background-color: var(--dark-blue-1);
+    background: var(--dark-blue-1);
   }
   .music-player > div:first-child {
     box-shadow: 0px 0px 1px white;

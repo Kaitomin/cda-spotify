@@ -64,10 +64,10 @@ const Search = () => {
       <div className="text-center">
         { musicList.length > 0 &&<h2 className="mb-3">{musicList.length == 1 ? 'Résultat' : 'Résultats'} ({musicList.length})</h2> }
         <div className="result-grid">
-          {musicList.map(music => (
+          {musicList.map((music, index) => (
             <div key={music.id} className="music-item-search bg-white rounded">
               <Link to={`/music/${music.id}`} className="text-decoration-none text-black">            
-                <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${music.imgUri}`} alt={music.title} loading='lazy' className="music-image-search rounded-top object-fit-cover" width={100 + '%'} height={150} />
+                <img src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${music.imgUri}`} alt={music.title} loading={index > 6 ? 'lazy' : 'eager'} className="music-image-search rounded-top object-fit-cover" width={100 + '%'} height={150} />
                 <h2 className="music-title-search fw-bold mt-2" title={music.title}>{music.title}</h2>
                 <h3 className="music-author-search" title={music.artist}>{music.artist}</h3>
               </Link>

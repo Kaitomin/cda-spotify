@@ -28,6 +28,8 @@ const MusicPlayer = ({
   const isAuthenticated = localStorage.getItem("isAuthenticated")
   const { currentUser, checkCookie } = useAuth()
 
+  console.log('rendering MusicPlayer')
+
   // Check for current connected user
   useEffect(() => {
     if (!isAuthenticated) return
@@ -250,7 +252,9 @@ const MusicPlayer = ({
               <img
                 className="img-player object-fit-cover w-100"
                 src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${currentMusic.imgUri}`}
+                alt={`${currentMusic.title}`}
                 height={250}
+                fetchpriority="high"
               />
             </div>
           </div>
