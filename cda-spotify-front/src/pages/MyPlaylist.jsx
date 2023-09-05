@@ -4,7 +4,6 @@ import PlaylistService from '../service/PlaylistService';
 import UserService from '../service/UserService';
 import PlaylistForm from '../components/PlaylistForm';
 import useAuth from '../hook/useAuth'
-import { useNavigate } from 'react-router-dom'
 
 const MyPlaylist = () => {
   const [playlists, setPlaylists] = useState([])

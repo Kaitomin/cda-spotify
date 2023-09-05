@@ -1,8 +1,7 @@
-import React, {useState, useRef} from "react";
-import {useEffect} from "react";
-import "../style.css";
+import React, {useState, useEffect, useRef} from "react";
 import PlaylistService from "../service/PlaylistService";
 import useAuth from "../hook/useAuth";
+import "../style.css";
 
 const MusicPlayer = ({selectedMusicsList, selectedMusic, selectedIndex, updateSelectedMusic}) => {
   const audioRef = useRef();

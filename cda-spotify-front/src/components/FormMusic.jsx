@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react'
-import '../style.css'
-import React from 'react'
 import { useParams } from 'react-router-dom'
 import MusicService from '../service/MusicService';
 import TagService from '../service/TagService';
-import useAuth from '../hook/useAuth'
 import ModalMessage from './ModalMessage';
-import {sanitizeInput} from '../utils/CustomFunctions'
+import { sanitizeInput } from '../utils/CustomFunctions'
+import '../style.css'
 
 const FormMusic = () => { 
     const [tags, setTags] = useState();
-    const [checkedTags, setCheckedTags] = useState([]);
     const [showLoadingModal, setShowLoadingModal] = useState(false)
     const [msgModal, setMsgModal] = useState()
     const [loader, setLoader] = useState(false)
@@ -29,20 +26,8 @@ const FormMusic = () => {
         tags: "",
         imgFile: "",
         audioFile: "",
-      });
-      const [touchedFields, setTouchedFields] = useState({
-        title: false,
-        artist: false,
-        releasedAt: false,
-        imgFile: false,
-        audioFile: false,
-      });
-     const [tagError, setTagError] = useState(false);
-     const [formSubmitted, setFormSubmitted] = useState(false);
+    })
 
-
-
-    const { currentUser } = useAuth()
     const { musicId } = useParams()
 
     if (musicId) {
@@ -50,7 +35,6 @@ const FormMusic = () => {
             MusicService.getById(musicId)
                 .then(res => {
                     setMusic(res.data)
-                    setCheckedTags(res.data.tags)
                 })
         }, [])
     }
@@ -61,47 +45,33 @@ const FormMusic = () => {
     }, [])
 
     const handleCheck = (event) => {
-        let updatedList = [...checkedTags]
+        let updatedList = [...music.tags]
 
         if (event.target.checked) {
-          updatedList = [...checkedTags, event.target.value]
+          updatedList.push(event.target.value)
         } else {
-          updatedList.splice(checkedTags.indexOf(event.target.value), 1)
+          updatedList.splice(updatedList.indexOf(event.target.value), 1)
         }
-        setCheckedTags(updatedList)
+
+        // console.log(msgError);
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            tags: sanitizeInput(updatedList, 'tags'),
+        }))
+        setMusic({...music, tags: updatedList})
     }
 
-    const isChecked = (item) =>
-    checkedTags.includes(item) ? "checked-item" : "not-checked-item";
-
-
+    const isChecked = (item) => music.tags.includes(item) ? "checked-item" : "not-checked-item";
 
     const handleChange = e => {
         let { name, value, files } = e.target
-        
-        if (value) {
-            setTouchedFields(prevTouchedFields => ({
-                ...prevTouchedFields,
-                [name]: true,
-              }));
-        }else{
-            setTouchedFields(prevTouchedFields => ({
-                ...prevTouchedFields,
-                [name]: false,
-              }));
-        }
-
 
         // err msg
-        const msgError = sanitizeInput(value, name)
-        console.log(msgError);
+        // console.log(msgError);
         setErrors(prevErrors => ({
             ...prevErrors,
-            [name]: msgError,
-
-        }));
-
-
+            [name]: sanitizeInput(value, name),
+        }))
 
         e.target.type == 'file' ?
         setMusic({...music, [name]: files[0]}) :
@@ -109,25 +79,26 @@ const FormMusic = () => {
     }
 
     const handleSubmit = e => {
-        setFormSubmitted(true);
-        
         e.preventDefault()
-        for(const key in music){
+
+        // Check errors
+        let hasError = false
+
+        for (const key in music) {
             const msgError = sanitizeInput(music[key], key)
+
             setErrors(prevErrors => ({
                 ...prevErrors,
                 [key]: msgError,
             }))
 
-        }     
-        
+            if (msgError) hasError = true
+        }
+
+        // Cancel form submission
+        if (hasError) return
         
         // show loader
-        
-        if (errors.title || errors.artist || errors.releasedAt || errors.audioFile || errors.imgFile) {
-            console.log("errors");
-            return
-        }
         setMsgModal(musicId ? "Mise à jour en cours" : "Ajout en cours")
         setLoader(true)
         setShowLoadingModal(true)
@@ -138,7 +109,7 @@ const FormMusic = () => {
             "title" : music.title,
             "artist" : music.artist,
             "releasedAt" : music.releasedAt,
-            "tags" : checkedTags
+            "tags" : music.tags
         }
         
         formData.append("fileUpload", 
@@ -182,7 +153,6 @@ const FormMusic = () => {
                 }, 2000)
             })
         }      
-        console.log(setFormSubmitted );
     }
     
     return (
@@ -194,26 +164,22 @@ const FormMusic = () => {
                         Titre
                         <input type="text"
                             name="title"
-                            className={`form-control ${ errors.title ? "is-invalid" : touchedFields.title && music.title ? "is-valid" : ""} input`}
+                            className={`form-control ${errors.title ? "is-invalid" : music.title ? "is-valid" : ""} input`}
                             value={music.title}
                             onChange={handleChange}
                         />
-                        {/* {touchedFields.title && !music.title && formSubmitted && <div className="invalid-feedback">Le champ est requis</div>} */}
-                        <div className="invalid-feedback" >{ formSubmitted && errors.title}</div>
-                        {/* className={` ${!errors.title ? "invisible" : "visible"}`} */}
+                        <div className="invalid-feedback">{errors.title}</div>
                     </label>
                     <label className='d-flex flex-column mb-3'>
                         Artiste
                         <input
                             type="text"
                             name="artist"
-                            className={`form-control ${ errors.artist ? "is-invalid" : touchedFields.artist && music.artist ? "is-valid" : ""} input`}
-                            // className={`form-control ${touchedFields.artist && !music.artist ? "is-invalid" : touchedFields.artist && music.artist ? "is-valid" : ""} input`}
+                            className={`form-control ${errors.artist ? "is-invalid" : music.artist ? "is-valid" : ""} input`}
                             value={music.artist}
                             onChange={handleChange}
                         />
-                        {/* {touchedFields.artist && !music.artist && formSubmitted && <div className="invalid-feedback">Le champ est requis</div>} */}
-                        <div className="invalid-feedback" >{ formSubmitted && errors.artist}</div>
+                        <div className="invalid-feedback">{errors.artist}</div>
 
                     </label>
 
@@ -222,11 +188,11 @@ const FormMusic = () => {
                         <input
                             type="date"
                             name="releasedAt"
-                            className={`form-control ${ errors.releasedAt ? "is-invalid" : touchedFields.releasedAt && music.releasedAt ? "is-valid" : ""} input`}
+                            className={`form-control ${errors.releasedAt ? "is-invalid" : music.releasedAt ? "is-valid" : ""} input`}
                             value={music.releasedAt}
                             onChange={handleChange}
                         />
-                        <div className="invalid-feedback" >{ formSubmitted && errors.releasedAt}</div>
+                        <div className="invalid-feedback">{errors.releasedAt}</div>
 
                     </label>
                     <label className='d-flex flex-column mb-3'>
@@ -234,10 +200,10 @@ const FormMusic = () => {
                         <input
                             type="file"
                             name="imgFile"
-                            className={`form-control ${ errors.imgFile ? "is-invalid" : touchedFields.imgFile && music.imgFile ? "is-valid" : ""} input`}
+                            className={`form-control ${errors.imgFile ? "is-invalid" : music.imgFile ? "is-valid" : ""} input`}
                             onChange={handleChange}
                         />
-                        <div className="invalid-feedback" >{ formSubmitted && errors.imgFile}</div>
+                        <div className="invalid-feedback">{errors.imgFile}</div>
 
                     </label>
                     <label className='d-flex flex-column mb-3'>
@@ -245,19 +211,20 @@ const FormMusic = () => {
                         <input
                             type="file"
                             name="audioFile"
-                            className={`form-control ${ errors.audioFile ? "is-invalid" : touchedFields.audioFile && music.audioFile ? "is-valid" : ""} input`}
+                            className={`form-control ${errors.audioFile ? "is-invalid" : music.audioFile ? "is-valid" : ""} input`}
                             onChange={handleChange}
                         />
-                        <div className="invalid-feedback" >{ formSubmitted && errors.audioFile}</div>
+                        <div className="invalid-feedback">{errors.audioFile}</div>
 
                     </label>
                 </div>
                 <div className="tags-container mt-3 mb-4">
                     <p className="title">Tags</p>
+                    {errors.tags && <span className='text-danger'>{errors.tags}</span>}
                     <div className="tags-items d-flex justify-content-between flex-wrap text-center row-gap-1 column-gap-3">
                         { tags && tags.map(item => (
                             <div key={item}>
-                                <input id={item} value={item} type="checkbox" className='d-none' onChange={handleCheck} checked={checkedTags.includes(item)} />
+                                <input id={item} value={item} type="checkbox" className='d-none' onChange={handleCheck} checked={music.tags.includes(item)} />
                                 <label htmlFor={item} className={`px-3 py-1 w-100 ${isChecked(item)}`}>{item}</label>
                             </div>
                         ))}
