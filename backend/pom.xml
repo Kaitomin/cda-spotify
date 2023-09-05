@@ -146,6 +146,7 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
+				<!--		Exclude for Prod		-->
 <!--				<excludes>-->
 <!--					<exclude>application-dev.properties</exclude>-->
 <!--					<exclude>static/img/**</exclude>-->
@@ -155,6 +156,7 @@
 			<resource>
 				<directory>src/main/resources/static</directory>
 				<filtering>false</filtering>
+				<!--		Exclude for Prod		-->
 <!--				<excludes>-->
 <!--					<exclude>img/**</exclude>-->
 <!--					<exclude>audio/**</exclude>-->
@@ -240,9 +242,11 @@
 						<nonFilteredFileExtension>mp3</nonFilteredFileExtension>
 						<nonFilteredFileExtension>webp</nonFilteredFileExtension>
 						<nonFilteredFileExtension>jfif</nonFilteredFileExtension>
+						<nonFilteredFileExtension>wav</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 				</configuration>
 			</plugin>
+			<!--	[START] Prod		-->
 <!--			<plugin>-->
 <!--				<groupId>com.github.eirslett</groupId>-->
 <!--				<artifactId>frontend-maven-plugin</artifactId>-->
@@ -317,6 +321,7 @@
 <!--					</container>-->
 <!--				</configuration>-->
 <!--			</plugin>-->
+			<!--	[END] Prod		-->
 		</plugins>
 	</build>
 

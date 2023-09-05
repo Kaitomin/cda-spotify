@@ -22,10 +22,22 @@ const useAuth = () => {
           role: token.role
         })
 
-        if (!roles.includes(token.role)) throw new Error("Unauthorized")
+        if (!roles.includes(token.role)) throw ({response: {data : 'Unauthorized'}})
       })
-      .catch(() => {
-        navigate('/')
+      .catch((e) => {
+        switch (e.response.data) {
+          case 'Unauthorized':
+            navigate('/')
+            break
+          // JWT expired
+          case 'Cookie not found':
+            localStorage.removeItem('isAuthenticated')
+            localStorage.removeItem('isAdmin')
+            navigate('/login')
+            break
+          default:
+            navigate('/')
+        }
       })
   } 
  
