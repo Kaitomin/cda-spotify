@@ -27,8 +27,6 @@ const MusicPlayer = ({
   const isAuthenticated = localStorage.getItem("isAuthenticated")
   const { currentUser, checkCookie } = useAuth()
 
-  console.log('rendering MusicPlayer')
-
   // Check for current connected user
   useEffect(() => {
     if (!isAuthenticated) return
