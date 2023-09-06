@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+import PropTypes from 'prop-types'
 
 import MusicService from "../service/MusicService"
 import "../style.css"
@@ -54,6 +55,13 @@ const Slider = ({ musicType, searchKey, title, selectedMusic }) => {
       </div>
     )
   )
+}
+
+Slider.propTypes = {
+  musicType: PropTypes.string,
+  searchKey: PropTypes.string,
+  title: PropTypes.string,
+  selectedMusic: PropTypes.object
 }
 
 export default Slider

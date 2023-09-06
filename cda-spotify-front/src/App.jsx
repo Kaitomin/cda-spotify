@@ -1,7 +1,7 @@
 
 import Footer from './components/Footer'
 import Router from './router'
-import SecondaryNav from './components/SecondaryNav'
+import NavSecondary from './components/NavSecondary'
 import Header from './components/Header'
 import './style.css'
 
@@ -10,7 +10,7 @@ function App() {
     <>
       <Header />
       <Router />
-      <SecondaryNav />
+      <NavSecondary />
       <Footer />
     </>
   )

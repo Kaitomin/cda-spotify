@@ -7,7 +7,7 @@ import ModalMessage from './ModalMessage';
 import { sanitizeInput } from '../utils/CustomFunctions'
 import '../style.css'
 
-const FormMusic = () => { 
+const MusicForm = () => { 
     const [tags, setTags] = useState();
     const [showLoadingModal, setShowLoadingModal] = useState(false)
     const [msgModal, setMsgModal] = useState()
@@ -238,4 +238,4 @@ const FormMusic = () => {
     )
 } 
 
-export default FormMusic
+export default MusicForm

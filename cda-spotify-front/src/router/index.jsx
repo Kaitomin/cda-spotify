@@ -2,7 +2,7 @@ import { Suspense, lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 const Home = lazy(() => import('../pages/Home'))
-const FormMusic = lazy(() => import('../components/FormMusic'))
+const MusicForm = lazy(() => import('../components/MusicForm'))
 const Account = lazy(() => import('../pages/Account'))
 const MyPlaylist = lazy(() => import('../pages/MyPlaylist'))
 const Search = lazy(() => import('../pages/Search'))
@@ -35,8 +35,8 @@ const index = () => {
       <Route path="/playlist/:playlistId/music/:musicIndex" element={<Suspense fallback={<>...</>}><RequireAuth><MusicDetails key={"playlistId"}/></RequireAuth></Suspense>} />
 
       {/* ADMIN only */}
-      <Route path="/new-music" element={<Suspense fallback={<>...</>}><RequireAuthAdmin><FormMusic/></RequireAuthAdmin></Suspense>} />
-      <Route path="/update-music/:musicId" element={<Suspense fallback={<>...</>}><RequireAuthAdmin><FormMusic/></RequireAuthAdmin></Suspense>} />
+      <Route path="/new-music" element={<Suspense fallback={<>...</>}><RequireAuthAdmin><MusicForm/></RequireAuthAdmin></Suspense>} />
+      <Route path="/update-music/:musicId" element={<Suspense fallback={<>...</>}><RequireAuthAdmin><MusicForm/></RequireAuthAdmin></Suspense>} />
       <Route path="/dashboard" element={<Suspense fallback={<>...</>}><RequireAuthAdmin><Dashboard/></RequireAuthAdmin></Suspense>} />
   
       {/* Fallback route */}

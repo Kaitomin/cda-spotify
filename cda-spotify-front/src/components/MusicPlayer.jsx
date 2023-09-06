@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react"
+import PropTypes from 'prop-types'
 
 import PlaylistService from "../service/PlaylistService"
 import useAuth from "../hook/useAuth"
@@ -25,8 +26,9 @@ const MusicPlayer = ({
   const [showActionsModal, setShowActionsModal] = useState(false)
   const [isFavorite, setIsFavorite] = useState()
   const [actionModalMsg, setActionModalMsg] = useState()
-  const isAuthenticated = localStorage.getItem("isAuthenticated")
+  
   const { currentUser, checkCookie } = useAuth()
+  const isAuthenticated = localStorage.getItem("isAuthenticated")
 
   // Check for current connected user
   useEffect(() => {
@@ -376,4 +378,12 @@ const MusicPlayer = ({
     </div>
   )
 }
+
+MusicPlayer.propTypes = {
+  selectedMusicsList: PropTypes.array,
+  selectedMusic: PropTypes.object,
+  selectedIndex: PropTypes.number,
+  updateSelectedMusic: PropTypes.func
+}
+
 export default MusicPlayer

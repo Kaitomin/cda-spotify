@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import PropTypes from 'prop-types'
 
 const SearchBar = ({ getResult, refresh }) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -35,6 +36,11 @@ const SearchBar = ({ getResult, refresh }) => {
       <button style={{display: "none"}}>Search</button>
     </form>
   )
+}
+
+SearchBar.propTypes = {
+  getResult: PropTypes.func,
+  refresh: PropTypes.bool
 }
 
 export default SearchBar;

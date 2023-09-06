@@ -1,9 +1,9 @@
-import DetailedPlaylist from "../components/DetailedPlaylist"
+import PlaylistDetails from "../components/PlaylistDetails"
 
 const MyDetailedPlaylist = () => {
   return (
     <div className="my-detailed-playlist px-3 flex-grow-1">
-      <DetailedPlaylist showActions={true} isIntegrated={false} />
+      <PlaylistDetails showActions={true} isIntegrated={false} />
     </div>
   )
 }

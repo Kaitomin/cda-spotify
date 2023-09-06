@@ -23,7 +23,10 @@ const MyPlaylist = () => {
 
   const addNewPlaylistToUser = (newPlaylistName) => {
     UserService.addPlaylist(currentUser.id, { name: newPlaylistName }).then(
-      () => getPlaylists()
+      () => {
+        getPlaylists()
+        setShowModal(false)
+      }
     )
   }
 

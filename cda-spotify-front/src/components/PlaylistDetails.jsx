@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
+import PropTypes from 'prop-types'
 
 import PlaylistForm from "./PlaylistForm"
 import PlaylistService from "../service/PlaylistService"
 import useAuth from "../hook/useAuth"
 
-const Playlist = () => {
+const PlaylistDetails = ({ showActions, musicIndex, isIntegrated }) => {
   const [musicList, setMusicList] = useState([])
   const [playlist, setPlaylist] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentMusicId, setCurrentMusicId] = useState(null)
+  const [isToggleList, setIsToggleList] = useState(true)
   const { currentUser } = useAuth()
 
   const { playlistId } = useParams()
@@ -43,7 +45,7 @@ const Playlist = () => {
     })
   }
 
-  const handleClick = ( id) => {
+  const handleClick = (id) => {
     const buttons = document.querySelectorAll(".btn-container")
     const audios = document.querySelectorAll(".audio-tag")
     const currentBarContainer = document.querySelector(`.bars-${id}`)
@@ -146,10 +148,16 @@ const Playlist = () => {
   }
 
   return (
-    <div className="playlist px-3">
-      <div className="d-flex justify-content-center align-items-center column-gap-2">
+    <div className="detailed-playlist">
+      <div className="d-flex justify-content-center align-items-center column-gap-2" onClick={isIntegrated ? () => setIsToggleList(!isToggleList) : undefined}>
         <h1>{playlist && playlist.name}</h1>
-        {!isModalOpen && (
+        {isIntegrated && (
+            isToggleList 
+            ? <i className="fa-solid fa-angles-down"></i>
+            : <i className="fa-solid fa-angles-up"></i>
+          )
+        }
+        {playlist && playlist.name != 'Favoris' && showActions && !isModalOpen && (
           <i
             className="fa-solid fa-pen-to-square edit-btn"
             onClick={() => setIsModalOpen(true)}
@@ -165,10 +173,10 @@ const Playlist = () => {
           <button onClick={() => setIsModalOpen(false)}>Annuler</button>
         </div>
       )}
-      <div className="music-list d-flex flex-column align-items-start m-auto">
+      <div className={`music-list d-flex flex-column align-items-start m-auto ${isToggleList ? 'toggle-list' : ''}`}>
         {musicList.length == 0 && (
           <div className="w-100 mt-5 text-center">
-            <h2>Playlist vide </h2>
+            <h2>Playlist vide</h2>
             <Link to="/search">Visiter la bibliothèque de musiques</Link>
           </div>
         )}
@@ -176,7 +184,11 @@ const Playlist = () => {
           musicList.map(({id, title, artist, imgUri, audioUri}, index) => (
             <div
               key={id}
-              className={`music-item track-${id} d-flex align-items-center justify-content-around w-100 p-2`}
+              className={`music-item track-${
+                id
+              } d-flex align-items-center justify-content-around w-100 p-2 ${
+                musicIndex == index ? "active" : ""
+              }`}
             >
               <div className="music-track position-relative">
                 <img
@@ -184,6 +196,7 @@ const Playlist = () => {
                     imgUri
                   }`}
                   alt={title}
+                  loading='lazy'
                   className="music-image object-fit-cover"
                   width={60}
                   height={60}
@@ -199,50 +212,56 @@ const Playlist = () => {
                     type="audio/mp3"
                   />
                 </audio>
-                <div
-                  className={`btn-container btn-${id}`}
-                  onClick={() => handleClick(id)}
-                >
-                  <i className="fa-solid fa-circle-play"></i>
-                  <i className="fa-solid fa-circle-stop hidden"></i>
-                </div>
+                {showActions && (
+                  <div
+                    className={`btn-container btn-${id}`}
+                    onClick={() => handleClick(id)}
+                  >
+                    <i className="fa-solid fa-circle-play"></i>
+                    <i className="fa-solid fa-circle-stop hidden"></i>
+                  </div>
+                )}
               </div>
               <div>
-                <div className="music-info">
+                <div className="music-details">
                   <Link to={`/playlist/${playlist.id}/music/${index}`}>
                     <p className="music-title m-0">
-                      {artist} - {title}
+                      {artist}- {title}
                     </p>
                   </Link>
                 </div>
 
-                <div className={`music-bars bars-${id} hidden`}>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                </div>
+                {showActions && (
+                  <div className={`music-bars d-flex justify-content-between align-items-end bars-${id} hidden`}>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                  </div>
+                )}
               </div>
-              <i
-                className="fa-solid fa-xmark"
-                onClick={() => handleDelete(id)}
-              ></i>
+              {showActions && (
+                <i
+                  className="fa-solid fa-xmark"
+                  onClick={() => handleDelete(id)}
+                ></i>
+              )}
             </div>
           ))}
       </div>
@@ -250,4 +269,10 @@ const Playlist = () => {
   )
 }
 
-export default Playlist
+PlaylistDetails.propTypes = {
+  showActions: PropTypes.bool,
+  musicIndex: PropTypes.string,
+  isIntegrated: PropTypes.bool
+}
+
+export default PlaylistDetails
