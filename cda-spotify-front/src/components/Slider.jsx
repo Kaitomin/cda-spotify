@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react"
-import MusicService from "../service/MusicService"
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+
+import MusicService from "../service/MusicService"
 import "../style.css"
 
 const Slider = ({ musicType, searchKey, title, selectedMusic }) => {

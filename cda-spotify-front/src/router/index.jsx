@@ -1,19 +1,6 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-// import FormMusic from '../components/FormMusic'
-// import Account from '../pages/Account'
-// import Home from '../pages/Home'
-// import MyPlaylist from '../pages/MyPlaylist'
-// import Search  from '../pages/Search'
-// import Dashboard from '../pages/Dashboard'
-// import MusicDetails from '../pages/MusicDetails'
-// import Register from '../pages/Register'
-// import Login from '../pages/Login'
-// import AboutUs from '../pages/AboutUs'
-// import Contact from '../pages/Contact'
-// import RequireAuth from '../utils/RequireAuth'
-// import RequireAuthAdmin from '../utils/RequireAuthAdmin'
-// import MyDetailedPlaylist from '../pages/MyDetailedPlaylist'
 import { Suspense, lazy } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
+
 const Home = lazy(() => import('../pages/Home'))
 const FormMusic = lazy(() => import('../components/FormMusic'))
 const Account = lazy(() => import('../pages/Account'))

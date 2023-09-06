@@ -72,7 +72,7 @@ public class MusicController {
 	}
 
 	@GetMapping("/byTag/{tag}")
-	public ResponseEntity<List<MusicDTO>> getTop10ByTags(@PathVariable @Pattern(regexp = "^[a-zA-Z]+$") Tag tag) {
+	public ResponseEntity<List<MusicDTO>> getTop10ByTags(@PathVariable @Pattern(regexp = "^[A-Z]+$") Tag tag) {
 		return ResponseEntity.ok(service.getTop10ByTags(tag));
 	}
 	@GetMapping("/byArtist/{artist}")

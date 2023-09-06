@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react"
-import PlaylistForm from "./PlaylistForm"
+import { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
+
+import PlaylistForm from "./PlaylistForm"
 import PlaylistService from "../service/PlaylistService"
 import useAuth from "../hook/useAuth"
 
@@ -43,7 +44,7 @@ const DetailedPlaylist = ({ showActions, musicIndex, isIntegrated }) => {
     })
   }
 
-  const handleClick = (e, id) => {
+  const handleClick = (id) => {
     const buttons = document.querySelectorAll(".btn-container")
     const audios = document.querySelectorAll(".audio-tag")
     const currentBarContainer = document.querySelector(`.bars-${id}`)
@@ -179,11 +180,11 @@ const DetailedPlaylist = ({ showActions, musicIndex, isIntegrated }) => {
           </div>
         )}
         {musicList &&
-          musicList.map((music, index) => (
+          musicList.map(({id, title, artist, imgUri, audioUri}, index) => (
             <div
-              key={music.id}
+              key={id}
               className={`music-item track-${
-                music.id
+                id
               } d-flex align-items-center justify-content-around w-100 p-2 ${
                 musicIndex == index ? "active" : ""
               }`}
@@ -191,29 +192,29 @@ const DetailedPlaylist = ({ showActions, musicIndex, isIntegrated }) => {
               <div className="music-track position-relative">
                 <img
                   src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${
-                    music.imgUri
+                    imgUri
                   }`}
-                  alt={music.title}
+                  alt={title}
                   loading='lazy'
                   className="music-image object-fit-cover"
                   width={60}
                   height={60}
                 />
                 <audio
-                  className={`music-${music.id} audio-tag`}
+                  className={`music-${id} audio-tag`}
                   onEnded={handleEnded}
                 >
                   <source
                     src={`${import.meta.env.VITE_RESOURCE_AUDIO_URL}/${
-                      music.audioUri
+                      audioUri
                     }`}
                     type="audio/mp3"
                   />
                 </audio>
                 {showActions && (
                   <div
-                    className={`btn-container btn-${music.id}`}
-                    onClick={(e) => handleClick(e, music.id)}
+                    className={`btn-container btn-${id}`}
+                    onClick={() => handleClick(id)}
                   >
                     <i className="fa-solid fa-circle-play"></i>
                     <i className="fa-solid fa-circle-stop hidden"></i>
@@ -224,13 +225,13 @@ const DetailedPlaylist = ({ showActions, musicIndex, isIntegrated }) => {
                 <div className="music-details">
                   <Link to={`/playlist/${playlist.id}/music/${index}`}>
                     <p className="music-title m-0">
-                      {music.artist}- {music.title}
+                      {artist}- {title}
                     </p>
                   </Link>
                 </div>
 
                 {showActions && (
-                  <div className={`music-bars d-flex justify-content-between align-items-end bars-${music.id} hidden`}>
+                  <div className={`music-bars d-flex justify-content-between align-items-end bars-${id} hidden`}>
                     <div className="bar"></div>
                     <div className="bar"></div>
                     <div className="bar"></div>
@@ -257,7 +258,7 @@ const DetailedPlaylist = ({ showActions, musicIndex, isIntegrated }) => {
               {showActions && (
                 <i
                   className="fa-solid fa-xmark"
-                  onClick={() => handleDelete(music.id)}
+                  onClick={() => handleDelete(id)}
                 ></i>
               )}
             </div>

@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect, Children } from "react"
+import { useState, useRef, useEffect } from "react"
+
 import PlaylistService from "../service/PlaylistService"
 import useAuth from "../hook/useAuth"
 import ModalMessage from "./ModalMessage"
@@ -154,7 +155,7 @@ const MusicPlayer = ({
     setIsLooping(!isLooping)
   }
 
-  const handleRandom = (e) => {
+  const handleRandom = () => {
     if (!isRandom) setIsLooping(false)
 
     setIsRandom(!isRandom)
@@ -349,13 +350,13 @@ const MusicPlayer = ({
                       <p>Ajouter à ...</p>
                       {playlists &&
                         playlists.map(
-                          (p) =>
-                            p.name != "Favoris" && (
+                          ({name, id}) =>
+                            name != "Favoris" && (
                               <div
-                                key={p.id}
-                                onClick={() => addToPlaylist(p.id)}
+                                key={id}
+                                onClick={() => addToPlaylist(id)}
                               >
-                                {p.name}
+                                {name}
                               </div>
                             )
                         )}

@@ -1,6 +1,7 @@
+import { useState } from 'react';
+
 import { Link, useNavigate } from "react-router-dom"
 import useAuth from '../hook/useAuth'
-import { useState } from 'react';
 
 const NavBar = () => {
   const { logout } = useAuth()

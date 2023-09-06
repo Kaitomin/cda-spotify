@@ -29,7 +29,6 @@ const useAuth = () => {
           case 'Unauthorized':
             navigate('/')
             break
-          // JWT expired
           case 'Cookie not found':
             localStorage.removeItem('isAuthenticated')
             localStorage.removeItem('isAdmin')

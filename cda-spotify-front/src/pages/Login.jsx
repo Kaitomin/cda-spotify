@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom"
-import useAuth from "../hook/useAuth"
 import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+
+import useAuth from "../hook/useAuth"
 
 const Login = () => {
   const navigate = useNavigate()
-  const { login, currentUser } = useAuth()
+  const { login } = useAuth()
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -56,6 +57,9 @@ const Login = () => {
         </div>
         <button>Connexion</button>
       </form>
+      <div className="d-flex justify-content-center">
+        <Link to='/register'>Pas encore de compte ?</Link>
+      </div>
     </div>
   )
 }

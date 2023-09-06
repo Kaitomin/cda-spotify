@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const PlaylistForm = ({ playlistName, handlePlaylist }) => {
     const [newName, setNewName] = useState(playlistName ? playlistName : '');

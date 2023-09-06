@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+
 import MusicService from '../service/MusicService';
 import TagService from '../service/TagService';
 import ModalMessage from './ModalMessage';
@@ -27,17 +28,16 @@ const FormMusic = () => {
         imgFile: "",
         audioFile: "",
     })
-
     const { musicId } = useParams()
 
-    if (musicId) {
-        useEffect(() => {
+    useEffect(() => {
+        if (musicId) {
             MusicService.getById(musicId)
                 .then(res => {
                     setMusic(res.data)
-                })
-        }, [])
-    }
+            })
+        }
+    }, [])
 
     useEffect(() => {
         TagService.getAll()
@@ -129,7 +129,7 @@ const FormMusic = () => {
                     setShowLoadingModal(false)
                 }, 2000)
             })
-            .catch(e => {
+            .catch(() => {
                 setMsgModal("Erreur lors de la modification")
                 setLoader(false)
                 setTimeout(() => {
@@ -145,7 +145,7 @@ const FormMusic = () => {
                     setShowLoadingModal(false)
                 }, 2000)
             })
-            .catch(e => {
+            .catch(() => {
                 setMsgModal("Erreur lors de l'ajout")
                 setLoader(false)
                 setTimeout(() => {

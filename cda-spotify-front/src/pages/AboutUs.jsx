@@ -1,5 +1,3 @@
-import React from 'react'
-
 const AboutUs = () => {
   return (
     <div className='px-3 text-center about-us flex-grow-1'>
