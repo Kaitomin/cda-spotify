@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import PropTypes from 'prop-types'
 
 import PlaylistService from "../service/PlaylistService"
 import useAuth from "../hook/useAuth"
 import ModalMessage from "./ModalMessage"
 import "../style.css"
+import MusicPlayerControls from "./MusicPlayerControls"
 
 const MusicPlayer = ({
   selectedMusicsList,
@@ -12,10 +13,7 @@ const MusicPlayer = ({
   selectedIndex,
   updateSelectedMusic,
 }) => {
-  const audioRef = useRef()
   const [currentIndex, setCurrentIndex] = useState()
-  const [currentTime, setCurrentTime] = useState(0)
-  const [duration, setDuration] = useState(0)
   const [currentMusic, setCurrentMusic] = useState()
   const [musicList, setMusicList] = useState()
   const [playlists, setPlaylists] = useState([])
@@ -25,13 +23,10 @@ const MusicPlayer = ({
   const [isFavorite, setIsFavorite] = useState()
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
   const [showActionsModal, setShowActionsModal] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isLooping, setIsLooping] = useState(false)
-  const [isRandom, setIsRandom] = useState(false)
 
   const { currentUser, checkCookie } = useAuth()
   const isAuthenticated = localStorage.getItem("isAuthenticated")
-
+  
   // Check for current connected user
   useEffect(() => {
     if (!isAuthenticated) return
@@ -53,14 +48,6 @@ const MusicPlayer = ({
     )
   }, [selectedMusic, selectedMusicsList])
 
-  // Autoplay audio
-  useEffect(() => {
-    if (audioRef.current && currentMusic) {
-      audioRef.current.play()
-      setIsPlaying(!audioRef.current.paused)
-    }
-  }, [currentMusic])
-
   // Check if current music is in user's Favoris
   useEffect(() => {
     if (playlists.length == 0 || currentMusic == null) return
@@ -76,16 +63,7 @@ const MusicPlayer = ({
     }
   }, [playlists, currentMusic])
 
-  const togglePlay = () => {
-    if (isPlaying) {
-      audioRef.current.pause()
-    } else {
-      audioRef.current.play()
-    }
-    setIsPlaying(!isPlaying)
-  }
-
-  const handlePrevious = () => {
+  const handlePrevious = (isRandom) => {
     if (isRandom) {
       let newRandomIndex = Math.floor(Math.random() * musicList.length)
       while (newRandomIndex === currentIndex) {
@@ -101,36 +79,7 @@ const MusicPlayer = ({
     }
   }
 
-  const handleTimeUpdate = () => {
-    setCurrentTime(audioRef.current.currentTime)
-  }
-
-  const handleLoadedMetadata = () => {
-    const splitted = currentMusic.duration.split(":")
-    setDuration(parseInt(splitted[0]) * 60 + parseInt(splitted[1]))
-  }
-
-  const handleEnd = () => {
-    // Reset duration back to 0
-    if (!isLooping && !isRandom) {
-      audioRef.current.pause()
-      audioRef.current.currentTime = 0
-      setIsPlaying(false)
-    } else if (!isLooping) handleNext()
-
-    return
-  }
-
-  const handleTimelineClick = (e) => {
-    const timelineWidth = e.currentTarget.clientWidth
-    const clickPosition = e.nativeEvent.offsetX
-    const newTime = (clickPosition / timelineWidth) * duration
-
-    audioRef.current.currentTime = newTime
-    setCurrentTime(newTime)
-  }
-
-  const handleNext = () => {
+  const handleNext = (isRandom) => {
     if (isRandom) {
       let newRandomIndex = Math.floor(Math.random() * musicList.length)
       while (newRandomIndex === currentIndex) {
@@ -144,25 +93,6 @@ const MusicPlayer = ({
       setCurrentIndex(prevIndex)
       updateSelectedMusic(musicList[prevIndex], prevIndex)
     }
-  }
-
-  const formatTime = (timeInSeconds) => {
-    const minutes = Math.floor(timeInSeconds / 60)
-    const seconds = Math.floor(timeInSeconds % 60)
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`
-  }
-
-  const handleLoop = () => {
-    if (!isLooping) setIsRandom(false)
-
-    audioRef.current.loop = !isLooping
-    setIsLooping(!isLooping)
-  }
-
-  const handleRandom = () => {
-    if (!isRandom) setIsLooping(false)
-
-    setIsRandom(!isRandom)
   }
 
   const displayPlaylistsModal = () => {
@@ -256,6 +186,7 @@ const MusicPlayer = ({
                 src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${currentMusic.imgUri}`}
                 alt={`${currentMusic.title}`}
                 height={250}
+                // eslint-disable-next-line react/no-unknown-property
                 fetchpriority="high"
               />
             </div>
@@ -266,57 +197,8 @@ const MusicPlayer = ({
               <h2 className="text-center fw-bold">{currentMusic.title}</h2>
               <h3 className="text-center">{currentMusic.artist}</h3>
             </div>
-            <audio
-              ref={audioRef}
-              onTimeUpdate={handleTimeUpdate}
-              onLoadedMetadata={handleLoadedMetadata}
-              onEnded={handleEnd}
-              src={`${import.meta.env.VITE_RESOURCE_AUDIO_URL}/${currentMusic.audioUri}`}
-            />
-
-            <div className="controls d-flex align-items-center flex-wrap justify-content-around">
-              <div className="d-flex justify-content-between w-100 timer">
-                <div>{formatTime(currentTime)}</div>
-                <div>{formatTime(duration)}</div>
-              </div>
-              <div
-                className="timeline w-100 bg-white position-relative"
-                onClick={handleTimelineClick}
-              >
-                <div
-                  className="progress position-absolute top-0 start-0"
-                  style={{
-                    width: `${(currentTime / duration) * 100}%`,
-                  }}
-                ></div>
-              </div>
-              <i
-                className={`fa-solid fa-rotate-left mt-4 ${isLooping ? "loop active" : ""}`}
-                onClick={handleLoop}
-              ></i>
-              <i
-                className="fa-solid fa-backward mt-4"
-                onClick={handlePrevious}
-              ></i>
-              {isPlaying ? (
-                <i
-                  className="fa-solid fa-pause mt-4 active"
-                  onClick={togglePlay}
-                ></i>
-              ) : (
-                <i className="fa-solid fa-play mt-4" onClick={togglePlay}></i>
-              )}
-              <>
-                <i
-                  className="fa-solid fa-forward mt-4"
-                  onClick={handleNext}
-                ></i>
-                <i
-                  className={`fa-solid fa-shuffle mt-4 ${isRandom ? "active" : ""}`}
-                  onClick={handleRandom}
-                ></i>
-              </>
-            </div>
+            
+            <MusicPlayerControls currentMusic={currentMusic} handleNext={handleNext} handlePrevious={handlePrevious} />
 
             <div className="d-flex justify-content-between flex-wrap gap-2">
               <div className="tags d-flex flex-wrap gap-2 align-content-center">
