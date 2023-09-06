@@ -6,7 +6,7 @@ import UserService from "../service/UserService"
 import PlaylistForm from "../components/PlaylistForm"
 import useAuth from "../hook/useAuth"
 
-const MyPlaylist = () => {
+const Playlists = () => {
   const [playlists, setPlaylists] = useState([])
   const [showModal, setShowModal] = useState(false)
   const { currentUser } = useAuth()
@@ -90,4 +90,4 @@ const MyPlaylist = () => {
   )
 }
 
-export default MyPlaylist
+export default Playlists

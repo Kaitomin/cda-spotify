@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 const Home = lazy(() => import('../pages/Home'))
 const MusicForm = lazy(() => import('../components/MusicForm'))
 const Account = lazy(() => import('../pages/Account'))
-const MyPlaylist = lazy(() => import('../pages/MyPlaylist'))
+const Playlists = lazy(() => import('../pages/Playlists'))
 const Search = lazy(() => import('../pages/Search'))
 const Dashboard = lazy(() => import('../pages/Dashboard'))
 const MusicDetails = lazy(() => import('../pages/MusicDetails'))
@@ -29,7 +29,7 @@ const index = () => {
       <Route path="/contact" element={<Suspense fallback={<>...</>}><Contact/></Suspense>} />
 
       {/* CLIENT and ADMIN only */}
-      <Route path="/playlists" element={<Suspense fallback={<>...</>}><RequireAuth><MyPlaylist/></RequireAuth></Suspense>} />
+      <Route path="/playlists" element={<Suspense fallback={<>...</>}><RequireAuth><Playlists/></RequireAuth></Suspense>} />
       <Route path="/account" element={<Suspense fallback={<>...</>}><RequireAuth><Account/></RequireAuth></Suspense>} />
       <Route path="/playlist/:playlistId" element={<Suspense fallback={<>...</>}><RequireAuth><MyDetailedPlaylist/></RequireAuth></Suspense>} />
       <Route path="/playlist/:playlistId/music/:musicIndex" element={<Suspense fallback={<>...</>}><RequireAuth><MusicDetails key={"playlistId"}/></RequireAuth></Suspense>} />

@@ -13,20 +13,22 @@ const MusicPlayer = ({
   updateSelectedMusic,
 }) => {
   const audioRef = useRef()
-  const [isPlaying, setIsPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState()
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
-  const [isLooping, setIsLooping] = useState(false)
-  const [isRandom, setIsRandom] = useState(false)
   const [currentMusic, setCurrentMusic] = useState()
   const [musicList, setMusicList] = useState()
   const [playlists, setPlaylists] = useState([])
+  
+  // useReducer
+  const [actionModalMsg, setActionModalMsg] = useState()
+  const [isFavorite, setIsFavorite] = useState()
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
   const [showActionsModal, setShowActionsModal] = useState(false)
-  const [isFavorite, setIsFavorite] = useState()
-  const [actionModalMsg, setActionModalMsg] = useState()
-  
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isLooping, setIsLooping] = useState(false)
+  const [isRandom, setIsRandom] = useState(false)
+
   const { currentUser, checkCookie } = useAuth()
   const isAuthenticated = localStorage.getItem("isAuthenticated")
 

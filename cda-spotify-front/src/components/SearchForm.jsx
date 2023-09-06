@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types'
 
-const SearchBar = ({ getResult, refresh }) => {
+const SearchForm = ({ getResult, refresh }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const inputRef = useRef()
 
@@ -38,9 +38,9 @@ const SearchBar = ({ getResult, refresh }) => {
   )
 }
 
-SearchBar.propTypes = {
+SearchForm.propTypes = {
   getResult: PropTypes.func,
   refresh: PropTypes.bool
 }
 
-export default SearchBar;
+export default SearchForm;

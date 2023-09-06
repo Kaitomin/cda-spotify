@@ -511,7 +511,7 @@ header .nav-desktop i {
 }
 
 /* ------------ */
-/*  MyPlaylist  */
+/*  Playlists  */
 /* ------------ */
 .my-playlist .playlist-container {
   display: grid;
@@ -887,7 +887,7 @@ footer > div {
   }
 
   /* ------------ */
-  /*  MyPlaylist  */
+  /*  Playlists  */
   /* ------------ */
   .my-playlist .playlist-container {
     grid-template-columns: repeat(1, 1fr);
@@ -927,7 +927,7 @@ footer > div {
 
 @media screen and (min-width: 650px) { 
   /* ------------ */
-  /*  MyPlaylist  */
+  /*  Playlists  */
   /* ------------ */
   .my-playlist .playlist-container {
     grid-template-columns: repeat(3, 1fr);
@@ -988,7 +988,7 @@ footer > div {
 
 @media screen and (min-width: 768px) {
   /* ------------ */
-  /*  MyPlaylist  */
+  /*  Playlists  */
   /* ------------ */
   .my-playlist .playlist-container {
     grid-template-columns: repeat(4, 1fr);
@@ -1004,7 +1004,7 @@ footer > div {
 
 @media screen and (min-width: 1000px) {
   /* ------------ */
-  /*  MyPlaylist  */
+  /*  Playlists  */
   /* ------------ */
   .my-playlist .playlist-container {
     grid-template-columns: repeat(5, 1fr);
@@ -1020,7 +1020,7 @@ footer > div {
 
 @media screen and (min-width: 1200px) {
   /* ------------ */
-  /*  MyPlaylist  */
+  /*  Playlists  */
   /* ------------ */
   .my-playlist .playlist-container {
     grid-template-columns: repeat(6, 1fr);

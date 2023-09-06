@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 
-import SearchBar from "../components/SearchBar"
+import SearchForm from "../components/SearchForm"
 import MusicService from "../service/MusicService"
 
 const Search = () => {
@@ -48,7 +48,7 @@ const Search = () => {
 
   return (
     <div className="search-page px-3 mt-4 flex-grow-1">
-      <SearchBar getResult={getResult} refresh={refresh} />
+      <SearchForm getResult={getResult} refresh={refresh} />
       <div className="d-flex justify-content-around my-2">
         <div className="position-relative input d-flex flex-column align-items-center">
           <label htmlFor="title" className="toggle mb-2">

@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const year = new Date().getFullYear()
+
   return (
     <footer className='w-100 p-1 mt-4 d-none d-sm-block'>
       <div className='d-flex justify-content-around'>
-        <span>©2023 Streamy</span> 
+        <span>©{year} Streamy</span>
         <span>-</span>
         <span>Tous droits réservés (ou pas)</span>
         <span>-</span>
