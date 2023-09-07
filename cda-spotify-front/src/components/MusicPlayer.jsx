@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 import PlaylistService from "../service/PlaylistService"
 import useAuth from "../hook/useAuth"
-import ModalMessage from "./ModalMessage"
-import "../style.css"
 import MusicPlayerControls from "./MusicPlayerControls"
+import MusicPlayerActions from "./MusicPlayerActions"
+import "../style.css"
 
 const MusicPlayer = ({
   selectedMusicsList,
@@ -17,13 +17,8 @@ const MusicPlayer = ({
   const [currentMusic, setCurrentMusic] = useState()
   const [musicList, setMusicList] = useState()
   const [playlists, setPlaylists] = useState([])
-  
-  // useReducer
-  const [actionModalMsg, setActionModalMsg] = useState()
   const [isFavorite, setIsFavorite] = useState()
-  const [showPlaylistModal, setShowPlaylistModal] = useState(false)
-  const [showActionsModal, setShowActionsModal] = useState(false)
-
+  
   const { currentUser, checkCookie } = useAuth()
   const isAuthenticated = localStorage.getItem("isAuthenticated")
   
@@ -95,85 +90,14 @@ const MusicPlayer = ({
     }
   }
 
-  const displayPlaylistsModal = () => {
-    if (!currentUser.id) {
-      setActionModalMsg("Veuillez vous connecter")
-      setShowActionsModal(true)
-      setTimeout(() => setShowActionsModal(false), 1500)
-      return
-    }
-
-    setShowPlaylistModal(true)
+  const addToPlaylist = () => {
+    PlaylistService.getPlaylistByUserId(currentUser.id)
+      .then((res) => setPlaylists(res.data))
   }
 
-  const addToPlaylist = (id) => {
-    if (!currentUser.id) {
-      return
-    }
+  const addToFavorite = () => setIsFavorite(true)
 
-    // Check if music already exists in playlist
-    const filteredMusic = playlists
-      .filter((p) => p.id == id)[0]
-      .musics.filter((m) => m.id == currentMusic.id)
-
-    if (filteredMusic.length != 0) {
-      setActionModalMsg("Cette musique est déjà dans cette playlist")
-      setShowActionsModal(true)
-      setTimeout(() => setShowActionsModal(false), 1500)
-      setShowPlaylistModal(!showPlaylistModal)
-      return
-    }
-
-    PlaylistService.addMusic(id, currentMusic).then(() => {
-      setActionModalMsg("Ajoutée à la playlist")
-      setShowActionsModal(true)
-      setTimeout(() => setShowActionsModal(false), 1500)
-      setShowPlaylistModal(!showPlaylistModal)
-
-      PlaylistService.getPlaylistByUserId(currentUser.id).then((res) =>
-        setPlaylists(res.data)
-      )
-    })
-  }
-
-  const addToFavorite = () => {
-    if (!currentUser.id) {
-      setActionModalMsg("Veuillez vous connecter")
-      setShowActionsModal(true)
-      setTimeout(() => setShowActionsModal(false), 1500)
-      return
-    }
-
-    PlaylistService.addMusic(playlists[0].id, currentMusic).then(() => {
-      setIsFavorite(true)
-      setActionModalMsg("Ajoutée aux favoris")
-      setShowActionsModal(true)
-      setTimeout(() => setShowActionsModal(false), 1500)
-    })
-  }
-
-  const removeToFavorite = () => {
-    if (!currentUser.id) {
-      return
-    }
-    PlaylistService.removeMusic(playlists[0].id, currentMusic.id).then(() => {
-      setIsFavorite(false)
-      setActionModalMsg("Retirée des favoris")
-      setShowActionsModal(true)
-      setTimeout(() => setShowActionsModal(false), 1500)
-    })
-  }
-
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(location.href)
-      setActionModalMsg("Lien copié dans le presse-papiers")
-      setShowActionsModal(true)
-      setTimeout(() => setShowActionsModal(false), 1500)
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  const removeToFavorite = () => setIsFavorite(false)
 
   return (
     <div className="music-player text-light position-relative">
@@ -198,7 +122,11 @@ const MusicPlayer = ({
               <h3 className="text-center">{currentMusic.artist}</h3>
             </div>
             
-            <MusicPlayerControls currentMusic={currentMusic} handleNext={handleNext} handlePrevious={handlePrevious} />
+            <MusicPlayerControls 
+              currentMusic={currentMusic} 
+              handleNext={handleNext} 
+              handlePrevious={handlePrevious}
+            />
 
             <div className="d-flex justify-content-between flex-wrap gap-2">
               <div className="tags d-flex flex-wrap gap-2 align-content-center">
@@ -209,52 +137,16 @@ const MusicPlayer = ({
                 ))}
               </div>
 
-              <div className="d-flex justify-content-around actions">
-                {showActionsModal && (
-                  <ModalMessage message={actionModalMsg} loader={false} />
-                )}
-                {!isFavorite && (
-                  <i
-                    className="fa-regular fa-heart"
-                    onClick={addToFavorite}
-                  ></i>
-                )}
-                {isFavorite && (
-                  <i
-                    className="fa-solid fa-heart"
-                    onClick={removeToFavorite}
-                  ></i>
-                )}
+              <MusicPlayerActions 
+                isFavorite={isFavorite}
+                currentMusic={currentMusic}
+                currentUser={currentUser}
+                playlists={playlists} 
+                handleAddToFavorite={addToFavorite} 
+                handleRemoveToFavorite={removeToFavorite} 
+                handleAddToPlaylist={addToPlaylist}
+              />
 
-                <div>
-                  <i
-                    className="fa-solid fa-circle-plus"
-                    onClick={displayPlaylistsModal}
-                  ></i>
-                  {showPlaylistModal && (
-                    <div className="playlist-modal">
-                      <p>Ajouter à ...</p>
-                      {playlists &&
-                        playlists.map(
-                          ({name, id}) =>
-                            name != "Favoris" && (
-                              <div
-                                key={id}
-                                onClick={() => addToPlaylist(id)}
-                              >
-                                {name}
-                              </div>
-                            )
-                        )}
-                      <i
-                        className="fa-solid fa-circle-xmark"
-                        onClick={() => setShowPlaylistModal(false)}
-                      ></i>
-                    </div>
-                  )}
-                </div>
-                <i className="fa-solid fa-share" onClick={copyToClipboard}></i>
-              </div>
             </div>
           </div>
         </div>
