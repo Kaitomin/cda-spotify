@@ -6,7 +6,7 @@ import PlaylistForm from "./PlaylistForm"
 import PlaylistService from "../service/PlaylistService"
 import useAuth from "../hook/useAuth"
 
-const PlaylistDetails = ({ showActions, musicIndex, isIntegrated }) => {
+const PlaylistContent = ({ showActions, musicIndex, isIntegrated }) => {
   const [musicList, setMusicList] = useState([])
   const [playlist, setPlaylist] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -269,10 +269,10 @@ const PlaylistDetails = ({ showActions, musicIndex, isIntegrated }) => {
   )
 }
 
-PlaylistDetails.propTypes = {
+PlaylistContent.propTypes = {
   showActions: PropTypes.bool,
   musicIndex: PropTypes.string,
   isIntegrated: PropTypes.bool
 }
 
-export default PlaylistDetails
+export default PlaylistContent

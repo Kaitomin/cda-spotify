@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 
 import MusicPlayer from "../components/MusicPlayer"
 import Slider from "../components/Slider"
-import PlaylistDetails from "../components/PlaylistDetails"
+import PlaylistContent from "../components/PlaylistContent"
 import MusicService from "../service/MusicService"
 import PlaylistService from "../service/PlaylistService"
 
@@ -59,7 +59,7 @@ const MusicDetails = () => {
         updateSelectedMusic={updateSelectedMusic}
       />
       {playlistId && (
-        <PlaylistDetails
+        <PlaylistContent
           showActions={false}
           isIntegrated={true}
           musicIndex={musicIndex}

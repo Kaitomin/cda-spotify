@@ -2,10 +2,10 @@ import Api from './Api'
 
 export default {
   getAll() {
-    return Api().get('/api/music');
+    return Api().get('/api/music')
   },
   getById(id) {
-    return Api().get(`/api/music/${id}`);
+    return Api().get(`/api/music/${id}`)
   },
   getByTypeAndSearchkey(type, searchKey){
     return Api().get(`/api/music/by${type}/${searchKey}`)

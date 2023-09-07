@@ -12,9 +12,9 @@ const Register = lazy(() => import('../pages/Register'))
 const Login = lazy(() => import('../pages/Login'))
 const AboutUs = lazy(() => import('../pages/AboutUs'))
 const Contact = lazy(() => import('../pages/Contact'))
-const RequireAuth = lazy(() => import('../utils/RequireAuth'))
-const RequireAuthAdmin = lazy(() => import('../utils/RequireAuthAdmin'))
-const MyDetailedPlaylist = lazy(() => import('../pages/MyDetailedPlaylist'))
+const RequireAuth = lazy(() => import('./RequireAuth'))
+const RequireAuthAdmin = lazy(() => import('./RequireAuthAdmin'))
+const PlaylistDetails = lazy(() => import('../pages/PlaylistDetails'))
 
 const index = () => {
   return (
@@ -31,7 +31,7 @@ const index = () => {
       {/* CLIENT and ADMIN only */}
       <Route path="/playlists" element={<Suspense fallback={<>...</>}><RequireAuth><Playlists/></RequireAuth></Suspense>} />
       <Route path="/account" element={<Suspense fallback={<>...</>}><RequireAuth><Account/></RequireAuth></Suspense>} />
-      <Route path="/playlist/:playlistId" element={<Suspense fallback={<>...</>}><RequireAuth><MyDetailedPlaylist/></RequireAuth></Suspense>} />
+      <Route path="/playlist/:playlistId" element={<Suspense fallback={<>...</>}><RequireAuth><PlaylistDetails/></RequireAuth></Suspense>} />
       <Route path="/playlist/:playlistId/music/:musicIndex" element={<Suspense fallback={<>...</>}><RequireAuth><MusicDetails key={"playlistId"}/></RequireAuth></Suspense>} />
 
       {/* ADMIN only */}
