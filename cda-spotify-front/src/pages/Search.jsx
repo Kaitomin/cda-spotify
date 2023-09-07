@@ -15,9 +15,16 @@ const Search = () => {
 
   const currentSearchPage = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * debouncedItemPerPage
-    const lastPageIndex = firstPageIndex + debouncedItemPerPage
+    const lastPageIndex = firstPageIndex + +debouncedItemPerPage
+
     return musicList.slice(firstPageIndex, lastPageIndex)
   }, [currentPage, musicList, debouncedItemPerPage])
+
+  useEffect(() => {
+    if (musicList.length) {
+      setCurrentPage(prev => prev > Math.ceil(musicList.length / itemPerPage) ? Math.ceil(musicList.length / itemPerPage) : prev)
+    }
+  }, [debouncedItemPerPage])
 
   useEffect(() => setRefresh(!refresh), [checkedFilters])
 
@@ -70,10 +77,10 @@ const Search = () => {
   return (
     <div className="search-page px-3 mt-4 flex-grow-1">
       <SearchForm getResult={getResult} refresh={refresh} />
-      <div className="d-flex justify-content-around my-2">
-        <div className="position-relative input d-flex flex-column align-items-center">
-          <label htmlFor="paginate-btn">Musiques par page</label>
-          <input type="number" id="paginate-btn" name="paginate-btn" value={itemPerPage} onChange={(e) => setItemPerPage(e.target.value)} />
+      <div className="filters d-flex justify-content-around my-3">
+        <div className="position-relative input d-flex flex-column justify-content-center align-items-center">
+          <label htmlFor="paginate-btn" className="mb-2 fw-bolder">Musiques par page</label>
+          <input type="number" id="paginate-btn" name="paginate-btn" min='1' value={itemPerPage} onChange={(e) => setItemPerPage(e.target.value <= 0 ? 1 : e.target.value)} />
         </div>
         <div className="position-relative input d-flex flex-column align-items-center">
           <label htmlFor="title" className="toggle mb-2">
