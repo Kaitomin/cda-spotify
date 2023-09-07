@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from "react"
-import { Link } from "react-router-dom"
 
 import SearchForm from "../components/SearchForm"
 import MusicService from "../service/MusicService"
 import Pagination from "../components/Pagination"
+import SearchFilter from "../components/SearchFilter"
+import SearchResult from "../components/SearchResult"
 
 const Search = () => {
   const [musicList, setMusicList] = useState([])
@@ -21,16 +22,10 @@ const Search = () => {
   }, [currentPage, musicList, debouncedItemPerPage])
 
   useEffect(() => {
-    if (musicList.length) {
-      setCurrentPage(prev => prev > Math.ceil(musicList.length / itemPerPage) ? Math.ceil(musicList.length / itemPerPage) : prev)
-    }
-  }, [debouncedItemPerPage])
-
-  useEffect(() => setRefresh(!refresh), [checkedFilters])
-
-  useEffect(() => {
     MusicService.getAll().then((res) => setMusicList(res.data))
   }, [])
+
+  useEffect(() => setRefresh(!refresh), [checkedFilters])
 
   // Debouncer
   useEffect(() => {
@@ -42,6 +37,14 @@ const Search = () => {
       clearTimeout(debouncedId)
     }
   }, [itemPerPage])
+
+  useEffect(() => {
+    if (musicList.length) {
+      setCurrentPage(prev => prev > Math.ceil(musicList.length / itemPerPage) ? Math.ceil(musicList.length / itemPerPage) : prev)
+    }
+  }, [debouncedItemPerPage, musicList])
+
+ 
 
   const getResult = (searchKey) => {
     if (searchKey == "") {
@@ -77,44 +80,7 @@ const Search = () => {
   return (
     <div className="search-page px-3 mt-4 flex-grow-1">
       <SearchForm getResult={getResult} refresh={refresh} />
-      <div className="filters d-flex justify-content-around my-3">
-        <div className="position-relative input d-flex flex-column justify-content-center align-items-center">
-          <label htmlFor="paginate-btn" className="mb-2 fw-bolder">Musiques par page</label>
-          <input type="number" id="paginate-btn" name="paginate-btn" min='1' value={itemPerPage} onChange={(e) => setItemPerPage(e.target.value <= 0 ? 1 : e.target.value)} />
-        </div>
-        <div className="position-relative input d-flex flex-column align-items-center">
-          <label htmlFor="title" className="toggle mb-2">
-            Titre
-          </label>
-          <input
-            type="checkbox"
-            id="title"
-            name="title"
-            value="title"
-            className="toggle__input"
-            onChange={handleFilter}
-          />
-          <span className="toggle-track">
-            <span className="toggle-indicator"></span>
-          </span>
-        </div>
-        <div className="position-relative input d-flex flex-column align-items-center">
-          <label htmlFor="artist" className="toggle mb-2">
-            Artiste
-          </label>
-          <input
-            type="checkbox"
-            id="artist"
-            name="artist"
-            value="artist"
-            className="toggle__input"
-            onChange={handleFilter}
-          />
-          <span className="toggle-track">
-            <span className="toggle-indicator"></span>
-          </span>
-        </div>
-      </div>
+      <SearchFilter handleFilter={handleFilter} itemPerPage={+itemPerPage} setItemPerPage={setItemPerPage} />
       <hr />
       <div className="text-center">
         {musicList.length > 0 && (
@@ -123,39 +89,7 @@ const Search = () => {
             {musicList.length})
           </h2>
         )}
-
-        <div className="result-grid">
-          {currentSearchPage.map(({id, title, artist, imgUri}, index) => (
-            <Link
-                to={`/music/${id}`}
-                key={id}
-                className="text-decoration-none text-black"
-              >
-              <div className="h-100 bg-white rounded">
-                <img
-                  src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${
-                    imgUri
-                  }`}
-                  alt={title}
-                  loading={index > 6 ? "lazy" : "eager"}
-                  className="rounded-top object-fit-cover"
-                  width={100 + "%"}
-                  height={150}
-                />
-                <h2
-                  className="fw-bold mt-2"
-                  title={title}
-                >
-                  {title}
-                </h2>
-                <h3 title={artist}>
-                  {artist}
-                </h3>
-              </div>
-            </Link>
-          ))}
-        </div>
-
+        <SearchResult currentSearchPage={currentSearchPage} />
         <Pagination
           currentPage={currentPage}
           totalItems={musicList.length}

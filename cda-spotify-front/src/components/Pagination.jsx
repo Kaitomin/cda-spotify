@@ -24,7 +24,6 @@ const Pagination = ({
 
   const onNext = () => {
     if (currentPage >= Math.ceil(totalItems / itemPerPage)) {
-      console.log('max overflow')
       return
     }
     onPageChange(currentPage + 1);
@@ -32,13 +31,10 @@ const Pagination = ({
 
   const onPrevious = () => {
     if (currentPage <= 1) {
-      console.log('min overflow')
       return
     }
     onPageChange(currentPage - 1);
   }
-
-  let lastPage = paginationRange[paginationRange.length - 1]
   
   return (
     <ul
