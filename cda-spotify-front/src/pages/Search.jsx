@@ -1,17 +1,19 @@
 import { useState, useEffect, useMemo } from "react"
 
 import SearchForm from "../components/SearchForm"
-import MusicService from "../service/MusicService"
 import Pagination from "../components/Pagination"
 import SearchFilter from "../components/SearchFilter"
 import SearchResult from "../components/SearchResult"
+import MusicService from "../service/MusicService"
+import Loader from "../components/Loader"
 
 const Search = () => {
   const [musicList, setMusicList] = useState([])
   const [checkedFilters, setCheckedFilters] = useState([])
   const [refresh, setRefresh] = useState(false)
-  const [itemPerPage, setItemPerPage] = useState(5)
-  const [debouncedItemPerPage, setDebouncedItemPerPage] = useState(5)
+  const [isLoading, setIsLoading] = useState(false)
+  const [itemPerPage, setItemPerPage] = useState(10)
+  const [debouncedItemPerPage, setDebouncedItemPerPage] = useState(itemPerPage)
   const [currentPage, setCurrentPage] = useState(1)
 
   const currentSearchPage = useMemo(() => {
@@ -22,7 +24,12 @@ const Search = () => {
   }, [currentPage, musicList, debouncedItemPerPage])
 
   useEffect(() => {
-    MusicService.getAll().then((res) => setMusicList(res.data))
+    setIsLoading(true)
+
+    MusicService.getAll().then((res) => {
+      setMusicList(res.data)
+      setIsLoading(false)
+    })
   }, [])
 
   useEffect(() => setRefresh(!refresh), [checkedFilters])
@@ -44,27 +51,37 @@ const Search = () => {
     }
   }, [debouncedItemPerPage, musicList])
 
- 
-
   const getResult = (searchKey) => {
+    setIsLoading(true)
+
     if (searchKey == "") {
-      MusicService.getAll().then((res) => setMusicList(res.data))
+      MusicService.getAll()
+        .then((res) => {
+          setMusicList(res.data)
+          setIsLoading(false)
+      })
     } else if (searchKey) {
       if (
-        (checkedFilters.includes("title") &&
-          checkedFilters.includes("artist")) ||
-        (!checkedFilters.includes("title") &&
-          !checkedFilters.includes("artist"))
+        (checkedFilters.includes("title") && checkedFilters.includes("artist")) ||
+        (!checkedFilters.includes("title") && !checkedFilters.includes("artist"))
       ) {
-        MusicService.searchBy(searchKey).then((res) => setMusicList(res.data))
+        MusicService.searchBy(searchKey)
+          .then((res) => {
+            setMusicList(res.data)
+            setIsLoading(false)
+        })
       } else if (checkedFilters.includes("title")) {
-        MusicService.searchByTitle(searchKey).then((res) =>
-          setMusicList(res.data)
-        )
+        MusicService.searchByTitle(searchKey)
+          .then((res) => {
+            setMusicList(res.data)
+            setIsLoading(false)
+        })
       } else if (checkedFilters.includes("artist")) {
-        MusicService.searchByArtist(searchKey).then((res) =>
-          setMusicList(res.data)
-        )
+        MusicService.searchByArtist(searchKey)
+          .then((res) => {
+            setMusicList(res.data)
+            setIsLoading(false)
+        })
       }
     }
   }
@@ -89,7 +106,13 @@ const Search = () => {
             {musicList.length})
           </h2>
         )}
-        <SearchResult currentSearchPage={currentSearchPage} />
+        {isLoading && musicList.length == 0 && (
+          <div className="d-flex flex-column align-items-center">
+            <Loader />
+            <span>Fetching data...</span>
+          </div>
+        )}
+        {musicList && <SearchResult currentSearchPage={currentSearchPage} />}
         <Pagination
           currentPage={currentPage}
           totalItems={musicList.length}
