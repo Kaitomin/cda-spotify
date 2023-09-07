@@ -52,13 +52,6 @@ header .nav-desktop i {
   height: 56px;
 }
 
-header .nav-desktop i {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
 /* ------------ */
 /* ModalMessage */
 /* ------------ */
@@ -384,35 +377,35 @@ header .nav-desktop i {
 /* ------------ */
 /* MusicDetails */
 /* ------------ */
-.music-details .detailed-playlist {
+.music-details .playlist-content {
   padding: 0 15px;
   margin-bottom: 4em;
 }
-.music-details .detailed-playlist > div:first-child {
+.music-details .playlist-content > div:first-child {
   box-shadow: 0px 0px 1px white;
   background: var(--dark-blue-1);
 }
-.music-details .detailed-playlist > div:first-child:hover {
+.music-details .playlist-content > div:first-child:hover {
   cursor: pointer;
 }
-.music-details .detailed-playlist > div:first-child h1 {
+.music-details .playlist-content > div:first-child h1 {
   font-size: 1.2em;
   margin-bottom: 0.5em !important;
   margin-top: 0.5em !important;
 }
-.music-details .detailed-playlist .music-list {
+.music-details .playlist-content .music-list {
   max-width: 100%;
   max-height: 0px;
   overflow-y: scroll;
   transition: max-height 0.5s ease-in-out;
 }
-.music-details .detailed-playlist .music-list.toggle-list {
+.music-details .playlist-content .music-list.toggle-list {
   max-height: 500px;
 }
-.music-details .detailed-playlist .music-item.active {
+.music-details .playlist-content .music-item.active {
   /* background: darkcyan !important; */
 }
-.music-details .detailed-playlist .music-list > .music-item:nth-child(2n) {
+.music-details .playlist-content .music-list > .music-item:nth-child(2n) {
   background: var(--link-hover);
 }
 .music-details .music-list::-webkit-scrollbar {
@@ -438,16 +431,16 @@ header .nav-desktop i {
 .slider-component > div {
   position: relative;
 }
-.slider {
+.slider-component .slider {
   display: flex;
   background: var(--dark-blue-1);
 }
 
-.slider h3 {
+.slider-component .slider h3 {
   font-size: 1em;
   margin-bottom: 0 !important;
 }
-.slider-container {
+.slider-component .slider-container {
   overflow-x: auto;
   white-space: nowrap;
   background: var(--dark-blue-1);
@@ -455,19 +448,19 @@ header .nav-desktop i {
   box-shadow: 0px 0px 1px white;
   scroll-behavior: smooth;
 }
-.slider-music-component > a {
+.slider-component .slider > a {
   text-decoration: none;
 }
-.slider-music-component > a > img {
+.slider-component .slider img {
   width: 125px;
   height: 125px;
   object-fit: cover;
   border-radius: 5px;
 }
-.slider-music-component {
+.slider-component .slider-music-component {
   padding : 1rem;
 }
-.slider-music-title {
+.slider-component .slider-music-title {
   font-size: large;
   color: white;
   overflow: hidden;
@@ -513,13 +506,13 @@ header .nav-desktop i {
 /* ------------ */
 /*  Playlists  */
 /* ------------ */
-.my-playlist .playlist-container {
+.playlists .playlist-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: auto;
   gap: 10px;
 }
-.my-playlist .playlist-item i.fa-xmark {
+.playlists i.fa-xmark {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -531,15 +524,15 @@ header .nav-desktop i {
   z-index: 10;
   height: 30px;
 }
-.my-playlist .playlist-item i.fa-xmark:hover {
+.playlists i.fa-xmark:hover {
   cursor: pointer;
 }
-.my-playlist .playlist-image {
+.playlists .playlist-image {
   max-height: 150px; /* Taille d'image fixe */
   border-radius: 5px 5px 0 0;
   border-bottom: 1px solid #80808054;
 }
-.my-playlist .playlist-title {
+.playlists .playlist-title {
   font-size: 1.1em;
   border-radius: 0 0 5px 5px;
 }
@@ -547,40 +540,40 @@ header .nav-desktop i {
 /* ------------------ */
 /*  PlaylistContent  */
 /* ------------------ */
-.detailed-playlist h2 {
+.playlist-content h2 {
   font-size: 1.2em;
 }
-.detailed-playlist .edit-btn:hover {
+.playlist-content .edit-btn:hover {
   cursor: pointer;
 }
-.detailed-playlist .music-list {
+.playlist-content .music-list {
   max-width: 800px;
 }
-.detailed-playlist .music-list > .music-item:nth-child(2n) {
+.playlist-content .music-list > .music-item:nth-child(2n) {
   background: var(--dark-blue-1);
 }
-.detailed-playlist .music-list > .music-item:nth-child(2n + 1) {
+.playlist-content .music-list > .music-item:nth-child(2n + 1) {
   background: var(--dark-blue-2);
 }
-.detailed-playlist .music-details a {
+.playlist-content .music-details a {
   color: white;
 }
-.detailed-playlist .modal-window {
+.playlist-content .modal-window {
   display: flex;
   margin: 1em 0;
   justify-content: center
 }
-.detailed-playlist .music-list .music-item:first-child {
+.playlist-content .music-list .music-item:first-child {
   border-top: 1px solid;
 }
-.detailed-playlist .music-item {
+.playlist-content .music-item {
   gap: 0 25px;
   border-bottom: 1px solid #ccc;
 }
-.detailed-playlist .music-image {
+.playlist-content .music-image {
   border-radius: 8px;
 }
-.detailed-playlist .btn-container {
+.playlist-content .btn-container {
   position: absolute;
   bottom: -5px;
   right: -15px;
@@ -588,46 +581,46 @@ header .nav-desktop i {
   background: none;
   border: 0;
 }
-.detailed-playlist .btn-container i {
+.playlist-content .btn-container i {
   font-size: 35px;
   background: white;
   border-radius: 100%;
 }
-.detailed-playlist .btn-container i.fa-circle-play {
+.playlist-content .btn-container i.fa-circle-play {
   color: #00806f;
 }
-.detailed-playlist .btn-container i.fa-circle-stop {
+.playlist-content .btn-container i.fa-circle-stop {
   color: var(--red-warning);
 }
-.detailed-playlist .btn-container i.fa-circle-play:hover,
+.playlist-content .btn-container i.fa-circle-play:hover,
 .btn-container i.fa-circle-stop:hover {
   cursor: pointer;
 }
-.detailed-playlist .music-item > div:nth-child(2) {
+.playlist-content .music-item > div:nth-child(2) {
   width: 40%;
 }
-.detailed-playlist i.fa-xmark {
+.playlist-content i.fa-xmark {
   color: white;
   background: var(--red-warning);
   border-radius: 20%;
   padding: 5px;
   font-size: 20px;
 }
-.detailed-playlist i.fa-xmark:hover {
+.playlist-content i.fa-xmark:hover {
   cursor: pointer;
 }
-.detailed-playlist .hidden {
+.playlist-content .hidden {
   display: none !important;
 }
-.detailed-playlist .music-bars {
+.playlist-content .music-bars {
   height: 30px;
 }
-.detailed-playlist .bar {
+.playlist-content .bar {
   background: transparent;
   height: 3px;
   flex-grow: 1;
 }
-.detailed-playlist .animated {
+.playlist-content .animated {
   background: var(--light-blue);
   animation: sound 0ms -800ms linear infinite alternate;
 }
@@ -868,6 +861,23 @@ footer > div {
   margin: 0 auto;
 }
 
+/* ---------- */
+/* Pagination */
+/* ---------- */
+.pagination li {
+  padding: 3px 10px;
+}
+.pagination li.is-page:hover:not(.activePage) {
+  cursor: pointer;
+  background: var(--link-hover);
+}
+.pagination i:hover {
+  cursor: pointer;
+}
+.activePage {
+  background: darkcyan;
+}
+
 /* ========================== */
 /* ======= Responsive ======= */
 /* =========================- */
@@ -889,7 +899,7 @@ footer > div {
   /* ------------ */
   /*  Playlists  */
   /* ------------ */
-  .my-playlist .playlist-container {
+  .playlists .playlist-container {
     grid-template-columns: repeat(1, 1fr);
   }
 
@@ -929,7 +939,7 @@ footer > div {
   /* ------------ */
   /*  Playlists  */
   /* ------------ */
-  .my-playlist .playlist-container {
+  .playlists .playlist-container {
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -940,7 +950,7 @@ footer > div {
     padding: 0 15px;
   }
   
-  .music-details .detailed-playlist {
+  .music-details .playlist-content {
     max-width: 1000px;
     margin: 0 auto 4em auto;
     padding: 0;
@@ -990,7 +1000,7 @@ footer > div {
   /* ------------ */
   /*  Playlists  */
   /* ------------ */
-  .my-playlist .playlist-container {
+  .playlists .playlist-container {
     grid-template-columns: repeat(4, 1fr);
   }
 
@@ -1006,7 +1016,7 @@ footer > div {
   /* ------------ */
   /*  Playlists  */
   /* ------------ */
-  .my-playlist .playlist-container {
+  .playlists .playlist-container {
     grid-template-columns: repeat(5, 1fr);
   }
 
@@ -1022,7 +1032,7 @@ footer > div {
   /* ------------ */
   /*  Playlists  */
   /* ------------ */
-  .my-playlist .playlist-container {
+  .playlists .playlist-container {
     grid-template-columns: repeat(6, 1fr);
   }
 

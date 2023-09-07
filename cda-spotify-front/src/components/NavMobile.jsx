@@ -68,7 +68,9 @@ const NavMobile = ({ isAuthenticated, handleLogout }) => {
                   onClick={onLogout}
                   className="logout d-flex align-items-center w-100 justify-content-center"
                 >
-                  Déconnexion
+                  <button className="bg-transparent border-0 text-white">
+                    Déconnexion
+                  </button>
                 </li>
               </>
             )}

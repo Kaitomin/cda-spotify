@@ -1,19 +1,40 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Link } from "react-router-dom"
 
 import SearchForm from "../components/SearchForm"
 import MusicService from "../service/MusicService"
+import Pagination from "../components/Pagination"
 
 const Search = () => {
   const [musicList, setMusicList] = useState([])
   const [checkedFilters, setCheckedFilters] = useState([])
   const [refresh, setRefresh] = useState(false)
+  const [itemPerPage, setItemPerPage] = useState(5)
+  const [debouncedItemPerPage, setDebouncedItemPerPage] = useState(5)
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const currentSearchPage = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * debouncedItemPerPage
+    const lastPageIndex = firstPageIndex + debouncedItemPerPage
+    return musicList.slice(firstPageIndex, lastPageIndex)
+  }, [currentPage, musicList, debouncedItemPerPage])
 
   useEffect(() => setRefresh(!refresh), [checkedFilters])
 
   useEffect(() => {
     MusicService.getAll().then((res) => setMusicList(res.data))
   }, [])
+
+  // Debouncer
+  useEffect(() => {
+    const debouncedId = setTimeout(() => {
+      setDebouncedItemPerPage(itemPerPage)
+    }, 1000)
+
+    return () => {
+      clearTimeout(debouncedId)
+    }
+  }, [itemPerPage])
 
   const getResult = (searchKey) => {
     if (searchKey == "") {
@@ -50,6 +71,10 @@ const Search = () => {
     <div className="search-page px-3 mt-4 flex-grow-1">
       <SearchForm getResult={getResult} refresh={refresh} />
       <div className="d-flex justify-content-around my-2">
+        <div className="position-relative input d-flex flex-column align-items-center">
+          <label htmlFor="paginate-btn">Musiques par page</label>
+          <input type="number" id="paginate-btn" name="paginate-btn" value={itemPerPage} onChange={(e) => setItemPerPage(e.target.value)} />
+        </div>
         <div className="position-relative input d-flex flex-column align-items-center">
           <label htmlFor="title" className="toggle mb-2">
             Titre
@@ -91,36 +116,45 @@ const Search = () => {
             {musicList.length})
           </h2>
         )}
+
         <div className="result-grid">
-          {musicList.map(({id, title, artist, imgUri}, index) => (
-            <div key={id} className="music-item-search bg-white rounded">
-              <Link
+          {currentSearchPage.map(({id, title, artist, imgUri}, index) => (
+            <Link
                 to={`/music/${id}`}
+                key={id}
                 className="text-decoration-none text-black"
               >
+              <div className="h-100 bg-white rounded">
                 <img
                   src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${
                     imgUri
                   }`}
                   alt={title}
                   loading={index > 6 ? "lazy" : "eager"}
-                  className="music-image-search rounded-top object-fit-cover"
+                  className="rounded-top object-fit-cover"
                   width={100 + "%"}
                   height={150}
                 />
                 <h2
-                  className="music-title-search fw-bold mt-2"
+                  className="fw-bold mt-2"
                   title={title}
                 >
                   {title}
                 </h2>
-                <h3 className="music-author-search" title={artist}>
+                <h3 title={artist}>
                   {artist}
                 </h3>
-              </Link>
-            </div>
+              </div>
+            </Link>
           ))}
         </div>
+
+        <Pagination
+          currentPage={currentPage}
+          totalItems={musicList.length}
+          itemPerPage={+debouncedItemPerPage}
+          onPageChange={page => setCurrentPage(page)}
+        />
       </div>
     </div>
   )

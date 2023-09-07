@@ -148,7 +148,7 @@ const PlaylistContent = ({ showActions, musicIndex, isIntegrated }) => {
   }
 
   return (
-    <div className="detailed-playlist">
+    <div className="playlist-content">
       <div className="d-flex justify-content-center align-items-center column-gap-2" onClick={isIntegrated ? () => setIsToggleList(!isToggleList) : undefined}>
         <h1>{playlist && playlist.name}</h1>
         {isIntegrated && (

@@ -37,8 +37,8 @@ const Slider = ({ musicType, searchKey, title, selectedMusic }) => {
           <div id={musicType} className="slider-container">
             <div className="slider">
               {musicList.map(music => (
-                <div className="slider-music-component" key={music.id}>
-                  <Link to={`/music/${music.id}`}>
+                <Link to={`/music/${music.id}`} key={music.id}>
+                  <div className="slider-music-component">
                     <img
                       src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${
                         music.imgUri
@@ -46,8 +46,8 @@ const Slider = ({ musicType, searchKey, title, selectedMusic }) => {
                       alt={`${music.title}`}
                     />
                     <h3 className="slider-music-title my-3">{music.title}</h3>
-                  </Link>
-                </div>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>

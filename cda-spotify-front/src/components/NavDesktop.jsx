@@ -11,14 +11,14 @@ const NavDesktop = ({ isAuthenticated, isAdmin, handleLogout }) => {
             to="/search"
             className="d-flex align-items-center p-1 text-decoration-none text-light"
           >
-            <i className="fa-solid fa-magnifying-glass"></i>
+            <i className="d-flex align-items-center justify-content-center fa-solid fa-magnifying-glass"></i>
           </Link>
         </li>
         {isAuthenticated && (
           <li className="px-3 h-100">
             <Link
               to="/playlists"
-              className=" d-flex align-items-center p-1 text-decoration-none text-light"
+              className="d-flex align-items-center p-1 text-decoration-none text-light"
             >
               Playlists
             </Link>
@@ -28,7 +28,7 @@ const NavDesktop = ({ isAuthenticated, isAdmin, handleLogout }) => {
           <li className="d-none d-sm-block px-3 h-100">
             <Link
               to="/dashboard"
-              className=" d-flex align-items-center p-1 text-decoration-none text-light"
+              className="d-flex align-items-center p-1 text-decoration-none text-light"
             >
               Dashboard
             </Link>
@@ -39,7 +39,7 @@ const NavDesktop = ({ isAuthenticated, isAdmin, handleLogout }) => {
             <li className="px-3 h-100">
               <Link
                 to="/register"
-                className=" d-flex align-items-center p-1 text-decoration-none text-light"
+                className="d-flex align-items-center p-1 text-decoration-none text-light"
               >
                 S&apos;inscrire
               </Link>
@@ -47,7 +47,7 @@ const NavDesktop = ({ isAuthenticated, isAdmin, handleLogout }) => {
             <li className="px-3 h-100">
               <Link
                 to="/login"
-                className=" d-flex align-items-center p-1 text-decoration-none text-light"
+                className="d-flex align-items-center p-1 text-decoration-none text-light"
               >
                 Connexion
               </Link>
@@ -59,7 +59,9 @@ const NavDesktop = ({ isAuthenticated, isAdmin, handleLogout }) => {
             onClick={handleLogout}
             className="logout d-flex align-items-center px-3 h-100"
           >
-            <i className="fa-solid fa-right-from-bracket"></i>
+            <button className="bg-transparent border-0">
+              <i className="d-flex align-items-center justify-content-center fa-solid fa-right-from-bracket text-white"></i>
+            </button>
           </li>
         )}
       </ul>
