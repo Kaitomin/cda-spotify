@@ -7,16 +7,18 @@ const SearchFilter = ({ handleFilter, itemPerPage, setItemPerPage }) => {
         <label htmlFor="paginate-btn" className="mb-2 fw-bolder">
           Musiques par page
         </label>
-        <input
-          type="number"
+        <select
           id="paginate-btn"
           name="paginate-btn"
-          min="1"
           value={itemPerPage}
           onChange={(e) =>
-            setItemPerPage(e.target.value <= 0 ? 1 : e.target.value)
+            setItemPerPage(e.target.value)
           }
-        />
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
       </div>
       <div className="position-relative input d-flex flex-column align-items-center">
         <label htmlFor="title" className="toggle mb-2">
