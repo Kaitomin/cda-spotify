@@ -1,7 +1,6 @@
 package com.dreamteam.app.interceptors;
 
 import com.dreamteam.app.exceptions.AuthenticationException;
-import com.dreamteam.app.exceptions.MusicException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +15,5 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleAuthenticateException(Exception e, WebRequest request) {
         System.out.println(e.getMessage());
         return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.FORBIDDEN, request);
-    }
-
-    @ExceptionHandler(MusicException.class)
-    public ResponseEntity<?> handleMusicException(Exception e, WebRequest request) {
-        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }

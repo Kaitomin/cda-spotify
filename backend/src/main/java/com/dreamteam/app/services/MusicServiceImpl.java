@@ -3,15 +3,12 @@ package com.dreamteam.app.services;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
-import java.util.stream.Stream;
 
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.entities.Music;
 import com.dreamteam.app.enums.Tag;
-import com.dreamteam.app.exceptions.MusicException;
 import com.dreamteam.app.storage.StorageService;
 import com.dreamteam.app.utils.CustomUtils;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -69,7 +66,7 @@ public class MusicServiceImpl implements IMusicService {
 			MultipartFile imgFile,
 			MultipartFile audioFile,
 			long id
-		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException, MusicException {
+		) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, ParseException {
 
 		if (repository.findById(id).orElse(null) != null) {
 			Music m = repository.findById(id).orElse(null);

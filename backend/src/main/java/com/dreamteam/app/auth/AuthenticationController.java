@@ -23,13 +23,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<Void> authenticate(
+    public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody @Valid AuthenticationRequest req,
             HttpServletResponse response
     ) {
         AuthenticationResponse authRes = service.authenticate(req);
         response.addCookie(authRes.getToken());
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok(authRes);
     }
 
     @GetMapping("/checkCookie")

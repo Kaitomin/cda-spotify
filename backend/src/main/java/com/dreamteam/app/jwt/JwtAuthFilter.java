@@ -30,6 +30,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+//        System.out.println("CSRF TOKEN " + request.getHeader("x-csrf-token"));
+
 //        System.out.println("JwtAuthFilter");
 //        System.out.println(request.getMethod());
 //        System.out.println("Cookies" + request.getCookies());
@@ -53,7 +55,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            if (jwtService.isTokenValid(jwt, userDetails)) {
+            if (jwtService.isTokenValid(jwt, userDetails, request.getHeader("x-csrf-token"))) {
 //                System.out.println("userDetails : " + userDetails);
 //                System.out.println("userDetails authorities : " + userDetails.getAuthorities());
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

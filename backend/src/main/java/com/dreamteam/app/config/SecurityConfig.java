@@ -1,30 +1,62 @@
 package com.dreamteam.app.config;
 
+import com.dreamteam.app.interceptors.AuthInterceptor;
 import com.dreamteam.app.jwt.JwtAuthFilter;
+import com.dreamteam.app.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-
+import org.springframework.web.servlet.config.annotation.*;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
 
     private final JwtAuthFilter jwtAuthFilter;
+    private final JwtService jwtService;
     private final AuthenticationProvider authenticationProvider;
+
+    @Value("${spring.frontend.url}") String url;
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins(url)
+                .allowedMethods("*")
+                .allowedHeaders("*")
+                .exposedHeaders("*")
+                .allowCredentials(true);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AuthInterceptor(jwtService));
+        WebMvcConfigurer.super.addInterceptors(registry);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations("/", "classpath:/static/");
+        WebMvcConfigurer.super.addResourceHandlers(registry);
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("forward:/index.html");
+        WebMvcConfigurer.super.addViewControllers(registry);
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

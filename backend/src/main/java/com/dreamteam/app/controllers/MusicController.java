@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.dreamteam.app.dto.MusicDTO;
 import com.dreamteam.app.enums.Tag;
-import com.dreamteam.app.exceptions.MusicException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -67,7 +66,7 @@ public class MusicController {
 		@RequestPart("fileUpload") @Valid MusicDTO musicDTO,
 		@RequestPart(value = "imgFile", required = false) MultipartFile imgFile,
 		@RequestPart(value = "audioFile", required = false) MultipartFile audioFile
-	) throws MusicException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, IOException, ParseException {
+	) throws CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, IOException, ParseException {
 		return ResponseEntity.ok(service.update(musicDTO, imgFile, audioFile, id));
 	}
 

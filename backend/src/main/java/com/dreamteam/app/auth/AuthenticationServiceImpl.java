@@ -1,11 +1,9 @@
 package com.dreamteam.app.auth;
 
 import com.dreamteam.app.dto.PlaylistDTO;
-import com.dreamteam.app.dto.UserDTO;
 import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.entities.User;
 import com.dreamteam.app.enums.Role;
-import com.dreamteam.app.exceptions.AuthenticationException;
 import com.dreamteam.app.jwt.JwtService;
 import com.dreamteam.app.repositories.UserRepository;
 import com.dreamteam.app.utils.CustomUtils;
@@ -79,9 +77,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     public void logout(HttpServletResponse response) {
         Cookie cookie = new Cookie("jwt", null);
-        cookie.setMaxAge(0); // expires in 7 days
-        cookie.setSecure(true); // in production mode
-        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
         cookie.setPath("/");
 
         response.addCookie(cookie);

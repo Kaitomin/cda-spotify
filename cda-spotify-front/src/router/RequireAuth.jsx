@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import useAuth from '../hook/useAuth'
 
 const RequireAuth = ({ children }) => {

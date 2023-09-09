@@ -14,6 +14,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Service
@@ -38,10 +39,19 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    public String extractCsrfToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(getSignInkey())
+                .parseClaimsJws(token)
+                .getBody();
+        return (String) claims.get("csrfToken");
+    }
+
     public String generateToken(User user) {
         Map<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", user.getId());
         hashMap.put("role", user.getRole());
+        hashMap.put("csrfToken", UUID.randomUUID());
         return generateToken(hashMap, user);
     }
 
@@ -59,9 +69,9 @@ public class JwtService {
                 .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token, UserDetails userDetails, String csrfToken) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token) && extractCsrfToken(token).equals(csrfToken);
     }
 
     private boolean isTokenExpired(String token) {
