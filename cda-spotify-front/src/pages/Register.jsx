@@ -33,6 +33,7 @@ const Register = () => {
   }, [])
 
   return (
+    !(localStorage.getItem("isAuthenticated")) &&
     <div className="register flex-grow-1">
       <h1>Créer un compte</h1>
       <form

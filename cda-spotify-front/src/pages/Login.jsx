@@ -32,6 +32,7 @@ const Login = () => {
   }, [])
 
   return (
+    !(localStorage.getItem("isAuthenticated")) &&
     <div className="connection flex-grow-1">
       <h1>Se connecter</h1>
       <form onSubmit={handleLogin} className="d-flex flex-column w-50 m-auto">
