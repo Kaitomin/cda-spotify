@@ -59,7 +59,7 @@ const useAuth = () => {
   const login = ({ username, password }) => {
     AuthService.login({ username, password })
       .then((res) => {
-        const token = jwtDecode(res.data.token.value)
+        const token = jwtDecode(res.data.token)
 
         setCurrentUser({
           id: token.id,

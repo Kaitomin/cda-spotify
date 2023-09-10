@@ -61,13 +61,8 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         var user = repository.findByUsername(req.getUsername()).orElse(null);
         var jwtToken = jwtService.generateToken(user);
 
-        Cookie cookie = new Cookie("jwt", jwtToken);
-        cookie.setMaxAge(24 * 60 * 60); // expires in 1 day
-        cookie.setSecure(true); // in production mode
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
         return AuthenticationResponse.builder()
-            .token(cookie)
+            .token(jwtToken)
             .build();
     }
 
