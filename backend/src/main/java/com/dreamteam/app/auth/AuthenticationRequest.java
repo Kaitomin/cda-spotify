@@ -16,7 +16,7 @@ public class AuthenticationRequest {
     private String username;
 
     @NonNull
-    @Pattern(regexp = "^[a-zA-Z0-9!+_]+$")
+    @Pattern(regexp = "^[a-zA-Z0-9!+_@?]+$")
     @Size(min = 2, message = "Password must have at least 5 characters")
     private String password;
 }

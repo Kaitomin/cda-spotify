@@ -33,6 +33,7 @@ h1 {
   margin-bottom: 1em !important; /* Override BS */
   margin-top: 1em !important; /* Override BS */
   text-align: center;
+  font-size: 2em;
 }
 header {
   background: var(--dark-blue-1);
@@ -208,8 +209,12 @@ header .nav-desktop i {
 /* MusicForm */
 /* --------- */
 .music-form form {
-  max-width: 350px;
+  max-width: 450px;
   margin: 0 auto;
+  padding: 2em 1em;
+  box-shadow: 0px 0px 1px white;
+  background: var(--dark-blue-1);
+  gap: 10px 0;
 }
 .music-form .tags-items > div {
   width: 100px;
@@ -224,6 +229,15 @@ header .nav-desktop i {
 .music-form .tags-items input:checked + label {
   background: var(--dark-blue-5);
   border: 1px solid white;
+}
+.music-form .tags-container > p {
+  text-align: center;
+}
+.music-form .tags-items {
+  justify-content: center !important;
+}
+.music-form input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
 
 /* ------------- */
@@ -505,7 +519,7 @@ header .nav-desktop i {
 /* ------------ */
 .playlists .playlist-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   grid-auto-rows: auto;
   gap: 10px;
 }
@@ -677,7 +691,7 @@ header .nav-desktop i {
 .search-page h3 {
   font-size: 1em;
 }
-.search-page .form__field {
+.form__field {
   font-family: inherit;
   width: 100%;
   border: 0;
@@ -688,7 +702,7 @@ header .nav-desktop i {
   background: transparent;
   /* transition:  ; */
 }
-.search-page .form__field-span::before {
+.form__field-span::before {
   content: "\f002";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
@@ -700,7 +714,7 @@ header .nav-desktop i {
 .search-page input[type="checkbox"]:hover {
   cursor: pointer;
 }
-.search-page .form__field:focus {
+.form__field:focus {
   padding-bottom: 6px;  
   font-weight: 700;
   border-width: 3px;
@@ -709,8 +723,8 @@ header .nav-desktop i {
 }
 
 /* reset input */
-.search-page .form__field:required,
-.search-page .form__field:invalid {
+.form__field:required,
+.form__field:invalid {
   box-shadow:none; 
 }
 
@@ -846,6 +860,33 @@ header .nav-desktop i {
 .about-us h2 {
   font-size: 1.5em;
 }
+/* ---------------- */
+/*  Login/Register/MusicForm  */
+/* --------------- */
+.login form,
+.register form {
+  padding: 30px 15px;
+  box-shadow: 0px 0px 1px white;
+  background: var(--dark-blue-1);
+  gap: 10px 0;
+  max-width: 300px;
+}
+.login button,
+.register button,
+.music-form input[type='submit'] {
+  border: 1px solid white;
+  outline: none;
+  background: white;
+  color: black;
+  width: 100px;
+  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.login button:hover,
+.register button:hover,
+.music-form input[type='submit']:hover {
+  background: darkcyan;
+  color: white;
+}
 /* -------- */
 /*  Footer  */
 /* -------- */
@@ -885,11 +926,11 @@ footer > div {
 /* ======= Responsive ======= */
 /* =========================- */
 
-@media screen and (max-width: 400px) {
+@media screen and (min-width: 400px) {
   /* --------- */
   /* MusicForm */
   /* --------- */
-  .music-form form {
+  /* .music-form form {
     padding: 0 1em;
   }
   .music-form .tags-container > p {
@@ -897,25 +938,25 @@ footer > div {
   }
   .music-form .tags-items {
     justify-content: center !important;
-  }
+  } */
 
   /* ------------ */
   /*  Playlists  */
   /* ------------ */
   .playlists .playlist-container {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   /* -------*/
   /* Search */
   /* ------ */
-  .search-page .result-grid {
+  /* .search-page .result-grid {
     grid-template-columns: repeat(1, 100%);
   }
   .search-page .filters {
     flex-direction: column;
     gap: 10px 0;
-  }
+  } */
 
 }
 
@@ -934,7 +975,7 @@ footer > div {
     bottom: 25px;
     right: 3%;
   }
-    
+
   /* -------*/
   /* Search */
   /* ------ */
