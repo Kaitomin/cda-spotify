@@ -4,10 +4,13 @@ import { Link } from "react-router-dom"
 import '../style.css'
 import MusicService from "../service/MusicService"
 import HomeCard from "../components/HomeCard"
+import Slider from "../components/Slider"
 
 const Home = () => {
   const [musicData, setMusicData] = useState([])
-
+  const [artistData, setArtistData] = useState()
+  const [tagData, setTagData] = useState()
+  const [selectedMusic, setSelectedMusic] = useState()
 
   useEffect(() => {
     MusicService.getFourRandom()
@@ -19,6 +22,16 @@ const Home = () => {
         console.log("ca marche pas mdr" + error);
       })
   }, [])
+
+  useEffect(() => {
+    if (musicData.length > 0 ) {
+        const random = Math.floor(Math.random() * 4)
+        console.log(random);
+        setArtistData(musicData[random].artist)
+        setTagData(musicData[random].tags[0])
+        setSelectedMusic(musicData[random])
+    }
+  }, [musicData])
 
 
   return (
@@ -34,14 +47,14 @@ const Home = () => {
       <div className="sliders-container d-flex flex-column row-gap-4">
           <Slider
             musicType="Artist"
-            searchKey={selectedMusic.artist}
-            title="Par le même artiste"
+            searchKey={artistData}
+            title={`a la mémoire de  ${artistData}`}
             selectedMusic={selectedMusic}
           />
           <Slider
             musicType="Tag"
-            searchKey={selectedMusic.tags[0]}
-            title="Dans le même genre"
+            searchKey={tagData}
+            title={`dans le style ${tagData}`}
             selectedMusic={selectedMusic}
           />
         </div>
