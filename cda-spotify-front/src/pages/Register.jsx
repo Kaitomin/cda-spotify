@@ -64,64 +64,66 @@ const Register = () => {
 
   return (
     !localStorage.getItem("isAuthenticated") && (
-      <div className="register flex-grow-1">
-        <h1>Créer un compte</h1>
+      <div className="register flex-grow-1 mt-5">
         <form
           onSubmit={handleRegister}
           className="d-flex flex-column m-auto"
         >
-          <div>
-            <label htmlFor="username">Nom d&#39;utilisateur</label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              className={`w-100 form__field ${
-                errors.username ? "is-invalid" : user.username ? "is-valid" : ""
-              } input`}
-              onChange={handleChange}
-            />
-            {errors.username && (
-              <span className="invalid-feedback">{errors.username}</span>
-            )}
+          <h1>Inscription</h1>
+          <div className="d-flex flex-column row-gap-3 px-3 pt-3 pb-4">
+            <div>
+              <label htmlFor="username">Nom d&#39;utilisateur</label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                className={`w-100 form__field ${
+                  errors.username ? "is-invalid" : user.username ? "is-valid" : ""
+                } input`}
+                onChange={handleChange}
+              />
+              {errors.username && (
+                <span className="invalid-feedback">{errors.username}</span>
+              )}
+            </div>
+            <div>
+              <label htmlFor="password">Mot de passe</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                className={`w-100 form__field ${
+                  errors.password ? "is-invalid" : user.password ? "is-valid" : ""
+                } input`}
+                onChange={handleChange}
+              />
+              {errors.password && (
+                <span className="invalid-feedback">{errors.password}</span>
+              )}
+            </div>
+            <div>
+              <label htmlFor="confirmPassword">Confirmation mot de passe</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                className={`w-100 form__field ${
+                  user.password !== user.confirmPassword || errors.confirmPassword
+                    ? "is-invalid"
+                    : user.password
+                    ? "is-valid"
+                    : ""
+                } input`}
+                onChange={handleChange}
+              />
+              <span className="invalid-feedback">
+                {errors.confirmPassword
+                  ? errors.confirmPassword
+                  : "Mot de passe de confirmation ne correspond pas"}
+              </span>
+            </div>
+            <button className="mt-3">Créer un compte</button>
           </div>
-          <div>
-            <label htmlFor="password">Mot de passe</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className={`w-100 form__field ${
-                errors.password ? "is-invalid" : user.password ? "is-valid" : ""
-              } input`}
-              onChange={handleChange}
-            />
-            {errors.password && (
-              <span className="invalid-feedback">{errors.password}</span>
-            )}
-          </div>
-          <div>
-            <label htmlFor="confirmPassword">Confirmation mot de passe</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              id="confirmPassword"
-              className={`w-100 form__field ${
-                user.password !== user.confirmPassword || errors.confirmPassword
-                  ? "is-invalid"
-                  : user.password
-                  ? "is-valid"
-                  : ""
-              } input`}
-              onChange={handleChange}
-            />
-            <span className="invalid-feedback">
-              {errors.confirmPassword
-                ? errors.confirmPassword
-                : "Mot de passe de confirmation ne correspond pas"}
-            </span>
-          </div>
-          <button className="mt-3">S&#39;inscrire</button>
         </form>
       </div>
     )
