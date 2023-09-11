@@ -7,6 +7,9 @@ export default {
   getById(id) {
     return Api().get(`/api/music/${id}`)
   },
+  getFourRandom(){
+    return Api().get(`/api/music/four-random`)
+  },
   getByTypeAndSearchkey(type, searchKey){
     return Api().get(`/api/music/by${type}/${searchKey}`)
   },

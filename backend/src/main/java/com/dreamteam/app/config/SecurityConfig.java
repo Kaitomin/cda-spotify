@@ -84,7 +84,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                         "/api/auth/**",
                         "/api/tag",
                         "/img/**",
-                        "/audio/**"
+                        "/audio/**",
+                        "/api/music/four-random"
                 ).permitAll()
                 .requestMatchers(
                         "/api/playlist",

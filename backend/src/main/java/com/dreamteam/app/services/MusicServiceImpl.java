@@ -31,6 +31,9 @@ public class MusicServiceImpl implements IMusicService {
 	public List<MusicDTO> findAll(){
 		return repository.findAll().stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
 	}
+	public List<MusicDTO> findRandomMusic(){
+		return repository.findRandomMusic().stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
+	}
 	public  List<MusicDTO> searchMusic(String searchKey){
 		return repository.findByTitleContainingIgnoreCaseOrArtistContainingIgnoreCase(searchKey, searchKey).stream().map(music -> mapper.map(music, MusicDTO.class)).toList();
 	}

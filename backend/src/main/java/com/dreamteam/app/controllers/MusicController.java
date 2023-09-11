@@ -78,4 +78,8 @@ public class MusicController {
 	public ResponseEntity<List<MusicDTO>> getTop10ByArtist(@PathVariable @Pattern(regexp = "^[a-zA-Z0-9 ]+$") String artist) {
 		return ResponseEntity.ok(service.getTop10ByArtist(artist));
 	}
+	@GetMapping("/four-random")
+	public ResponseEntity<List<MusicDTO>>countAllMusic(){
+		return ResponseEntity.ok(service.findRandomMusic());
+	}
 }

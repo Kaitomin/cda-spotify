@@ -77,7 +77,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 "/api/auth/**",
                 "/api/tag",
                 "/img/**",
-                "/audio/**"
+                "/audio/**",
+                "/api/music/four-random"
             )
         );
         return arr.stream().anyMatch(p -> antPathMatcher.match(p, request.getRequestURI()));

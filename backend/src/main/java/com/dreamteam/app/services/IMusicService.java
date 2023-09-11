@@ -17,6 +17,9 @@ public interface IMusicService {
     List<MusicDTO> searchMusic(String searchKey);
     List<MusicDTO> searchMusicByTitle(String searchKey);
     List<MusicDTO> searchMusicByArtist(String searchKey);
+    List<MusicDTO> findRandomMusic();
+
+
     MusicDTO add(
             MusicDTO mDto,
             MultipartFile imgFile,
