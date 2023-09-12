@@ -36,7 +36,7 @@ const Home = () => {
 
   return (
     <div className="home-page flex-grow-1">
-      <h2>Laisse toi faire </h2>
+      <h2 className="m-4">Découvre donc</h2>
       <div className="home-card-container">
           {musicData && musicData.map(({ id, title, imgUri, artist }) => (
             <div className="home-card" key={id}>
@@ -44,17 +44,18 @@ const Home = () => {
             </div>
           ))}
       </div>
-      <div className="sliders-container d-flex flex-column row-gap-4">
+      <div className="sliders-container d-flex flex-column row-gap-4 mt-4">
+        {/* <h2>{`a la memoire de ${artistData}`}</h2> */}
           <Slider
             musicType="Artist"
             searchKey={artistData}
-            title={`a la mémoire de  ${artistData}`}
+            title={`De la parte de ${artistData}`}
             selectedMusic={selectedMusic}
           />
           <Slider
             musicType="Tag"
             searchKey={tagData}
-            title={`dans le style ${tagData}`}
+            title={`Dans le style ${tagData}`}
             selectedMusic={selectedMusic}
           />
         </div>

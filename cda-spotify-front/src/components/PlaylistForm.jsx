@@ -13,11 +13,15 @@ const PlaylistForm = ({ playlistName, handlePlaylist }) => {
     }
 
     return (
-        <div className='edit-playlist-modal'>
-            <form onSubmit={handleSubmit} >
-                <input type="text" placeholder="Nouveau nom de la playlist" value={newName} onChange={handleChange} autoFocus />
-                <button type="submit">Modifier le nom</button>
-            </form>
+        <div>
+            <div className='edit-playlist-modal'>
+                <p>Modifier le nom</p>
+                <form onSubmit={handleSubmit} >
+                    <input type="text" placeholder="Nom de la playlist ..." value={newName} onChange={handleChange} autoFocus />
+                    <button type="submit">Attribuer le nom</button>
+                </form>
+                
+            </div>
         </div>
     )
 }

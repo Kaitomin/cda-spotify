@@ -165,12 +165,16 @@ const PlaylistContent = ({ showActions, musicIndex, isIntegrated }) => {
         )}
       </div>
       {isModalOpen && (
-        <div className="modal-window">
+        // <div className="modal-window">
+        <div className="form-playlist-modal">
           <PlaylistForm
             playlistName={playlist.name}
             handlePlaylist={handleUpdatePlaylist}
+            
           />
-          <button onClick={() => setIsModalOpen(false)}>Annuler</button>
+          {/* <button onClick={() => setIsModalOpen(false)}>Annuler</button> */}
+          <i onClick={() => setIsModalOpen(false)} class="fa-solid fa-circle-xmark"></i>
+
         </div>
       )}
       <div className={`music-list d-flex flex-column align-items-start m-auto ${isToggleList ? 'toggle-list' : ''}`}>

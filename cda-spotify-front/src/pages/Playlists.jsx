@@ -81,9 +81,9 @@ const Playlists = () => {
         Créer une playlist
       </p>
       {showModal && (
-        <div className="modal-window">
+        <div className="form-playlist-modal">
           <PlaylistForm handlePlaylist={addNewPlaylistToUser} />
-          <button onClick={() => setShowModal(false)}>Annuler</button>
+          <i onClick={() => setShowModal(false)} class="fa-solid fa-circle-xmark"></i>
         </div>
       )}
     </div>

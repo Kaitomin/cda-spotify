@@ -917,8 +917,66 @@ footer > div {
   border-radius: 5% 0 0 5%;
 
 }
+  /* -----------------------*/
+  /*  Modal form playlists  */
+  /* -----------------------*/
+.form-playlist-modal{
+  z-index: 10;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid;
+  background: var(--dark-blue-1);
+  text-align: center;
+  color: white;
+  border-radius: 5%;
+  min-width: 165px;
 
+  display: flex;
+  flex-direction: column;
+  /* padding-inline: 10px;
+  padding-block: 15px; */
+}
+.form-playlist-modal form{
+  display: flex;
+  flex-direction: column;
+}
+.form-playlist-modal input{
+  /* margin-bottom: 10px; */
+  padding-block: 5px;
+  padding-inline: 10px;
+  border-radius: 5px 5px 0% 0%;
+  background-color: var(--dark-blue-3);
+  color: white;
+  border: none;
+}
+.form-playlist-modal input::placeholder{
+  color: white;
+}
+.form-playlist-modal button{
+  /* margin-bottom: 10px; */
+  padding-block: 5px;
+  padding-inline: 10px;
+  color: white;
+  background-color: var(--dark-blue-1);
+  border-top: solid 1px;
+  border-bottom: solid 1px white;
+  border-left: none;
+  border-right: none;
+}
+.form-playlist-modal > i {
+  padding-block: 10px;
+  padding-inline: 10px;
+  color: var(--red-warning);
+  font-size: 20px;
+  height: 40px;
+}
+.edit-playlist-modal > p {
+  padding-block: 5px;
+  border-bottom: solid 1px white;
 
+}
 
 /* ========================== */
 /* ======= Responsive ======= */
