@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const PlaylistForm = ({ playlistName, handlePlaylist }) => {
+const PlaylistForm = ({ playlistName, handlePlaylist, setShowModal}) => {
     const [newName, setNewName] = useState(playlistName ? playlistName : '')
 
     const handleChange = e => {
@@ -18,9 +18,12 @@ const PlaylistForm = ({ playlistName, handlePlaylist }) => {
                 <p>Modifier le nom</p>
                 <form onSubmit={handleSubmit} >
                     <input type="text" placeholder="Nom de la playlist ..." value={newName} onChange={handleChange} autoFocus />
-                    <button type="submit">Attribuer le nom</button>
+                    <div className='interaction'>
+                        <button type="submit"><i class="fa-solid fa-square-check"></i></button>
+                        <i onClick={() => setShowModal(false)} class="fa-solid fa-circle-xmark"></i>
+                    </div>
                 </form>
-                
+
             </div>
         </div>
     )

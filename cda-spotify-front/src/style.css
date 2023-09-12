@@ -942,42 +942,55 @@ footer > div {
   display: flex;
   flex-direction: column;
 }
+.form-playlist-modal input:focus-visible{
+  outline: 0px;
+  /* background-color: var(--dark-blue-3); */
+}
 .form-playlist-modal input{
   /* margin-bottom: 10px; */
   padding-block: 5px;
   padding-inline: 10px;
-  border-radius: 5px 5px 0% 0%;
-  background-color: var(--dark-blue-3);
+  background-color: var(--dark-blue-1);
   color: white;
   border: none;
+  border-bottom: solid 1px white;
 }
 .form-playlist-modal input::placeholder{
   color: white;
 }
 .form-playlist-modal button{
-  /* margin-bottom: 10px; */
-  padding-block: 5px;
-  padding-inline: 10px;
-  color: white;
   background-color: var(--dark-blue-1);
-  border-top: solid 1px;
-  border-bottom: solid 1px white;
-  border-left: none;
-  border-right: none;
 }
-.form-playlist-modal > i {
-  padding-block: 10px;
-  padding-inline: 10px;
-  color: var(--red-warning);
-  font-size: 20px;
-  height: 40px;
-}
+
 .edit-playlist-modal > p {
   padding-block: 5px;
   border-bottom: solid 1px white;
-
+  margin-bottom: 0px ;  
+  background-color: var(--dark-blue-3);
+  border-radius: 4px 4px 0% 0%;
+}
+.edit-playlist-modal .interaction{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
+.form-playlist-modal .interaction > i {
+  padding: 10px;
+  color: var(--red-warning);
+  font-size: 20px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.form-playlist-modal .interaction > button >i {
+  color: var(--light-blue);
+  font-size: 20px;
+  border: 0px;
+}
+.form-playlist-modal .interaction > button  {
+  border: 0px;
+}
 /* ========================== */
 /* ======= Responsive ======= */
 /* =========================- */

@@ -82,8 +82,8 @@ const Playlists = () => {
       </p>
       {showModal && (
         <div className="form-playlist-modal">
-          <PlaylistForm handlePlaylist={addNewPlaylistToUser} />
-          <i onClick={() => setShowModal(false)} class="fa-solid fa-circle-xmark"></i>
+          <PlaylistForm handlePlaylist={addNewPlaylistToUser} setShowModal={setShowModal} />
+          {/* <i onClick={() => setShowModal(false)} class="fa-solid fa-circle-xmark"></i> */}
         </div>
       )}
     </div>

@@ -9,7 +9,7 @@ import useAuth from "../hook/useAuth"
 const PlaylistContent = ({ showActions, musicIndex, isIntegrated }) => {
   const [musicList, setMusicList] = useState([])
   const [playlist, setPlaylist] = useState()
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentMusicId, setCurrentMusicId] = useState(null)
   const [isToggleList, setIsToggleList] = useState(true)
@@ -40,7 +40,7 @@ const PlaylistContent = ({ showActions, musicIndex, isIntegrated }) => {
     }
 
     PlaylistService.updateName(currentUser.id, newPlaylistData).then(() => {
-      setIsModalOpen(false)
+      setShowModal(false)
       getPlaylist()
     })
   }
@@ -157,23 +157,24 @@ const PlaylistContent = ({ showActions, musicIndex, isIntegrated }) => {
             : <i className="fa-solid fa-angles-up"></i>
           )
         }
-        {playlist && playlist.name != 'Favoris' && showActions && !isModalOpen && (
+        {playlist && playlist.name != 'Favoris' && showActions && !showModal && (
           <i
             className="fa-solid fa-pen-to-square edit-btn"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setShowModal(true)}
           ></i>
         )}
       </div>
-      {isModalOpen && (
+      {showModal && (
         // <div className="modal-window">
         <div className="form-playlist-modal">
           <PlaylistForm
             playlistName={playlist.name}
             handlePlaylist={handleUpdatePlaylist}
+            setShowModal={setShowModal}
             
           />
-          {/* <button onClick={() => setIsModalOpen(false)}>Annuler</button> */}
-          <i onClick={() => setIsModalOpen(false)} class="fa-solid fa-circle-xmark"></i>
+          {/* <button onClick={() => setShowModal(false)}>Annuler</button> */}
+          {/* <i onClick={() => setShowModal(false)} class="fa-solid fa-circle-xmark"></i> */}
 
         </div>
       )}
