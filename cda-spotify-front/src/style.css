@@ -698,7 +698,7 @@ header .nav-desktop i {
   border-bottom: 2px solid grey;
   outline: 0;
   color: white;
-  padding: 7px 0;
+  padding: 5px 0 5px 10px;
   background: #ffffff05;
   /* transition:  ; */
 }
@@ -715,9 +715,9 @@ header .nav-desktop i {
   cursor: pointer;
 }
 .form__field:focus {
-  padding-bottom: 6px;  
+  /* padding-bottom: 6px;   */
   font-weight: 700;
-  border-width: 3px;
+  /* border-width: 3px; */
   border-image: linear-gradient(to right, #002d66, #00a8b9);
   border-image-slice: 1;
 }
@@ -886,7 +886,6 @@ header .nav-desktop i {
   outline: none;
   background: white;
   color: black;
-  width: 150px;
   transition: all 0.2s ease-in-out;
 }
 .login button:hover,

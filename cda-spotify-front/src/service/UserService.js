@@ -9,5 +9,8 @@ export default {
   },
   deletePlaylist(userId, playlistId) {
     return Api().post(`/api/user/${userId}/deletePlaylist/${playlistId}`)
+  },
+  deleteById(id) {
+    return Api().delete(`/api/user/delete/${id}`)
   }
 }

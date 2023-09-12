@@ -44,13 +44,10 @@ public class UserServiceImpl implements IUserService {
         playlistDTO.setCreatedAt(LocalDate.now());
         playlistDTO.setMusics(Collections.emptyList());
 
-        System.out.println(playlistDTO);
-
         repository.findById(userId).ifPresent(user -> {
             List<Playlist> userPlaylists = user.getPlaylists();
             userPlaylists.add(mapper.map(playlistDTO, Playlist.class));
             user.setPlaylists(userPlaylists);
-            System.out.println(userPlaylists);
             repository.save(user);
         });
 
@@ -73,8 +70,6 @@ public class UserServiceImpl implements IUserService {
         // Can not update playlist "Favoris"
         if (playlistDTO.getName().equals("Favoris")) return;
 
-        System.out.println(playlistDTO);
-
         repository.findById(userId).ifPresent(user -> {
             List<Playlist> playlists = user.getPlaylists();
             playlists.stream()
@@ -87,7 +82,13 @@ public class UserServiceImpl implements IUserService {
         });
     }
 
-    public void delete(long id){ repository.deleteById(id); }
+    public void delete(long id){
+        List<PlaylistDTO> userPlaylists = playlistService.findAllByUserId(id);
+        repository.deleteById(id);
+        for (PlaylistDTO playlistDto: userPlaylists) {
+            playlistService.delete(playlistDto.getId());
+        }
+    }
     public UserDTO getById(long id) {
         return repository.findById(id).map(user -> mapper.map(user, UserDTO.class)).orElse(null);
     }
