@@ -23,7 +23,7 @@ public class Playlist implements Serializable {
     @Size(min = 2, message = "Name must have at least 2 characters")
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @NonNull
     private List<Music> musics;
 

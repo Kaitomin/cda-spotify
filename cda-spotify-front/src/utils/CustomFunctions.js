@@ -12,30 +12,45 @@ export function sanitizeInput(input, type) {
         return "Vous devez avoir plus de deux caractères"
       } else if (regexp.test(input)) {
         return ""
-      } else {
-        return "Un des caractères n'est pas correct"
       }
+      return "Un des caractères n'est pas correct"
     case "releasedAt":
       if (!input.trim()) {
         return "Le champ est requis"
       } else if (regexpDate.test(input)) {
         return ""
-      } else {
-        return "Un des caractères n'est pas correct"
       }
+      return "Un des caractères n'est pas correct"
     case "imgFile":
     case "audioFile":
       if (input) {
         return ""
-      } else {
-        return "Le champ est requis"
       }
+      return "Le champ est requis"
     case "tags":
       if (input.length === 0) {
         return "Sélectionnez au moins un tag"
-      } else {
+      }
+      return ""
+    case "username":
+      if (!input.trim()) {
+        return "Le champ est requis"
+      } else if (input.length < 2) {
+        return "Vous devez avoir plus de deux caractères"
+      } else if (/^[a-zA-Z0-9/]{2,}$/.test(input)) {
         return ""
       }
+      return "Un des caractères n'est pas correct"
+    case "password":
+    case "confirmPassword":
+      if (input.length === 0) {
+        return "Le champ est requis"
+      } else if (input.length < 5) {
+        return "Vous devez avoir au moins 5 caractères"
+      } else if (!(/^[a-zA-Z0-9+_!@?/]{2,}$/).test(input)) {
+        return "Un des caractères n'est pas correct"
+      }
+      return ""
     // for id, version, duration (fetched from current music, not to be manually edited) | imgUri, audioUri (not mandatory) when modifying a music - no check done
     default:
       return ""

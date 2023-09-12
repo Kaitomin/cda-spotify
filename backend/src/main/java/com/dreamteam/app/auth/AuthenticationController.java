@@ -1,7 +1,5 @@
 package com.dreamteam.app.auth;
 
-import com.dreamteam.app.dto.UserDTO;
-import com.dreamteam.app.exceptions.AuthenticationException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

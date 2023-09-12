@@ -157,14 +157,14 @@ const MusicForm = () => {
     
     return (
         <div className='music-form flex-grow-1'>
+            <h1>{musicId ? "Modifier une musique" : "Ajouter une musique"}</h1>
             <form onSubmit={handleSubmit} className='d-flex flex-column align-items-center justify-content-center'>
-                <h1>{musicId ? "Modifier une musique" : "Ajouter une musique"}</h1>
                 <div className='w-100'>
                     <label className='d-flex flex-column mb-3'>
                         Titre
                         <input type="text"
                             name="title"
-                            className={`form-control ${errors.title ? "is-invalid" : music.title ? "is-valid" : ""} input`}
+                            className={`form__field ${errors.title ? "is-invalid" : music.title ? "is-valid" : ""} input`}
                             value={music.title}
                             onChange={handleChange}
                         />
@@ -175,7 +175,7 @@ const MusicForm = () => {
                         <input
                             type="text"
                             name="artist"
-                            className={`form-control ${errors.artist ? "is-invalid" : music.artist ? "is-valid" : ""} input`}
+                            className={`form__field ${errors.artist ? "is-invalid" : music.artist ? "is-valid" : ""} input`}
                             value={music.artist}
                             onChange={handleChange}
                         />
@@ -188,7 +188,7 @@ const MusicForm = () => {
                         <input
                             type="date"
                             name="releasedAt"
-                            className={`form-control ${errors.releasedAt ? "is-invalid" : music.releasedAt ? "is-valid" : ""} input`}
+                            className={`form__field ${errors.releasedAt ? "is-invalid" : music.releasedAt ? "is-valid" : ""} input`}
                             value={music.releasedAt}
                             onChange={handleChange}
                         />
@@ -200,7 +200,7 @@ const MusicForm = () => {
                         <input
                             type="file"
                             name="imgFile"
-                            className={`form-control ${errors.imgFile ? "is-invalid" : music.imgFile ? "is-valid" : ""} input`}
+                            className={`form__field ${errors.imgFile ? "is-invalid" : music.imgFile ? "is-valid" : ""} input`}
                             onChange={handleChange}
                         />
                         <div className="invalid-feedback">{errors.imgFile}</div>
@@ -211,16 +211,16 @@ const MusicForm = () => {
                         <input
                             type="file"
                             name="audioFile"
-                            className={`form-control ${errors.audioFile ? "is-invalid" : music.audioFile ? "is-valid" : ""} input`}
+                            className={`form__field ${errors.audioFile ? "is-invalid" : music.audioFile ? "is-valid" : ""} input`}
                             onChange={handleChange}
                         />
                         <div className="invalid-feedback">{errors.audioFile}</div>
 
                     </label>
                 </div>
-                <div className="tags-container mt-3 mb-4">
+                <div className="tags-container mb-4">
                     <p className="title">Tags</p>
-                    {errors.tags && <span className='text-danger'>{errors.tags}</span>}
+                    {errors.tags && <span className='text-danger d-block text-center'>{errors.tags}</span>}
                     <div className="tags-items d-flex justify-content-between flex-wrap text-center row-gap-1 column-gap-3">
                         { tags && tags.map(item => (
                             <div key={item}>

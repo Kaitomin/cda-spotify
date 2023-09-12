@@ -21,21 +21,28 @@ const Dashboard = () => {
     UserService.getAll().then((res) => setUsers(res.data))
   }
 
+  const getPlaylists = () => {
+    PlaylistService.getAll().then((res) => setPlaylists(res.data))
+  }
+
   useEffect(() => {
     getMusics()
-  }, [])
-
-  useEffect(() => {
     getUsers()
+    getPlaylists()
   }, [])
 
-  useEffect(() => {
-    PlaylistService.getAll().then((res) => setPlaylists(res.data))
-  }, [])
-
-  const deleteMusic = (id) => {
-    if (confirm("Supprimer cette musique ?")) {
+  const deleteMusic = (id, title) => {
+    if (confirm(`Supprimer la musique "${title}" ?`)) {
       MusicService.delete(id).then(() => getMusics())
+    }
+  }
+
+  const deleteUSer = (id, username) => {
+    if (confirm(`Supprimer l'utilisateur "${username}" ?`)) {
+      UserService.deleteById(id).then(() => {
+        getUsers()
+        getPlaylists()
+      })
     }
   }
 
@@ -131,7 +138,7 @@ const Dashboard = () => {
                           </Link>
                           <i
                             className="fa-solid fa-trash"
-                            onClick={() => deleteMusic(id)}
+                            onClick={() => deleteMusic(id, title)}
                           ></i>
                         </td>
                       </tr>
@@ -202,7 +209,7 @@ const Dashboard = () => {
                         ></i>
                         <i
                           className="fa-solid fa-trash"
-                          //  onClick={() => deleteUser(id)}
+                           onClick={() => deleteUSer(id, username)}
                         ></i>
                       </td>
                     </tr>
