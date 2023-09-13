@@ -17,9 +17,7 @@ const MusicDetails = () => {
   useEffect(() => {
     // Acessing from music page
     if (musicId) {
-      MusicService.getById(musicId).then((res) => {
-        setSelectedMusic(res.data)
-      })
+      MusicService.getById(musicId).then((res) => setSelectedMusic(res.data))
 
       MusicService.getAll().then((res) => {
         const indexOfCurrentMusic = res.data.findIndex((m) => m.id == musicId)
@@ -52,12 +50,14 @@ const MusicDetails = () => {
 
   return (
     <div className="music-details flex-grow-1">
-      <MusicPlayer
-        selectedMusicsList={selectedMusicsList}
-        selectedMusic={selectedMusic}
-        selectedIndex={musicId ? +selectedIndex : +musicIndex}
-        updateSelectedMusic={updateSelectedMusic}
-      />
+      {selectedMusic &&
+        <MusicPlayer
+          selectedMusicsList={selectedMusicsList}
+          selectedMusic={selectedMusic}
+          selectedIndex={musicId ? +selectedIndex : +musicIndex}
+          updateSelectedMusic={updateSelectedMusic}
+        />
+      }
       {playlistId && (
         <PlaylistContent
           showActions={false}

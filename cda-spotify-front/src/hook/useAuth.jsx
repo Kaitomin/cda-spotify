@@ -32,12 +32,6 @@ const useAuth = () => {
             navigate('/')
             break
           case 'Cookie not found':
-            setCurrentUser({})
-            localStorage.removeItem('isAuthenticated')
-            localStorage.removeItem('isAdmin')
-            localStorage.removeItem('csrf-token')
-            navigate('/login')
-            break
           case 'Invalid X-CSRF-TOKEN':
             setCurrentUser({})
             localStorage.removeItem('isAuthenticated')

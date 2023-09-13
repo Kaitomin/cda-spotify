@@ -958,6 +958,7 @@ footer > div {
 }
 .home-card h3 {
   font-size: 1.1em;
+  font-style: italic;
 }
 .home-card-link {
   background-color: white;
@@ -1090,11 +1091,11 @@ footer > div {
   /* ------ */
   /* .search-page .result-grid {
     grid-template-columns: repeat(1, 100%);
-  }
-  .search-page .filters {
-    flex-direction: column;
-    gap: 10px 0;
   } */
+  .search-page .filters {
+    flex-direction: row !important;
+    gap: 0;
+  }
 
 }
 

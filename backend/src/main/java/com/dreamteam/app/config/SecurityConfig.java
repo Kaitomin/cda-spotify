@@ -80,7 +80,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                         "/api/music/{id:[0-9]+}",
                         "/api/music/search/**",
                         "/api/music/byTag/{tag:[A-Z]+}",
-                        "/api/music/byArtist/{artist:[a-zA-Z0-9 ]+}",
+                        "/api/music/byArtist/{artist}",
                         "/api/auth/**",
                         "/api/tag",
                         "/img/**",

@@ -6,29 +6,29 @@ const NavDesktop = ({ isAuthenticated, isAdmin, handleLogout }) => {
   return (
     <nav className="nav-desktop">
       <ul className="d-none d-sm-flex p-0 m-0 align-items-center list-unstyled">
-        <li className="px-3 h-100">
+        <li className="h-100">
           <Link
             to="/search"
-            className="d-flex align-items-center p-1 text-decoration-none text-light"
+            className="d-flex align-items-center px-3 text-decoration-none text-light"
           >
             <i className="d-flex align-items-center justify-content-center fa-solid fa-magnifying-glass"></i>
           </Link>
         </li>
         {isAuthenticated && (
-          <li className="px-3 h-100">
+          <li className="h-100">
             <Link
               to="/playlists"
-              className="d-flex align-items-center p-1 text-decoration-none text-light"
+              className="d-flex align-items-center px-3 text-decoration-none text-light"
             >
               Playlists
             </Link>
           </li>
         )}
         {isAuthenticated && isAdmin == "true" && (
-          <li className="d-none d-sm-block px-3 h-100">
+          <li className="d-none d-sm-block h-100">
             <Link
               to="/dashboard"
-              className="d-flex align-items-center p-1 text-decoration-none text-light"
+              className="d-flex align-items-center px-3 text-decoration-none text-light"
             >
               Dashboard
             </Link>
@@ -36,18 +36,18 @@ const NavDesktop = ({ isAuthenticated, isAdmin, handleLogout }) => {
         )}
         {!isAuthenticated && (
           <>
-            <li className="px-3 h-100">
+            <li className="h-100">
               <Link
                 to="/register"
-                className="d-flex align-items-center p-1 text-decoration-none text-light"
+                className="d-flex align-items-center px-3 text-decoration-none text-light"
               >
                 S&apos;inscrire
               </Link>
             </li>
-            <li className="px-3 h-100">
+            <li className="h-100">
               <Link
                 to="/login"
-                className="d-flex align-items-center p-1 text-decoration-none text-light"
+                className="d-flex align-items-center px-3 text-decoration-none text-light"
               >
                 Connexion
               </Link>

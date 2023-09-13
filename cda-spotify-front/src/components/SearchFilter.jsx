@@ -2,7 +2,7 @@ import PropTypes from "prop-types"
 
 const SearchFilter = ({ handleFilter, itemPerPage, setItemPerPage }) => {
   return (
-    <div className="filters d-flex justify-content-around my-3">
+    <div className="filters d-flex flex-column row-gap-3 justify-content-around my-3">
       <div className="position-relative input d-flex flex-column justify-content-center align-items-center">
         <label htmlFor="paginate-btn" className="mb-2 fw-bolder">
           Musiques par page
@@ -18,6 +18,7 @@ const SearchFilter = ({ handleFilter, itemPerPage, setItemPerPage }) => {
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="20">20</option>
+          <option value="0">Infinite</option>
         </select>
       </div>
       <div className="position-relative input d-flex flex-column align-items-center">

@@ -2,7 +2,8 @@ const AboutUs = () => {
   return (
     <div className='px-3 text-center about-us flex-grow-1'>
       <h1>A propos</h1>
-      <p>Streamy est un projet fullstack réalisé avec React et Java par 2 super développeurs lors de la POE "Développeur Java" chez Dawan en 2023</p>
+      <p>Streamy est un projet fullstack réalisé avec React et Java par 2 super développeurs lors de la POE &quot;Développeur Java&quot; chez Dawan en 2023</p>
+      <em>Ceci est un projet étudiant uniquement destiné à la démonstration. Aucune musique n&#39;est utilisée à des fins commerciales (no ban plz <img src="/prayge.gif" alt="" width={30} /> )</em>
       <div className='d-flex justify-content-around my-5'>
         <img src="/hackerman.gif" alt="" className='rounded-circle' width={120}/>
         <img src="/pepe.gif" alt="" className='rounded-circle' width={120}/>
