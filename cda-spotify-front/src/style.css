@@ -1049,11 +1049,12 @@ footer > div {
 /* ---------------- */
 /* Google reCaptcha */
 /* ---------------- */
+.register .g-recaptcha > div > div,
 .login .g-recaptcha > div > div {
   width: 100% !important;
   height: 100% !important;
 }
-
+.register .g-recaptcha > div > div > div > iframe[title="reCAPTCHA"],
 .login .g-recaptcha > div > div > div > iframe[title="reCAPTCHA"] {
   min-width: 207px;
   width: 100%;

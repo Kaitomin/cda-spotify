@@ -126,9 +126,10 @@ const Register = () => {
                   : "Mot de passe de confirmation ne correspond pas"}
               </span>
             </div>
-            <ReCAPTCHA
+            <ReCAPTCHA 
               ref={recaptchaRef}
               sitekey={import.meta.env.VITE_RECAPTCHA_KEY}
+              className="g-recaptcha"
             />
             <button className="mt-3">Créer un compte</button>
           </div>
