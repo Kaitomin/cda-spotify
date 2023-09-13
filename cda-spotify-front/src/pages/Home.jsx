@@ -1,10 +1,10 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
-import '../style.css'
+
 import MusicService from "../service/MusicService"
 import HomeCard from "../components/HomeCard"
 import Slider from "../components/Slider"
+import '../style.css'
 
 const Home = () => {
   const [musicData, setMusicData] = useState([])
@@ -15,7 +15,6 @@ const Home = () => {
   useEffect(() => {
     MusicService.getFourRandom()
       .then((reponse) => {
-        console.log(reponse.data);
         setMusicData(reponse.data)
       })
       .catch((error) => {
@@ -26,7 +25,6 @@ const Home = () => {
   useEffect(() => {
     if (musicData.length > 0 ) {
         const random = Math.floor(Math.random() * 4)
-        console.log(random);
         setArtistData(musicData[random].artist)
         setTagData(musicData[random].tags[0])
         setSelectedMusic(musicData[random])
@@ -36,7 +34,7 @@ const Home = () => {
 
   return (
     <div className="home-page flex-grow-1">
-      <h2 className="m-4">Découvre donc</h2>
+      <h1 className="mt-3">A découvrir</h1>
       <div className="home-card-container">
           {musicData && musicData.map(({ id, title, imgUri, artist }) => (
             <div className="home-card" key={id}>
@@ -44,21 +42,22 @@ const Home = () => {
             </div>
           ))}
       </div>
-      <div className="sliders-container d-flex flex-column row-gap-4 mt-4">
-        {/* <h2>{`a la memoire de ${artistData}`}</h2> */}
+      { artistData && tagData &&
+        <div className="sliders-container d-flex flex-column row-gap-4 mt-4">
           <Slider
             musicType="Artist"
             searchKey={artistData}
-            title={`De la parte de ${artistData}`}
+            title={`Par l'artiste ${artistData}`}
             selectedMusic={selectedMusic}
-          />
+            />
           <Slider
             musicType="Tag"
             searchKey={tagData}
             title={`Dans le style ${tagData}`}
             selectedMusic={selectedMusic}
-          />
+            />
         </div>
+      }
 
 
     </div>

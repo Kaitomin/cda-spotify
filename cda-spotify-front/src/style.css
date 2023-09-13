@@ -933,42 +933,47 @@ footer > div {
   /*  Home  */
   /* ------ */
 .home-page{
-
+  padding: 0 15px;
+}
+.home-page .sliders-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .home-card-container{
   display: grid;
   grid-template-columns: repeat(1 , 1fr);
   gap: 25px;
-  margin-inline: 15px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
-.home-card h2,.home-card h3{
-  max-width: 200px;
+.home-card h2,
+.home-card h3 {
+  /* max-width: 200px; */
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
-.home-card h2{
-  font-size: x-large;
+.home-card h2 {
+  font-size: 1.3em;
 }
-.home-card h3{
-  font-size: x-large;
+.home-card h3 {
+  font-size: 1.1em;
 }
-
-.home-card-link{
+.home-card-link {
   background-color: white;
   height: 100%;
-  border-radius: 5%;
+  border-radius: 5% 0 0 5%;
   display: flex;
 }
-.home-card-img{
+.home-card-img {
   width: 35%;
   object-fit: cover;
   border-radius: 5% 0 0 5%;
-
 }
-  /* -----------------------*/
-  /*  Modal form playlists  */
-  /* -----------------------*/
+
+/* -----------------------*/
+/*  Modal form playlists  */
+/* -----------------------*/
 .form-playlist-modal{
   z-index: 10;
   position: fixed;
@@ -1213,18 +1218,18 @@ footer > div {
   /* -------*/
   /*  Home  */
   /* ------ */
-  @media screen and (min-width: 500px){
+  @media screen and (min-width: 575px){
     .home-card-container{
       display: grid;
       grid-template-columns: repeat(2 , 1fr);
       gap: 25px;
-      margin-inline: 15px;
+      /* margin-inline: 15px; */
     }
     .home-card h2,.home-card h3{
-      max-width: 150px;
+      /* max-width: 150px;
       text-overflow: ellipsis;
       white-space: nowrap;
-      overflow: hidden;
+      overflow: hidden; */
     }
 
     
