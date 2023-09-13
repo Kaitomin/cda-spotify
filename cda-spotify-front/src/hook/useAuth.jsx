@@ -26,7 +26,7 @@ const useAuth = () => {
         if (!roles.includes(token.role)) throw ({response: {data : 'Unauthorized'}})
       })
       .catch((e) => {
-        console.log(e.response.data)
+        // console.log(e.response.data)
         switch (e.response.data) {
           case 'Unauthorized':
             navigate('/')
@@ -51,13 +51,13 @@ const useAuth = () => {
       })
   }
 
-  const register = ({ username, password }) => {
-    AuthService.register({ username, password })
+  const register = ({ username, password }, recaptchaToken) => {
+    AuthService.register({ username, password }, recaptchaToken)
       .then(() => navigate('/login'))
   }
 
-  const login = ({ username, password }) => {
-    AuthService.login({ username, password })
+  const login = ({ username, password }, recaptchaToken) => {
+    AuthService.login({ username, password }, recaptchaToken)
       .then((res) => {
         const token = jwtDecode(res.data.token)
 

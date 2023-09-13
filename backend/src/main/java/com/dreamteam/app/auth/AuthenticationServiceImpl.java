@@ -4,7 +4,9 @@ import com.dreamteam.app.dto.PlaylistDTO;
 import com.dreamteam.app.entities.Playlist;
 import com.dreamteam.app.entities.User;
 import com.dreamteam.app.enums.Role;
+import com.dreamteam.app.exceptions.AuthenticationException;
 import com.dreamteam.app.jwt.JwtService;
+import com.dreamteam.app.recaptcha.RecaptchaValidationService;
 import com.dreamteam.app.repositories.UserRepository;
 import com.dreamteam.app.utils.CustomUtils;
 import jakarta.servlet.http.Cookie;
@@ -30,8 +32,13 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final ModelMapper mapper;
+    private final RecaptchaValidationService recaptchaValidationService;
 
-    public void register(AuthenticationRequest req) {
+    public void register(AuthenticationRequest req, String recaptchaToken) throws AuthenticationException {
+        if (!recaptchaValidationService.isValidCaptcha(recaptchaToken)) {
+            throw new AuthenticationException("Invalid captcha");
+        }
+
         // Auto create 'Favoris' playlist
         PlaylistDTO playlistDTO = new PlaylistDTO();
         playlistDTO.setName("Favoris");
@@ -51,7 +58,10 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         repository.save(user);
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest req) {
+    public AuthenticationResponse authenticate(AuthenticationRequest req, String recaptchaToken) throws AuthenticationException {
+        if (!recaptchaValidationService.isValidCaptcha(recaptchaToken)) {
+            throw new AuthenticationException("Invalid captcha");
+        }
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 req.getUsername(),

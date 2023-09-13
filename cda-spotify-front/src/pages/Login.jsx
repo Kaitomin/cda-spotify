@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import ReCAPTCHA from "react-google-recaptcha"
 
 import { sanitizeInput } from "../utils/CustomFunctions"
 import useAuth from "../hook/useAuth"
@@ -15,6 +16,7 @@ const Login = () => {
     username: "",
     password: ""
   })
+  const recaptchaRef = useRef()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -32,6 +34,8 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault()
 
+    if (!recaptchaRef.current.getValue()) return
+
     let hasError = false
 
     for (const key in user) {
@@ -48,7 +52,7 @@ const Login = () => {
     // Cancel form submission
     if (hasError) return
 
-    login({ username: user.username, password: user.password })
+    login({ username: user.username, password: user.password }, recaptchaRef.current.getValue())
   }
 
   useEffect(() => {
@@ -59,7 +63,7 @@ const Login = () => {
 
   return (
     !(localStorage.getItem("isAuthenticated")) &&
-    <div className="login flex-grow-1 m-5">
+    <div className="login flex-grow-1 mt-5">
       <form onSubmit={handleLogin} className="d-flex flex-column m-auto">
         <h1>Connexion</h1>
         <div className="d-flex flex-column row-gap-3 px-3 pt-3 pb-4">
@@ -93,6 +97,11 @@ const Login = () => {
               <span className="invalid-feedback">{errors.password}</span>
             )}
           </div>
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey={import.meta.env.VITE_RECAPTCHA_KEY}
+            className="g-recaptcha"
+          />
           <button className="mt-3">Se connecter</button>
         </div>
       </form>

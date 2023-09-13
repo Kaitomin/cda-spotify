@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
+import ReCAPTCHA from "react-google-recaptcha"
 
 import { sanitizeInput } from "../utils/CustomFunctions"
 import useAuth from "../hook/useAuth"
@@ -17,6 +18,7 @@ const Register = () => {
     password: "",
     confirmPassword: ""
   })
+  const recaptchaRef = useRef()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -35,6 +37,8 @@ const Register = () => {
     e.preventDefault()
 
     // Check errors
+    if (!recaptchaRef.current.getValue()) return
+
     if (user.password !== user.confirmPassword) return
 
     let hasError = false
@@ -53,7 +57,7 @@ const Register = () => {
     // Cancel form submission
     if (hasError) return
 
-    register({ username: user.username, password: user.password })
+    register({ username: user.username, password: user.password }, recaptchaRef.current.getValue())
   }
 
   useEffect(() => {
@@ -122,6 +126,10 @@ const Register = () => {
                   : "Mot de passe de confirmation ne correspond pas"}
               </span>
             </div>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={import.meta.env.VITE_RECAPTCHA_KEY}
+            />
             <button className="mt-3">Créer un compte</button>
           </div>
         </form>

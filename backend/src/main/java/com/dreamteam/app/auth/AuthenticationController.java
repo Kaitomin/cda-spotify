@@ -1,5 +1,6 @@
 package com.dreamteam.app.auth;
 
+import com.dreamteam.app.exceptions.AuthenticationException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -17,17 +18,21 @@ public class AuthenticationController {
     private final AuthenticationServiceImpl service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid AuthenticationRequest req) {
-        service.register(req);
+    public ResponseEntity<AuthenticationResponse> register(
+            @RequestBody @Valid AuthenticationRequest req,
+            @RequestParam("g-recaptcha-response") String recaptchaToken
+    ) throws AuthenticationException {
+        service.register(req, recaptchaToken);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody @Valid AuthenticationRequest req,
+            @RequestParam("g-recaptcha-response") String recaptchaToken,
             HttpServletResponse response
-    ) {
-        AuthenticationResponse authRes = service.authenticate(req);
+    ) throws AuthenticationException {
+        AuthenticationResponse authRes = service.authenticate(req, recaptchaToken);
         ResponseCookie cookie = ResponseCookie.from("jwt", authRes.getToken())
             .httpOnly(true)
             .secure(true)
