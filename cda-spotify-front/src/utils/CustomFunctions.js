@@ -5,6 +5,7 @@ export function sanitizeInput(input, type) {
 
   switch (type) {
     case "title":
+    case "playlistName":
     case "artist":
       if (!input.trim()) {
         return "Le champ est requis"

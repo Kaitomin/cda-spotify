@@ -4,6 +4,7 @@ import Router from './router'
 import NavSecondary from './components/NavSecondary'
 import Header from './components/Header'
 import './style.css'
+import CookieBanner from './components/CookieBanner'
 
 function App() {  
   return (
@@ -11,6 +12,7 @@ function App() {
       <Header />
       <Router />
       <NavSecondary />
+      <CookieBanner />
       <Footer />
     </>
   )

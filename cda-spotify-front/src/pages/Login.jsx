@@ -4,6 +4,7 @@ import ReCAPTCHA from "react-google-recaptcha"
 
 import { sanitizeInput } from "../utils/CustomFunctions"
 import useAuth from "../hook/useAuth"
+import Cookies from "js-cookie"
 
 const Login = () => {
   const navigate = useNavigate()
@@ -33,6 +34,8 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault()
+
+    if (!Cookies.get('Streamy Cookie Consent')) return
 
     if (!recaptchaRef.current.getValue()) return
 

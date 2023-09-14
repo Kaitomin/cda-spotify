@@ -3,7 +3,6 @@ import Api from './Api'
 
 export default {
   register(newUser, recaptchaToken) {
-    console.log(recaptchaToken)
     return Api().post('/api/auth/register', newUser, {
       params: {
         "g-recaptcha-response": recaptchaToken

@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import ReCAPTCHA from "react-google-recaptcha"
+import Cookies from 'js-cookie'
+
 
 import { sanitizeInput } from "../utils/CustomFunctions"
 import useAuth from "../hook/useAuth"
@@ -36,6 +38,7 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault()
 
+    if (!Cookies.get('Streamy Cookie Consent')) return
     // Check errors
     if (!recaptchaRef.current.getValue()) return
 

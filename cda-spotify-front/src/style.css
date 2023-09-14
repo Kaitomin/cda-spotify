@@ -1059,6 +1059,43 @@ footer > div {
   min-width: 207px;
   width: 100%;
 }
+  /* ---------------- */
+  /*  Cookies banner  */
+  /* ---------------- */
+.cookie-banner{
+  padding: 20px;
+  margin-inline: 25px;
+  background-color: rgba(255, 255, 255, 0.87);
+  color: black;
+  position: fixed;
+  bottom: 50px;
+  right: 0;
+  max-width: 650px;
+}
+.cookie-reject{
+  background-color:var(--dark-blue-5);
+  cursor: url('../public/cursor-surprise.png'), pointer !important;
+}
+.cookie-consent{
+  background-color:var(--medium-blue);
+}
+.cookies-btn{
+  padding-block: 5px;
+  padding-inline: 15px;
+  /* margin-right: 25px; */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 20px;
+}
+.cookies-btn:hover{
+  font-weight: 800;
+  box-shadow: inset 0px 0px 50px 5px rgba(0,0,0,0.5);
+  /* cursor: url('../public/cursor-surprise.png'), pointer !important; */
+
+}
+
+
 
 /* ========================== */
 /* ======= Responsive ======= */
