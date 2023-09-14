@@ -5,6 +5,7 @@ import PlaylistService from "../service/PlaylistService"
 import UserService from "../service/UserService"
 import PlaylistForm from "../components/PlaylistForm"
 import useAuth from "../hook/useAuth"
+import Loader from "../components/Loader"
 
 const Playlists = () => {
   const [playlists, setPlaylists] = useState([])
@@ -40,49 +41,64 @@ const Playlists = () => {
 
   return (
     <div className="playlists px-3 flex-grow-1">
-      <h1>Playlists</h1>
-      <div className="playlist-container mb-5">
-        {playlists.map(({ id, musics, name }) => (
-          <div
-            key={id}
-            className="playlist-item position-relative text-decoration-none text-black"
-          >
-            <Link to={`/playlist/${id}`} className="text-decoration-none">
-              <img
-                src={
-                  musics.length > 0
-                    ? `${import.meta.env.VITE_RESOURCE_IMG_URL}/${
-                        musics[0].imgUri
-                      }`
-                    : "https://placehold.co/400x350"
-                }
-                alt={name}
-                className="playlist-image w-100 h-100 object-fit-cover"
-              />
-
-              <h2 className="playlist-title bg-white text-black text-center fw-bolder px-3 py-1">
-                {name}
-              </h2>
-            </Link>
-            {name !== "Favoris" && (
-              <i
-                className="fa-solid fa-xmark"
-                onClick={() => removePlaylistFromUser(id)}
-              ></i>
-            )}
-          </div>
-        ))}
-      </div>
-      <p className="text-decoration-underline" onClick={() => setShowModal(true)}>
-        <i
-          className="fa-solid fa-circle-plus me-2"
-        ></i>
-        Créer une playlist
-      </p>
-      {showModal && (
-        <div className="form-playlist-modal">
-          <PlaylistForm handlePlaylist={addNewPlaylistToUser} setShowModal={setShowModal} title={'Ajouter une playlist'} />
+      {playlists.length == 0 && (
+        <div className="d-flex flex-column align-items-center mt-3">
+          <Loader />
+          <span>Loading...</span>
         </div>
+      )}
+      {playlists.length > 0 && (
+        <>
+          <h1>Playlists</h1>
+          <div className="playlist-container mb-5">
+            {playlists.map(({ id, musics, name }) => (
+              <div
+                key={id}
+                className="playlist-item position-relative text-decoration-none text-black"
+              >
+                <Link to={`/playlist/${id}`} className="text-decoration-none">
+                  <img
+                    src={
+                      musics.length > 0
+                        ? `${import.meta.env.VITE_RESOURCE_IMG_URL}/${
+                            musics[0].imgUri
+                          }`
+                        : "https://placehold.co/400x350"
+                    }
+                    alt={name}
+                    className="playlist-image w-100 h-100 object-fit-cover"
+                  />
+
+                  <h2 className="playlist-title bg-white text-black text-center fw-bolder px-3 py-1">
+                    {name}
+                  </h2>
+                </Link>
+                {name !== "Favoris" && (
+                  <i
+                    className="fa-solid fa-xmark"
+                    onClick={() => removePlaylistFromUser(id)}
+                  ></i>
+                )}
+              </div>
+            ))}
+          </div>
+          <p
+            className="text-decoration-underline"
+            onClick={() => setShowModal(true)}
+          >
+            <i className="fa-solid fa-circle-plus me-2"></i>
+            Créer une playlist
+          </p>
+          {showModal && (
+            <div className="form-playlist-modal">
+              <PlaylistForm
+                handlePlaylist={addNewPlaylistToUser}
+                setShowModal={setShowModal}
+                title={"Ajouter une playlist"}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   )
