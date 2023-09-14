@@ -2,7 +2,7 @@ import { useState, createContext, useContext } from "react"
 import { useNavigate } from 'react-router-dom'
 
 import AuthService from "../service/AuthService"
-import jwtDecode from "jwt-decode";
+import jwtDecode from "jwt-decode"
 
 const authContext = createContext()
 
@@ -32,12 +32,6 @@ const useAuth = () => {
             navigate('/')
             break
           case 'Cookie not found':
-            setCurrentUser({})
-            localStorage.removeItem('isAuthenticated')
-            localStorage.removeItem('isAdmin')
-            localStorage.removeItem('csrf-token')
-            navigate('/login')
-            break
           case 'Invalid X-CSRF-TOKEN':
             setCurrentUser({})
             localStorage.removeItem('isAuthenticated')

@@ -73,17 +73,15 @@ const Playlists = () => {
           </div>
         ))}
       </div>
-      <p>
+      <p className="text-decoration-underline" onClick={() => setShowModal(true)}>
         <i
           className="fa-solid fa-circle-plus me-2"
-          onClick={() => setShowModal(true)}
         ></i>
         Créer une playlist
       </p>
       {showModal && (
         <div className="form-playlist-modal">
-          <PlaylistForm handlePlaylist={addNewPlaylistToUser} setShowModal={setShowModal} />
-          {/* <i onClick={() => setShowModal(false)} class="fa-solid fa-circle-xmark"></i> */}
+          <PlaylistForm handlePlaylist={addNewPlaylistToUser} setShowModal={setShowModal} title={'Ajouter une playlist'} />
         </div>
       )}
     </div>

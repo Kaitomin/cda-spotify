@@ -38,6 +38,9 @@ public class MusicController {
 	}
 	@GetMapping("/{id}")
 	public ResponseEntity<MusicDTO> getById(@PathVariable @Pattern(regexp = "^[0-9]$+") @NotBlank long id){
+		MusicDTO musicDTO = service.getById(id);
+
+		if (musicDTO == null) return ResponseEntity.notFound().build();
 		return ResponseEntity.ok(service.getById(id));
 	}
 	@GetMapping("/search/{searchKey}")

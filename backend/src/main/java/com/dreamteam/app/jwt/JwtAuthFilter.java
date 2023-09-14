@@ -29,33 +29,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-//    private final PathMatcher pathMatcher;
-
-//    @Override
-//    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-//        List<String> arr = new ArrayList<>(
-//            Arrays.asList(
-//                "/",
-//                "/*.png",
-//                "/*.gif",
-//                "/*.webp",
-//                "/index.html",
-//                "/favicon.ico",
-//                "/assets/**",
-//                "/api/music",
-//                "/api/music/{id:[0-9]+}",
-//                "/api/music/search/**",
-//                "/api/music/byTag/{tag:[A-Z]+}",
-//                "/api/music/byArtist/{artist:[a-zA-Z0-9 ]+}",
-//                "/api/auth/**",
-//                "/api/tag",
-//                "/img/**",
-//                "/audio/**"
-//            )
-//        );
-//        return arr.stream().anyMatch(p -> pathMatcher.match(p, request.getRequestURI()));
-//    }
-
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -73,7 +46,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 "/api/music/{id:[0-9]+}",
                 "/api/music/search/**",
                 "/api/music/byTag/{tag:[A-Z]+}",
-                "/api/music/byArtist/{artist:[a-zA-Z0-9 ]+}",
+                "/api/music/byArtist/{artist}",
                 "/api/auth/**",
                 "/api/tag",
                 "/img/**",
@@ -91,7 +64,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-//        System.out.println("JwtAuthFilter");
+//        System.out.println("JwtAuthFilter" + " - " + request.getRequestURI());
 
         // Extract JWT from cookie
         final String jwt = CustomUtils.getCookie(request.getCookies(), "jwt");

@@ -4,8 +4,10 @@ import { useParams, useNavigate } from "react-router-dom"
 import MusicPlayer from "../components/MusicPlayer"
 import Slider from "../components/Slider"
 import PlaylistContent from "../components/PlaylistContent"
+import Loader from "../components/Loader"
 import MusicService from "../service/MusicService"
 import PlaylistService from "../service/PlaylistService"
+
 
 const MusicDetails = () => {
   const { playlistId, musicIndex, musicId } = useParams()
@@ -17,9 +19,9 @@ const MusicDetails = () => {
   useEffect(() => {
     // Acessing from music page
     if (musicId) {
-      MusicService.getById(musicId).then((res) => {
-        setSelectedMusic(res.data)
-      })
+      MusicService.getById(musicId)
+        .then((res) => setSelectedMusic(res.data))
+        .catch(() => navigate('/404-notfound'))
 
       MusicService.getAll().then((res) => {
         const indexOfCurrentMusic = res.data.findIndex((m) => m.id == musicId)
@@ -51,13 +53,22 @@ const MusicDetails = () => {
   }
 
   return (
+   
     <div className="music-details flex-grow-1">
-      <MusicPlayer
-        selectedMusicsList={selectedMusicsList}
-        selectedMusic={selectedMusic}
-        selectedIndex={musicId ? +selectedIndex : +musicIndex}
-        updateSelectedMusic={updateSelectedMusic}
-      />
+      {!selectedMusic && 
+        <div className="d-flex flex-column align-items-center mt-3">
+          <Loader />
+          <span>Fetching music...</span>
+        </div>
+      }
+      {selectedMusic &&
+        <MusicPlayer
+          selectedMusicsList={selectedMusicsList}
+          selectedMusic={selectedMusic}
+          selectedIndex={musicId ? +selectedIndex : +musicIndex}
+          updateSelectedMusic={updateSelectedMusic}
+        />
+      }
       {playlistId && (
         <PlaylistContent
           showActions={false}

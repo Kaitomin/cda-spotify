@@ -2,8 +2,7 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { sanitizeInput } from '../utils/CustomFunctions'
 
-
-const PlaylistForm = ({ playlistName, handlePlaylist, setShowModal}) => {
+const PlaylistForm = ({ playlistName, handlePlaylist, setShowModal, title }) => {
     const [newName, setNewName] = useState(playlistName ? playlistName : '')
     const [errors, setErrors] = useState({
         playlistName:""
@@ -34,28 +33,28 @@ const PlaylistForm = ({ playlistName, handlePlaylist, setShowModal}) => {
     }
 
     return (
-        <div>
-            <div className='edit-playlist-modal'>
-                <p>Modifier le nom</p>
-                <form onSubmit={handleSubmit} >
-                    <input type="text" id='playlistName' name='playlistName' placeholder="Nom de la playlist ..." value={newName} onChange={handleChange} autoFocus 
-                    className=''
-                    />
-                    {errors.playlistName && <div className="error-message p-2 text-danger">{errors.playlistName}</div>}
-                    <div className='interaction'>
-                        <button type="submit"><i class="fa-solid fa-square-check"></i></button>
-                        <i onClick={() => setShowModal(false)} class="fa-solid fa-circle-xmark"></i>
-                    </div>
-                </form>
+        <div className='edit-playlist-modal'>
+            <p>{title}</p>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor='playlistName'></label>
+                <input type="text" id='playlistName' name='playlistName' placeholder="Nom de la playlist..." value={newName} onChange={handleChange} autoFocus />
+                {errors.playlistName && <div className="error-message p-2 text-danger">{errors.playlistName}</div>}
+                <div className='interaction'>
+                    <button type="submit" className='flex-grow-1'><i className="fa-solid fa-square-check"></i></button>
+                    <div className='separator'></div>
+                    <i onClick={() => setShowModal(false)} className="fa-solid fa-circle-xmark flex-grow-1"></i>
+                </div>
+            </form>
 
-            </div>
         </div>
     )
 }
 
 PlaylistForm.propTypes = {
     playlistName: PropTypes.string,
-    handlePlaylist: PropTypes.func
+    handlePlaylist: PropTypes.func,
+    setShowModal: PropTypes.func,
+    title: PropTypes.string
 }
 
 export default PlaylistForm;

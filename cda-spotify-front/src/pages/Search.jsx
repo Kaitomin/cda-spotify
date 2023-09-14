@@ -112,13 +112,15 @@ const Search = () => {
             <span>Fetching data...</span>
           </div>
         )}
-        {musicList && <SearchResult currentSearchPage={currentSearchPage} />}
-        <Pagination
+        {musicList && <SearchResult currentSearchPage={debouncedItemPerPage != 0 ? currentSearchPage : musicList} />}
+        {debouncedItemPerPage != 0 &&
+          <Pagination
           currentPage={currentPage}
           totalItems={musicList.length}
           itemPerPage={+debouncedItemPerPage}
           onPageChange={page => setCurrentPage(page)}
-        />
+          />
+        }
       </div>
     </div>
   )

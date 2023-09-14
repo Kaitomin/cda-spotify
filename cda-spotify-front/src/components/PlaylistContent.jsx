@@ -171,7 +171,7 @@ const PlaylistContent = ({ showActions, musicIndex, isIntegrated }) => {
             playlistName={playlist.name}
             handlePlaylist={handleUpdatePlaylist}
             setShowModal={setShowModal}
-            
+            title={'Modifier le nom'}
           />
           {/* <button onClick={() => setShowModal(false)}>Annuler</button> */}
           {/* <i onClick={() => setShowModal(false)} class="fa-solid fa-circle-xmark"></i> */}
