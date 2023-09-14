@@ -2,7 +2,7 @@ import { useState, createContext, useContext } from "react"
 import { useNavigate } from 'react-router-dom'
 
 import AuthService from "../service/AuthService"
-import jwtDecode from "jwt-decode";
+import jwtDecode from "jwt-decode"
 
 const authContext = createContext()
 

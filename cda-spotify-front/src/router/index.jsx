@@ -58,16 +58,7 @@ const index = () => {
       <Route
         path="/music/:musicId"
         element={
-          <Suspense
-            fallback={
-              <>
-                <div className="d-flex flex-column align-items-center mt-3">
-                  <Loader />
-                  <span>Fetching music...</span>
-                </div>
-              </>
-            }
-          >
+          <Suspense fallback={<>...</>}>
             <MusicDetails key={"musicId"} />
           </Suspense>
         }
@@ -164,7 +155,6 @@ const index = () => {
       />
 
       {/* Fallback route */}
-      {/* <Route path="*" element={<Navigate replace to="/" />} /> */}
       <Route path="/404-notfound" element={<Page404 />} />
       <Route path="*" element={<Page404 />} />
     </Routes>

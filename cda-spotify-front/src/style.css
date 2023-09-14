@@ -523,6 +523,9 @@ header .nav-desktop i {
   grid-auto-rows: auto;
   gap: 10px;
 }
+.playlists > p:hover {
+  cursor: pointer;
+}
 .playlists i.fa-xmark {
   position: absolute;
   top: 5px;
@@ -975,33 +978,32 @@ footer > div {
 /* -----------------------*/
 /*  Modal form playlists  */
 /* -----------------------*/
-.form-playlist-modal{
+.form-playlist-modal {
   z-index: 10;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid;
-  background: var(--dark-blue-1);
+  background: var(--dark-blue-5);
   text-align: center;
   color: white;
   border-radius: 5%;
   min-width: 165px;
-
   display: flex;
   flex-direction: column;
   /* padding-inline: 10px;
   padding-block: 15px; */
 }
-.form-playlist-modal form{
+.form-playlist-modal form {
   display: flex;
   flex-direction: column;
 }
-.form-playlist-modal input:focus-visible{
+.form-playlist-modal input:focus-visible {
   outline: 0px;
   /* background-color: var(--dark-blue-3); */
 }
-.form-playlist-modal input{
+.form-playlist-modal input {
   /* margin-bottom: 10px; */
   padding-block: 5px;
   padding-inline: 10px;
@@ -1010,26 +1012,32 @@ footer > div {
   border: none;
   border-bottom: solid 1px white;
 }
-.form-playlist-modal input::placeholder{
+.form-playlist-modal input::placeholder {
   color: white;
 }
-.form-playlist-modal button{
-  background-color: var(--dark-blue-1);
-}
-
 .edit-playlist-modal > p {
   padding-block: 5px;
   border-bottom: solid 1px white;
   margin-bottom: 0px ;  
-  background-color: var(--dark-blue-3);
-  border-radius: 4px 4px 0% 0%;
+  /* background-color: var(--dark-blue-3); */
+  /* border-radius: 4px 4px 0% 0%; */
 }
-.edit-playlist-modal .interaction{
+.edit-playlist-modal .interaction {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
-
+.form-playlist-modal .interaction button {
+  height: 40px;
+  width: 40px;
+  border: 0px;
+  background-color: transparent;
+}
+.form-playlist-modal .interaction .separator {
+  border-left: 1px solid;
+  height: 40px; 
+  width: 1px;
+}
 .form-playlist-modal .interaction > i {
   padding: 10px;
   color: var(--red-warning);
@@ -1037,14 +1045,22 @@ footer > div {
   height: 40px;
   cursor: pointer;
 }
-
-.form-playlist-modal .interaction > button >i {
+.form-playlist-modal .interaction > button > i {
   color: var(--light-blue);
   font-size: 20px;
   border: 0px;
 }
-.form-playlist-modal .interaction > button  {
-  border: 0px;
+::-webkit-input-placeholder {
+  font-style: italic;
+}
+:-moz-placeholder {
+  font-style: italic;  
+}
+::-moz-placeholder {
+  font-style: italic;  
+}
+:-ms-input-placeholder {  
+  font-style: italic; 
 }
 
 /* ---------------- */

@@ -4,8 +4,10 @@ import { useParams, useNavigate } from "react-router-dom"
 import MusicPlayer from "../components/MusicPlayer"
 import Slider from "../components/Slider"
 import PlaylistContent from "../components/PlaylistContent"
+import Loader from "../components/Loader"
 import MusicService from "../service/MusicService"
 import PlaylistService from "../service/PlaylistService"
+
 
 const MusicDetails = () => {
   const { playlistId, musicIndex, musicId } = useParams()
@@ -51,7 +53,14 @@ const MusicDetails = () => {
   }
 
   return (
+   
     <div className="music-details flex-grow-1">
+      {!selectedMusic && 
+        <div className="d-flex flex-column align-items-center mt-3">
+          <Loader />
+          <span>Fetching music...</span>
+        </div>
+      }
       {selectedMusic &&
         <MusicPlayer
           selectedMusicsList={selectedMusicsList}
