@@ -17,6 +17,7 @@ const RequireAuthAdmin = lazy(() => import("./RequireAuthAdmin"))
 const PlaylistDetails = lazy(() => import("../pages/PlaylistDetails"))
 
 import Loader from "../components/Loader"
+import Page404 from "../pages/Page404"
 
 const index = () => {
   return (
@@ -163,7 +164,9 @@ const index = () => {
       />
 
       {/* Fallback route */}
-      <Route path="*" element={<Navigate replace to="/" />} />
+      {/* <Route path="*" element={<Navigate replace to="/" />} /> */}
+      <Route path="/404-notfound" element={<Page404 />} />
+      <Route path="*" element={<Page404 />} />
     </Routes>
   )
 }

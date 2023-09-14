@@ -12,6 +12,7 @@ const Playlists = () => {
   const { currentUser } = useAuth()
 
   const getPlaylists = () => {
+    // PlaylistService.getPlaylistByUserId(currentUser.id).then((res) => {
     PlaylistService.getPlaylistByUserId(currentUser.id).then((res) => {
       setPlaylists(res.data)
     })

@@ -17,7 +17,9 @@ const MusicDetails = () => {
   useEffect(() => {
     // Acessing from music page
     if (musicId) {
-      MusicService.getById(musicId).then((res) => setSelectedMusic(res.data))
+      MusicService.getById(musicId)
+        .then((res) => setSelectedMusic(res.data))
+        .catch(() => navigate('/404-notfound'))
 
       MusicService.getAll().then((res) => {
         const indexOfCurrentMusic = res.data.findIndex((m) => m.id == musicId)
