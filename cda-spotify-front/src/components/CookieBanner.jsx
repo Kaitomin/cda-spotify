@@ -1,39 +1,49 @@
-import React from 'react'
-import Cookies from 'js-cookie'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from "react"
+
+import Cookies from "js-cookie"
 
 function CookieBanner() {
-const [isConsent, setIsConsent] = useState()
+  const [isConsent, setIsConsent] = useState()
 
-    useEffect( () => {
-        const cookie = Cookies.get('Streamy Cookie Consent')
-        console.log(cookie);
-        setIsConsent(cookie)
-        
-    })
+  useEffect(() => {
+    const cookie = Cookies.get("Streamy Cookie Consent")
+    setIsConsent(cookie)
+  })
 
-    const handleAcceptCookies = () =>{
-        //creation d'un cookie (valeur a def)
-        Cookies.set('Streamy Cookie Consent', 'true', { expires: 365 })
-        document.getElementById('cookie-banner').style.display = 'none'
-    }
-    const handleDeclineCookies = () =>{
-        document.getElementById('cookie-banner').style.display = 'none'
-    }
+  const handleAcceptCookies = () => {
+    //creation d'un cookie (valeur a def)
+    Cookies.set("Streamy Cookie Consent", "true", { expires: 365 })
+    document.getElementById("cookie-banner").style.display = "none"
+  }
+  const handleDeclineCookies = () => {
+    document.getElementById("cookie-banner").style.display = "none"
+  }
 
-
-  return (   
-    !isConsent && 
-        <div  id="cookie-banner" className='cookie-banner '>
-            <p>Attention le site que vous allez consultez contient des cookie et un donc une risque de cookiisation, plus serieursement si vous voulez utiliser le site vous n'avez pas le choix si non partez imediatment</p>
-            <div className='d-flex justify-content-evenly flex-wrap row-gap-2'>
-                <button className='cookie-consent cookies-btn' onClick={handleAcceptCookies}>Accepter les cookies</button>
-                <button className='cookie-reject cookies-btn' onClick={handleDeclineCookies}>Décliner les cookies</button>
-            </div>
-       </div>
-        
-      
+  return (
+    !isConsent && (
+      <div id="cookie-banner" className="cookie-banner ">
+        <p>
+          Attention, le site que vous consultez contient des cookies et donc
+          un risque de cookiisation! Sérieusement, si vous voulez utiliser le
+          site vous n&#39;avez pas le choix sinon partez immédiatement.<br />
+          <img src="/peepo-cookie.gif" width={50} />
+        </p>
+        <div className="d-flex justify-content-evenly flex-wrap row-gap-2">
+          <button
+            className="cookie-consent cookies-btn"
+            onClick={handleAcceptCookies}
+          >
+            Accepter les cookies
+          </button>
+          <button
+            className="cookie-reject cookies-btn"
+            onClick={handleDeclineCookies}
+          >
+            Décliner les cookies
+          </button>
+        </div>
+      </div>
+    )
   )
 }
 

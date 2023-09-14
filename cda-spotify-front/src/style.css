@@ -449,7 +449,6 @@ header .nav-desktop i {
   display: flex;
   background: var(--dark-blue-1);
 }
-
 .slider-component .slider h3 {
   font-size: 1em;
   margin-bottom: 0 !important;
@@ -1076,42 +1075,43 @@ footer > div {
   min-width: 207px;
   width: 100%;
 }
-  /* ---------------- */
-  /*  Cookies banner  */
-  /* ---------------- */
-.cookie-banner{
+/* ---------------- */
+/*  Cookies banner  */
+/* ---------------- */
+.cookie-banner {
   padding: 20px;
   margin-inline: 25px;
-  background-color: rgba(255, 255, 255, 0.87);
+  background-color: rgba(255, 255, 255, 0.90);
   color: black;
   position: fixed;
-  bottom: 50px;
+  bottom: 60px;
   right: 0;
-  max-width: 650px;
+  max-width: 375px;
+  z-index: 10;
 }
-.cookie-reject{
+.cookie-banner p {
+  font-size: 14px;
+}
+.cookie-reject {
   background-color:var(--dark-blue-5);
-  cursor: url('../public/cursor-surprise.png'), pointer !important;
+  cursor: url('/cursor-surprise.png'), pointer !important;
 }
-.cookie-consent{
+.cookie-consent {
   background-color:var(--medium-blue);
 }
-.cookies-btn{
+.cookies-btn {
   padding-block: 5px;
   padding-inline: 15px;
-  /* margin-right: 25px; */
   border: none;
   border-radius: 5px;
   color: white;
-  font-size: 20px;
+  font-size: 14px;
 }
-.cookies-btn:hover{
+.cookies-btn:hover {
   font-weight: 800;
   box-shadow: inset 0px 0px 50px 5px rgba(0,0,0,0.5);
-  /* cursor: url('../public/cursor-surprise.png'), pointer !important; */
 
 }
-
 
 
 /* ========================== */
@@ -1173,6 +1173,23 @@ footer > div {
   /* ------ */
   .search-page .result-grid {
     grid-template-columns: repeat(3, 31%);
+  }
+
+  /* -------*/
+  /*  Home  */
+  /* ------ */
+  .home-card-container{
+    display: grid;
+    grid-template-columns: repeat(2 , 1fr);
+    gap: 25px;
+    /* margin-inline: 15px; */
+  }
+
+  /* ---------------- */
+  /*  Cookies banner  */
+  /* ---------------- */
+  .cookie-banner {
+    bottom: 50px;
   }
 }
 
@@ -1284,22 +1301,5 @@ footer > div {
     grid-template-columns: repeat(6, 15%);
   }
 }
-  /* -------*/
-  /*  Home  */
-  /* ------ */
-  @media screen and (min-width: 575px){
-    .home-card-container{
-      display: grid;
-      grid-template-columns: repeat(2 , 1fr);
-      gap: 25px;
-      /* margin-inline: 15px; */
-    }
-    .home-card h2,.home-card h3{
-      /* max-width: 150px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden; */
-    }
-
     
-  }
+  
