@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom"
 import ReCAPTCHA from "react-google-recaptcha"
 import Cookies from 'js-cookie'
 
-
+import ModalMessage from "../components/ModalMessage"
 import { sanitizeInput } from "../utils/CustomFunctions"
 import useAuth from "../hook/useAuth"
 
 const Register = () => {
   const navigate = useNavigate()
   const { register } = useAuth()
+  const [showModal, setShowModal] = useState(false)
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -38,8 +39,14 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault()
 
-    if (!Cookies.get('Streamy Cookie Consent')) return
     // Check errors
+    if (!Cookies.get('Streamy Cookie Consent')) {
+      setErrors({...errors, cookie: 'Veuillez accepter les cookies'})
+      setShowModal(true)
+      setTimeout(() => setShowModal(false), 1500)
+      return
+    }
+    
     if (!recaptchaRef.current.getValue()) return
 
     if (user.password !== user.confirmPassword) return
@@ -137,6 +144,7 @@ const Register = () => {
             <button className="mt-3">Créer un compte</button>
           </div>
         </form>
+        {showModal && <ModalMessage message={errors.cookie} />}
       </div>
     )
   )

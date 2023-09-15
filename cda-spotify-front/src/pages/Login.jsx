@@ -17,7 +17,8 @@ const Login = () => {
   })
   const [errors, setErrors] = useState({
     username: "",
-    password: ""
+    password: "",
+    cookie: ""
   })
   const recaptchaRef = useRef()
 
@@ -37,7 +38,12 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault()
 
-    if (!Cookies.get('Streamy Cookie Consent')) return
+    if (!Cookies.get('Streamy Cookie Consent')) {
+      setErrors({...errors, cookie: 'Veuillez accepter les cookies'})
+      setShowModal(true)
+      setTimeout(() => setShowModal(false), 1500)
+      return
+    }
 
     if (!recaptchaRef.current.getValue()) return
 
@@ -120,7 +126,7 @@ const Login = () => {
       <div className="d-flex justify-content-center mt-4">
         <Link to='/register'>Pas encore de compte ?</Link>
       </div>
-     
+      {showModal && <ModalMessage message={errors.cookie} />}
       {authError && showModal && <ModalMessage message={authError} />}
     </div>
   )
