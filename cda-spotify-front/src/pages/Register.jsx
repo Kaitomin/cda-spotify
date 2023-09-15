@@ -9,7 +9,7 @@ import useAuth from "../hook/useAuth"
 
 const Register = () => {
   const navigate = useNavigate()
-  const { register } = useAuth()
+  const { register, authError } = useAuth()
   const [showModal, setShowModal] = useState(false)
   const [user, setUser] = useState({
     username: "",
@@ -68,6 +68,7 @@ const Register = () => {
     if (hasError) return
 
     register({ username: user.username, password: user.password }, recaptchaRef.current.getValue())
+    recaptchaRef.current.reset()
   }
 
   useEffect(() => {
@@ -75,6 +76,13 @@ const Register = () => {
       navigate("/")
     }
   }, [])
+
+  useEffect(() => {
+    if (!authError) return
+
+    setShowModal(true)
+    setTimeout(() => setShowModal(false), 1500)
+  }, [authError])
 
   return (
     !localStorage.getItem("isAuthenticated") && (
@@ -145,6 +153,7 @@ const Register = () => {
           </div>
         </form>
         {showModal && <ModalMessage message={errors.cookie} />}
+        {authError && showModal && <ModalMessage message={authError} />}
       </div>
     )
   )

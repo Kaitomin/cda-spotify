@@ -39,6 +39,10 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
             throw new AuthenticationException("Invalid captcha");
         }
 
+        if (repository.findByUsername(req.getUsername()).orElse(null) != null){
+            throw new AuthenticationException("Name already exists");
+        }
+
         // Auto create 'Favoris' playlist
         PlaylistDTO playlistDTO = new PlaylistDTO();
         playlistDTO.setName("Favoris");

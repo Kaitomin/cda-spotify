@@ -48,7 +48,15 @@ const useAuth = () => {
 
   const register = ({ username, password }, recaptchaToken) => {
     AuthService.register({ username, password }, recaptchaToken)
-      .then(() => navigate('/login'))
+      .then(() => {  
+        setAuthError('')
+        navigate('/login')
+      })
+      .catch((e) => {
+        console.log(e)
+        setAuthError('Cet identifiant existe déjà')
+        setTimeout(() => setAuthError(''), 1500)
+      })
   }
 
   const login = ({ username, password }, recaptchaToken) => {
@@ -71,6 +79,7 @@ const useAuth = () => {
       })
       .catch(() => {
         setAuthError('Identifiants incorrects')
+        setTimeout(() => setAuthError(''), 1500)
       })
   }
 
