@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import Cookies from "js-cookie"
 
 function CookieBanner() {
-  const [isConsent, setIsConsent] = useState()
+  const [isConsent, setIsConsent] = useState(true) // banner does not appear upon page refresh
 
   useEffect(() => {
     const cookie = Cookies.get("Streamy Cookie Consent")
@@ -11,7 +11,7 @@ function CookieBanner() {
   })
 
   const handleAcceptCookies = () => {
-    //creation d'un cookie (valeur a def)
+    //creation d'un cookie
     Cookies.set("Streamy Cookie Consent", "true", { expires: 365 })
     document.getElementById("cookie-banner").style.display = "none"
   }

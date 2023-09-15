@@ -110,7 +110,6 @@ const MusicPlayer = ({
                 src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${currentMusic.imgUri}`}
                 alt={`${currentMusic.title}`}
                 height={250}
-                // eslint-disable-next-line react/no-unknown-property
                 fetchpriority="high"
               />
             </div>

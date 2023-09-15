@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 const SliderCard = ({id, title, imgUri}) => {
   return (
     <div>
-      <Link to={`/music/${id}`} key={id} className='text-decoration-none'>
+      <Link to={`/music/${id}`} className='text-decoration-none'>
         <div className="slider-music-component">
           <img
             src={`${import.meta.env.VITE_RESOURCE_IMG_URL}/${

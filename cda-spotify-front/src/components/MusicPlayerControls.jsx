@@ -42,8 +42,9 @@ const MusicPlayerControls = ({ currentMusic, handlePrevious, handleNext }) => {
       audioRef.current.pause()
       audioRef.current.currentTime = 0
       setIsPlaying(false)
-    } else if (!isLooping) handleNext()
-
+    } else if (!isLooping && isRandom) {
+      handleNext(isRandom)
+    } 
     return
   }
 

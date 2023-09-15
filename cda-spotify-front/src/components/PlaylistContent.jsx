@@ -186,7 +186,7 @@ const PlaylistContent = ({ showActions, musicIndex, isIntegrated }) => {
           </div>
         )}
         {musicList &&
-          musicList.map(({id, title, artist, imgUri, audioUri}, index) => (
+          musicList.map(({id, title, artist, imgUri, audioUri, duration}, index) => (
             <div
               key={id}
               className={`music-item track-${
@@ -228,12 +228,13 @@ const PlaylistContent = ({ showActions, musicIndex, isIntegrated }) => {
                 )}
               </div>
               <div>
-                <div className="music-details">
+                <div className="music-details d-flex justify-content-between align-items-center column-gap-2">
                   <Link to={`/playlist/${playlist.id}/music/${index}`}>
                     <p className="music-title m-0">
-                      {artist}- {title}
+                      {artist} - {title}
                     </p>
                   </Link>
+                  <p className="m-0 d-none d-sm-block">{duration.split("").splice(1).join("")}</p>
                 </div>
 
                 {showActions && (

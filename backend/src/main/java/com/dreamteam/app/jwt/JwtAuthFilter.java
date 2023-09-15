@@ -70,19 +70,23 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String jwt = CustomUtils.getCookie(request.getCookies(), "jwt");
         final String userEmail;
 
+        // Get user's username from JWT token
         userEmail = jwtService.extractUsername(jwt);
 
+        // userEmail exists & currently authenticated user in SecurityContext is null
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            // Retrieve user(username, password) by his username from DB
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            // Verify JWT and CSRF token
             if (jwtService.isTokenValid(jwt, userDetails, request.getHeader("x-csrf-token"))) {
-//                System.out.println("userDetails : " + userDetails);
+                System.out.println("userDetails : " + userDetails);
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
                         userDetails.getAuthorities()
                 );
-//                System.out.println("AUTHTOKEN : " + authToken);
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//                System.out.println("AUTHTOKEN before : " + authToken);
+//                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
