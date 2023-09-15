@@ -38,7 +38,7 @@ public class AuthenticationController {
             .secure(true)
             .path("/")
             .maxAge(24 * 60 * 60)
-            .sameSite("Lax")  // sameSite
+            .sameSite("Lax")
             .build();
 
         // Response to the client

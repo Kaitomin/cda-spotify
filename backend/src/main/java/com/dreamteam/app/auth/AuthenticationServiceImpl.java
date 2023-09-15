@@ -59,15 +59,17 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest req, String recaptchaToken) throws AuthenticationException {
-        if (!recaptchaValidationService.isValidCaptcha(recaptchaToken)) {
-            throw new AuthenticationException("Invalid captcha");
-        }
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 req.getUsername(),
                 req.getPassword()
             )
         );
+
+        if (!recaptchaValidationService.isValidCaptcha(recaptchaToken)) {
+            throw new AuthenticationException("Invalid captcha");
+        }
+
         var user = repository.findByUsername(req.getUsername()).orElse(null);
         var jwtToken = jwtService.generateToken(user);
 

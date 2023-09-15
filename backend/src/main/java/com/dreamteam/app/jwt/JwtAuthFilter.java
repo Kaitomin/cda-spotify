@@ -63,7 +63,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-
 //        System.out.println("JwtAuthFilter" + " - " + request.getRequestURI());
 
         // Extract JWT from cookie
@@ -79,14 +78,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             // Verify JWT and CSRF token
             if (jwtService.isTokenValid(jwt, userDetails, request.getHeader("x-csrf-token"))) {
-                System.out.println("userDetails : " + userDetails);
+//                System.out.println("userDetails : " + userDetails);
+                // Create a new UsernamePasswordAuthenticationToken object
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
                         userDetails.getAuthorities()
                 );
-//                System.out.println("AUTHTOKEN before : " + authToken);
+//                System.out.println("AUTHTOKEN : " + authToken);
 //                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                // Set the newly created UsernamePasswordAuthenticationToken object as the current authenticated user in a ThreadLocal
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }

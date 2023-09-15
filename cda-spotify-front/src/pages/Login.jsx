@@ -5,10 +5,12 @@ import ReCAPTCHA from "react-google-recaptcha"
 import { sanitizeInput } from "../utils/CustomFunctions"
 import useAuth from "../hook/useAuth"
 import Cookies from "js-cookie"
+import ModalMessage from "../components/ModalMessage"
 
 const Login = () => {
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const [showModal, setShowModal] = useState(false)
+  const { login, authError } = useAuth()
   const [user, setUser] = useState({
     username: "",
     password: ""
@@ -45,8 +47,8 @@ const Login = () => {
       const msgError = sanitizeInput(user[key], key)
 
       setErrors(prevErrors => ({
-          ...prevErrors,
-          [key]: msgError,
+        ...prevErrors,
+        [key]: msgError,
       }))
 
       if (msgError) hasError = true
@@ -55,7 +57,7 @@ const Login = () => {
     // Cancel form submission
     if (hasError) return
 
-    login({ username: user.username, password: user.password }, recaptchaRef.current.getValue())
+    login({ username: user.username, password: user.password }, recaptchaRef.current.getValue()) 
   }
 
   useEffect(() => {
@@ -63,6 +65,13 @@ const Login = () => {
       navigate("/")
     }
   }, [])
+
+  useEffect(() => {
+    if (!authError) return
+
+    setShowModal(true)
+    setTimeout(() => setShowModal(false), 1500)
+  }, [authError])
 
   return (
     !(localStorage.getItem("isAuthenticated")) &&
@@ -111,6 +120,8 @@ const Login = () => {
       <div className="d-flex justify-content-center mt-4">
         <Link to='/register'>Pas encore de compte ?</Link>
       </div>
+     
+      {authError && showModal && <ModalMessage message={authError} />}
     </div>
   )
 }

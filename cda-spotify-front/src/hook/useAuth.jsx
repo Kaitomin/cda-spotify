@@ -8,6 +8,7 @@ const authContext = createContext()
 
 const useAuth = () => {
   const [currentUser, setCurrentUser] = useState({})
+  const [authError, setAuthError] = useState()
   const navigate = useNavigate()
 
   const checkCookie = roles => {
@@ -64,7 +65,12 @@ const useAuth = () => {
         localStorage.setItem('csrf-token', token.csrfToken)
         localStorage.setItem('isAdmin', token.role === 'ADMIN')
 
+        setAuthError('')
+        
         navigate('/')
+      })
+      .catch(() => {
+        setAuthError('Identifiants incorrects')
       })
   }
 
@@ -80,6 +86,7 @@ const useAuth = () => {
  
   return {
     currentUser,
+    authError,
     checkCookie,
     register,
     login,

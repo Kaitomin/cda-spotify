@@ -897,6 +897,16 @@ header .nav-desktop i {
   color: white;
   border-color: darkcyan;
 }
+/* ------- */
+/*  Login  */
+/* ------- */
+.login .modal-message {
+  border: 1px solid #ffffff;
+  background: #740000;
+}
+.login .modal-message p {
+  color: white;
+}
 /* -------- */
 /*  Footer  */
 /* -------- */
