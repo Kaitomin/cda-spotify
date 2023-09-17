@@ -675,7 +675,7 @@ header .nav-desktop i {
 /* ------ */
 .search-page .result-grid {
   display: grid;
-  grid-template-columns: repeat(2, 49%);
+  grid-template-columns: repeat(1, 1fr);
   gap: 20px;
   justify-content: center;
 }
@@ -709,7 +709,7 @@ header .nav-desktop i {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   position: absolute;
-  top: 5px;
+  top: 2px;
   left: 10px;
   font-size: 1.3em;
 }
@@ -901,6 +901,7 @@ header .nav-desktop i {
 .register .modal-message {
   border: 1px solid #ffffff;
   background: #740000;
+  position: fixed;
 }
 .login .modal-message p,
 .register .modal-message p {
@@ -965,10 +966,10 @@ footer > div {
   overflow: hidden;
 }
 .home-card h2 {
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 .home-card h3 {
-  font-size: 1.1em;
+  font-size: 1em;
   font-style: italic;
 }
 .home-card-link {
@@ -1085,9 +1086,9 @@ footer > div {
   width: 100%;
 }
 /* ---------------- */
-/*  Cookies banner  */
+/*  Cookie banner  */
 /* ---------------- */
-.cookie-banner {
+.ck-banner {
   padding: 20px;
   margin-inline: 25px;
   background-color: rgba(255, 255, 255, 0.90);
@@ -1098,17 +1099,17 @@ footer > div {
   max-width: 375px;
   z-index: 10;
 }
-.cookie-banner p {
+.ck-banner p {
   font-size: 14px;
 }
-.cookie-reject {
+.ck-reject {
   background-color:var(--dark-blue-5);
   cursor: url('/cursor-surprise.png'), pointer !important;
 }
-.cookie-consent {
+.ck-consent {
   background-color:var(--medium-blue);
 }
-.cookies-btn {
+.ck-btn {
   padding-block: 5px;
   padding-inline: 15px;
   border: none;
@@ -1116,10 +1117,9 @@ footer > div {
   color: white;
   font-size: 14px;
 }
-.cookies-btn:hover {
+.ck-btn:hover {
   font-weight: 800;
   box-shadow: inset 0px 0px 50px 5px rgba(0,0,0,0.5);
-
 }
 
 
@@ -1151,9 +1151,9 @@ footer > div {
   /* -------*/
   /* Search */
   /* ------ */
-  /* .search-page .result-grid {
-    grid-template-columns: repeat(1, 100%);
-  } */
+  .search-page .result-grid {
+    grid-template-columns: repeat(2, 49%);
+  }
   .search-page .filters {
     flex-direction: row !important;
     gap: 0;
@@ -1184,6 +1184,13 @@ footer > div {
     grid-template-columns: repeat(3, 31%);
   }
 
+  /* ------------ */
+  /*  Playlists  */
+  /* ------------ */
+  .playlists .playlist-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   /* -------*/
   /*  Home  */
   /* ------ */
@@ -1195,21 +1202,14 @@ footer > div {
   }
 
   /* ---------------- */
-  /*  Cookies banner  */
+  /*  Cookie banner  */
   /* ---------------- */
-  .cookie-banner {
+  .ck-banner {
     bottom: 50px;
   }
 }
 
 @media screen and (min-width: 650px) { 
-  /* ------------ */
-  /*  Playlists  */
-  /* ------------ */
-  .playlists .playlist-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   /* ------------ */
   /* MusicDetails */
   /* ------------ */

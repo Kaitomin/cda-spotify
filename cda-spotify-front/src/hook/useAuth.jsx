@@ -53,7 +53,7 @@ const useAuth = () => {
         navigate('/login')
       })
       .catch((e) => {
-        console.log(e)
+        // console.log(e)
         setAuthError('Cet identifiant existe déjà')
         setTimeout(() => setAuthError(''), 1500)
       })

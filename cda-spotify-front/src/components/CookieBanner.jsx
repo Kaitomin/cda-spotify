@@ -13,15 +13,15 @@ function CookieBanner() {
   const handleAcceptCookies = () => {
     //creation d'un cookie
     Cookies.set("Streamy Cookie Consent", "true", { expires: 365 })
-    document.getElementById("cookie-banner").style.display = "none"
+    document.getElementById("ck-banner").style.display = "none"
   }
   const handleDeclineCookies = () => {
-    document.getElementById("cookie-banner").style.display = "none"
+    document.getElementById("ck-banner").style.display = "none"
   }
 
   return (
     !isConsent && (
-      <div id="cookie-banner" className="cookie-banner ">
+      <div id="ck-banner" className="ck-banner ">
         <p>
           Attention, le site que vous consultez contient des cookies et donc
           un risque de cookiisation! Sérieusement, si vous voulez utiliser le
@@ -30,13 +30,13 @@ function CookieBanner() {
         </p>
         <div className="d-flex justify-content-evenly flex-wrap row-gap-2">
           <button
-            className="cookie-consent cookies-btn"
+            className="ck-consent ck-btn"
             onClick={handleAcceptCookies}
           >
             Accepter les cookies
           </button>
           <button
-            className="cookie-reject cookies-btn"
+            className="ck-reject ck-btn"
             onClick={handleDeclineCookies}
           >
             Décliner les cookies

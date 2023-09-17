@@ -10,13 +10,14 @@ const AboutUs = () => {
       </div>
       <h2 className='text-decoration-underline'>Stack</h2>
       <div className='stack d-flex flex-wrap justify-content-around align-content-center gap-4 py-3'>
-        <img src='/react.png' alt='' width={55} title='React' />
-        <img src='/docker.png' alt='' width={55} title='Docker' />
-        <img src='/maven.png' alt='' width={55} title='Maven' />
-        <img src='/microsoftAzure.png' alt='' width={55} title='Microsoft Azure' />
-        <img src='/bootstrap.png' alt='' width={55} title='Bootstrap' />
-        <img src='/render.webp' alt='' width={55} title='Render' />
-        <img src='/spring.png' alt='' width={55} title='Spring' />
+        <img src='/react.png' alt='react' width={55} title='React' />
+        <img src='/docker.png' alt='docker' width={55} title='Docker' />
+        <img src='/maven.png' alt='maven' width={55} title='Maven' />
+        <img src='/microsoftAzure.png' alt='microsoft azure' width={55} title='Microsoft Azure' />
+        <img src='/bootstrap.png' alt='bootstrap' width={55} title='Bootstrap' />
+        <img src='/render.webp' alt='render' width={55} title='Render' />
+        <img src='/spring.png' alt='spring' width={55} title='Spring' />
+        <img src='/cloudinary.png' alt='cloudinary' width={55} title='Cloudinary' className="object-fit-contain" />
       </div>
     </div>
   )
