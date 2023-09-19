@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import ReCAPTCHA from "react-google-recaptcha"
+import Cookies from "js-cookie"
 
 import { sanitizeInput } from "../utils/CustomFunctions"
 import useAuth from "../hook/useAuth"
-import Cookies from "js-cookie"
 import ModalMessage from "../components/ModalMessage"
 
 const Login = () => {

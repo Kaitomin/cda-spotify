@@ -52,6 +52,14 @@ export function sanitizeInput(input, type) {
         return "Un des caractères n'est pas correct"
       }
       return ""
+    case "search":
+      if (input.length > 0 && !input.trim()) {
+        return "Empty"
+      }
+      if (!(/^[a-zA-Z0-9\s/]*$/).test(input)) {
+        return "Invalid input"
+      }
+      break;
     // for id, version, duration (fetched from current music, not to be manually edited) | imgUri, audioUri (not mandatory) when modifying a music - no check done
     default:
       return ""

@@ -23,9 +23,9 @@ function CookieBanner() {
     !isConsent && (
       <div id="ck-banner" className="ck-banner ">
         <p>
-          Attention, le site que vous consultez contient des cookies et donc
+          Cuculus! <br/> Le site que vous consultez contient des cookies et donc
           un risque de cookiisation! Sérieusement, si vous voulez utiliser le
-          site vous n&#39;avez pas le choix sinon partez immédiatement.<br />
+          site, vous n&#39;avez pas le choix ; relinquo statim!<br />
           <img src="/peepo-cookie.gif" width={50} />
         </p>
         <div className="d-flex justify-content-evenly flex-wrap row-gap-2">

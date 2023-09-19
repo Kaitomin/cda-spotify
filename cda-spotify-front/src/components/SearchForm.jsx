@@ -1,12 +1,18 @@
 import { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 
+import { sanitizeInput } from "../utils/CustomFunctions"
+
 const SearchForm = ({ getResult, refresh }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const inputRef = useRef()
 
   // Debouncer
   useEffect(() => {
+    const err = sanitizeInput(searchQuery, "search")
+
+    if (err) return
+
     const sendQuery = setTimeout(() => {
       getResult(searchQuery)
     }, 500)
@@ -19,6 +25,10 @@ const SearchForm = ({ getResult, refresh }) => {
   // For mobile users
   const handleSubmit = e => {
     e.preventDefault()
+
+    const err = sanitizeInput(searchQuery, "search")
+    if (err) return
+
     getResult(searchQuery)
     inputRef.current.blur()
   }
