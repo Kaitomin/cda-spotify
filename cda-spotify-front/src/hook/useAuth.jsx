@@ -10,6 +10,7 @@ const useAuth = () => {
   const [currentUser, setCurrentUser] = useState({})
   const [authError, setAuthError] = useState()
   const [loginLoading, setLoginLoading] = useState(false)
+  const [isCookieBannerHidden, setIsCookieBannerHidden] = useState()
   const navigate = useNavigate()
 
   const checkCookie = roles => {
@@ -94,6 +95,10 @@ const useAuth = () => {
         localStorage.removeItem('csrf-token')
       })
   }
+
+  const hideCookieBanner = (value) => {
+    setIsCookieBannerHidden(value)
+  }
  
   return {
     currentUser,
@@ -102,7 +107,9 @@ const useAuth = () => {
     checkCookie,
     register,
     login,
-    logout
+    logout,
+    hideCookieBanner,
+    isCookieBannerHidden
   }
 }
 

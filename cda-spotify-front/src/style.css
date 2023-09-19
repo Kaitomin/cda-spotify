@@ -918,6 +918,9 @@ footer > div {
   width: 550px;
   margin: 0 auto;
 }
+footer .fa-cookie-bite:hover {
+  cursor: pointer;
+}
 
 /* ---------- */
 /* Pagination */
@@ -1099,7 +1102,8 @@ footer > div {
   max-width: 375px;
   z-index: 10;
 }
-.ck-banner p {
+.ck-banner p,
+.ck-banner span {
   font-size: 14px;
 }
 .ck-reject {
@@ -1121,7 +1125,14 @@ footer > div {
   font-weight: 800;
   box-shadow: inset 0px 0px 50px 5px rgba(0,0,0,0.5);
 }
-
+.ck-banner .fa-xmark {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.ck-banner .fa-xmark:hover {
+  cursor: pointer;
+}
 
 /* ========================== */
 /* ======= Responsive ======= */
