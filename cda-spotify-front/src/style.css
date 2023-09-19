@@ -900,7 +900,7 @@ header .nav-desktop i {
 .login .modal-message,
 .register .modal-message {
   border: 1px solid #ffffff;
-  background: #740000;
+  background: darkcyan;
   position: fixed;
 }
 .login .modal-message p,

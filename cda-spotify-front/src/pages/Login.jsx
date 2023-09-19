@@ -123,7 +123,7 @@ const Login = () => {
             sitekey={import.meta.env.VITE_RECAPTCHA_KEY}
             className="g-recaptcha"
           />
-          <button className="mt-3">Se connecter</button>
+          <button className="mt-3" disabled={loginLoading}>Se connecter</button>
         </div>
       </form>
       <div className="d-flex justify-content-center mt-4">
@@ -131,7 +131,7 @@ const Login = () => {
       </div>
       {errors.cookie && showModal && <ModalMessage message={errors.cookie} />}
       {authError && showModal && <ModalMessage message={authError} />}
-      {loginLoading && <ModalMessage loader={true} />}
+      {!authError && loginLoading && <ModalMessage loader={true} />}
     </div>
   )
 }

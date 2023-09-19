@@ -14,14 +14,14 @@ export function sanitizeInput(input, type) {
       } else if (regexp.test(input)) {
         return ""
       }
-      return "Un des caractères n'est pas correct"
+      return "Un des caractères n'est pas autorisé"
     case "releasedAt":
       if (!input.trim()) {
         return "Le champ est requis"
       } else if (regexpDate.test(input)) {
         return ""
       }
-      return "Un des caractères n'est pas correct"
+      return "Un des caractères n'est pas autorisé"
     case "imgFile":
     case "audioFile":
       if (input) {
@@ -41,7 +41,7 @@ export function sanitizeInput(input, type) {
       } else if (/^[a-zA-Z0-9/]{2,}$/.test(input)) {
         return ""
       }
-      return "Un des caractères n'est pas correct"
+      return "Un des caractères n'est pas autorisé"
     case "password":
     case "confirmPassword":
       if (input.length === 0) {
@@ -49,7 +49,7 @@ export function sanitizeInput(input, type) {
       } else if (input.length < 5) {
         return "Vous devez avoir au moins 5 caractères"
       } else if (!(/^[a-zA-Z0-9+_!@?/]{2,}$/).test(input)) {
-        return "Un des caractères n'est pas correct"
+        return "Un des caractères n'est pas autorisé"
       }
       return ""
     case "search":

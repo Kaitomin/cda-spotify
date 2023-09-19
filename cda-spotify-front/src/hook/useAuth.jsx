@@ -60,9 +60,9 @@ const useAuth = () => {
   }
 
   const login = ({ username, password }, recaptchaToken) => {
+    setLoginLoading(true)
     AuthService.login({ username, password }, recaptchaToken)
       .then((res) => {
-        setLoginLoading(true)
         const token = jwtDecode(res.data.token)
 
         setCurrentUser({
@@ -79,6 +79,7 @@ const useAuth = () => {
         navigate('/')
       })
       .catch(() => {
+        setLoginLoading(false)
         setAuthError('Identifiants incorrects')
         setTimeout(() => setAuthError(''), 1500)
       })
