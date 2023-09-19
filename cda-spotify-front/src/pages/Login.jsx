@@ -10,7 +10,7 @@ import ModalMessage from "../components/ModalMessage"
 const Login = () => {
   const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false)
-  const { login, authError } = useAuth()
+  const { login, authError, loginLoading } = useAuth()
   const [user, setUser] = useState({
     username: "",
     password: ""
@@ -66,7 +66,7 @@ const Login = () => {
     // Cancel form submission
     if (hasError) return
 
-    login({ username: user.username, password: user.password }, recaptchaRef.current.getValue()) 
+    login({ username: user.username, password: user.password }, recaptchaRef.current.getValue())
   }
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const Login = () => {
 
   return (
     !(localStorage.getItem("isAuthenticated")) &&
-    <div className="login flex-grow-1 mt-5">
+    <div className="login flex-grow-1 mt-5 position-relative">
       <form onSubmit={handleLogin} className="d-flex flex-column m-auto">
         <h1>Connexion</h1>
         <div className="d-flex flex-column row-gap-3 px-3 pt-3 pb-4">
@@ -131,6 +131,7 @@ const Login = () => {
       </div>
       {errors.cookie && showModal && <ModalMessage message={errors.cookie} />}
       {authError && showModal && <ModalMessage message={authError} />}
+      {loginLoading && <ModalMessage loader={true} />}
     </div>
   )
 }

@@ -9,6 +9,7 @@ const authContext = createContext()
 const useAuth = () => {
   const [currentUser, setCurrentUser] = useState({})
   const [authError, setAuthError] = useState()
+  const [loginLoading, setLoginLoading] = useState(false)
   const navigate = useNavigate()
 
   const checkCookie = roles => {
@@ -52,8 +53,7 @@ const useAuth = () => {
         setAuthError('')
         navigate('/login')
       })
-      .catch((e) => {
-        // console.log(e)
+      .catch(() => {
         setAuthError('Cet identifiant existe déjà')
         setTimeout(() => setAuthError(''), 1500)
       })
@@ -62,6 +62,7 @@ const useAuth = () => {
   const login = ({ username, password }, recaptchaToken) => {
     AuthService.login({ username, password }, recaptchaToken)
       .then((res) => {
+        setLoginLoading(true)
         const token = jwtDecode(res.data.token)
 
         setCurrentUser({
@@ -72,7 +73,7 @@ const useAuth = () => {
         localStorage.setItem('isAuthenticated', true)
         localStorage.setItem('csrf-token', token.csrfToken)
         localStorage.setItem('isAdmin', token.role === 'ADMIN')
-
+        setLoginLoading(false)
         setAuthError('')
         
         navigate('/')
@@ -95,6 +96,7 @@ const useAuth = () => {
  
   return {
     currentUser,
+    loginLoading,
     authError,
     checkCookie,
     register,
